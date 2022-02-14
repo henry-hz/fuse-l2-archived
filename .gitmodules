@@ -1,0 +1,3 @@
+[submodule "bridge/validator/arb-avm-cpp/external/secp256k1"]
+	path = bridge/validator/arb-avm-cpp/external/secp256k1
+	url = https://github.com/bitcoin-core/secp256k1.git
