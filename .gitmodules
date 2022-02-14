@@ -13,3 +13,9 @@
 [submodule "validator/arb-avm-cpp/external/json"]
 	path = validator/arb-avm-cpp/external/json
 	url = https://github.com/nlohmann/json
+[submodule "validator/arb-avm-cpp/external/PicoSHA2"]
+	path = validator/arb-avm-cpp/external/PicoSHA2
+	url = https://github.com/okdshin/PicoSHA2
+[submodule "validator/arb-os"]
+	path = validator/arb-os
+	url = https://github.com/OffchainLabs/arb-os
