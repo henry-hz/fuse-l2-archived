@@ -16,3 +16,6 @@
 [submodule "validator/arb-os"]
 	path = validator/arb-os
 	url = https://github.com/OffchainLabs/arb-os
+[submodule "validator/arb-avm-cpp/external/secp256k1"]
+	path = validator/arb-avm-cpp/external/secp256k1
+	url = https://github.com/bitcoin-core/secp256k1.git
