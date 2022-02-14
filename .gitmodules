@@ -1,21 +1,21 @@
-[submodule "packages/arb-avm-cpp/external/secp256k1"]
+[submodule "validator/arb-avm-cpp/external/secp256k1"]
     path = validator/arb-avm-cpp/external/secp256k1
     url = https://github.com/bitcoin-core/secp256k1.git
-[submodule "packages/arb-avm-cpp/external/libff"]
+[submodule "validator/arb-avm-cpp/external/libff"]
     path = validator/arb-avm-cpp/external/libff
     url = https://github.com/scipr-lab/libff
-[submodule "packages/arb-avm-cpp/external/Catch2"]
+[submodule "validator/arb-avm-cpp/external/Catch2"]
     path = validator/arb-avm-cpp/external/Catch2
     url = https://github.com/catchorg/Catch2
-[submodule "packages/arb-avm-cpp/external/json"]
+[submodule "validator/arb-avm-cpp/external/json"]
     path = validator/arb-avm-cpp/external/json
     url = https://github.com/nlohmann/json
-[submodule "packages/arb-avm-cpp/cmake/cable"]
+[submodule "validator/arb-avm-cpp/cmake/cable"]
 	path = validator/arb-avm-cpp/cmake/cable
 	url = https://github.com/ethereum/cable
-[submodule "packages/arb-avm-cpp/external/PicoSHA2"]
+[submodule "validator/arb-avm-cpp/external/PicoSHA2"]
 	path = validator/arb-avm-cpp/external/PicoSHA2
 	url = https://github.com/okdshin/PicoSHA2
-[submodule "packages/arb-os"]
+[submodule "validator/arb-os"]
 	path = validator/arb-os
 	url = https://github.com/OffchainLabs/arb-os
