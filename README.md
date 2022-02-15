@@ -1,6 +1,12 @@
 Fuse Arbitrum Fork
 ==================
 
+To clone and recursivelly clone all the submodules, use:
+
+```
+git clone --recurse-submodules git@github.com:henry-hz/fuse-arb.gi
+```
+
 
 ## Bridge
 
