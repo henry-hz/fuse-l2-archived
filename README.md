@@ -1,6 +1,8 @@
 Fuse Arbitrum Fork
 ==================
 
+clone from: c678fae12f2a186cc9cf9b800f923e5ec37ae5f6 rev
+
 To clone and recursivelly clone all the submodules, use:
 
 ```

@@ -1,5 +1,12 @@
 
 
+include .env
+
+
+deploy:
+	export SPARKNET_PRIVKEY=$(KEY) && \
+	npx hardhat run scripts/deploy.ts --nework sparknet
+
 
 help:
 	npx hardhat help
