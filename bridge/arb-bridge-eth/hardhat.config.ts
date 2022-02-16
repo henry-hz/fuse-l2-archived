@@ -46,6 +46,12 @@ const config: HardhatUserConfig = {
     ],
   },
   networks: {
+    sparknet: {
+      url: "https://rpc.fusespark.io",
+      blockGasLimit: 10000000,
+      chainId: 123,
+      accounts: process.env['SPARKNET_PRIVKEY'],
+    },
     ropsten: {
       url: process.env.ROPSTEN_URL || "",
       accounts:
