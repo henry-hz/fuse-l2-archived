@@ -42,7 +42,8 @@ async function deploy(name: string) {
   const Contract = await ethers.getContractFactory(name);
   const contract = await Contract.deploy();
   await contract.deployed();
-  console.log("Inbox deployed to:", contract.address);
+  console.log(name + " transaction:", contract.deployTransaction);
+  console.log(name + " deployed to:", contract.address);
 }
 
 // We recommend this pattern to be able to use async/await everywhere

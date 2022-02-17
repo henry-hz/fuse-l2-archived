@@ -31,3 +31,10 @@ L2 Virtual Machine + Arb-OS
 > 3. change L2 code to point to custome L1  
 > 4. run custom L2  
 > 5. monitor custom L2
+
+
+
+## Resources
+
+
+* [hardhat-deploy](https://levelup.gitconnected.com/deploying-smart-contracts-with-hardhat-e1a76212df94)
