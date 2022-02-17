@@ -16,14 +16,17 @@ async function main() {
   console.log("Deploying contracts with the account:", deployer.address);
   console.log("Account balance:", (await deployer.getBalance()).toString());
 
+  const _deployments = ["Inbox", "Rollup"].map(async (message) => {
+    let contract = await ethers.getContractFactory(message);
+    let contract = await contract.deploy();
+    console.log("Deployed: " + message + contract.getDeployTransaction().nonce);
+  })
 
-  // We get the contract to deploy
-  const Inbox = await ethers.getContractFactory("Inbox");
-  const inbox = await Inbox.deploy();
-
-  await inbox.deployed();
-
-  console.log("Inbox deployed to:", inbox.address);
+  console.log(_deployments);
+  // const Inbox = await ethers.getContractFactory("Inbox");
+  // const inbox = await Inbox.deploy();
+  // await inbox.deployed();
+  // console.log("Inbox deployed to:", inbox.address);
 }
 
 // We recommend this pattern to be able to use async/await everywhere
