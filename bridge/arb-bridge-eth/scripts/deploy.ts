@@ -16,15 +16,33 @@ async function main() {
   console.log("Deploying contracts with the account:", deployer.address);
   console.log("Account balance:", (await deployer.getBalance()).toString());
 
-  const Inbox = await ethers.getContractFactory("Inbox");
-  const inbox = await Inbox.deploy();
-  await inbox.deployed();
-  console.log("Inbox deployed to:", inbox.address);
+  await seqDeploy([
+    "Inbox",
+    "BridgeCreator",
+    "BridgeUtils",
+    "GasRefunder",
+    "NodeFactory",
+    "OneStepProof",
+    "OneStepProof2",
+    "OneStepProofHash",
+    "SequencerInbox",
+    "ValidatorUtils",
+    "ValidatorWalletCreator",
+  ]);
+}
 
-  const BridgeCreator = await ethers.getContractFactory("BridgeCreator");
-  const bridgeCreator = await BridgeCreator.deploy();
-  await bridgeCreator.deployed();
-  console.log("BridgeCreator deployed to:", bridgeCreator.address);
+async function seqDeploy(names: string[]) {
+  for (const name of names) {
+    await deploy(name);
+  }
+  console.log("Done!");
+}
+
+async function deploy(name: string) {
+  const Contract = await ethers.getContractFactory(name);
+  const contract = await Contract.deploy();
+  await contract.deployed();
+  console.log("Inbox deployed to:", contract.address);
 }
 
 // We recommend this pattern to be able to use async/await everywhere
