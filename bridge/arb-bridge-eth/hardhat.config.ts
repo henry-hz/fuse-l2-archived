@@ -1,3 +1,5 @@
+// See config instructions:
+// https://medium.com/coinmonks/hardhat-configuration-c96415d4fcba
 import * as dotenv from "dotenv";
 
 import { HardhatUserConfig, task } from "hardhat/config";
@@ -46,11 +48,18 @@ const config: HardhatUserConfig = {
     ],
   },
   networks: {
+    goerli: {
+      url: "https://goerli.infura.io/v3/17509665a88549b9a5a5f8f3e291120c",
+      gasPrice: 1000000000,
+      from: "0x4828699dcbe7d449ce209af47ed285eba9a555a9",
+      accounts: process.env.PRIVATE_KEY !== undefined ? [process.env.PRIVATE_KEY] : [],
+    },
     sparknet: {
       url: "https://rpc.fusespark.io",
-      blockGasLimit: 10000000,
+      gasPrice: 1000000000,  // MUST be 1Gwei for sparknet
       chainId: 123,
-      accounts: process.env['SPARKNET_PRIVKEY'],
+      from: "0x4828699dcbe7d449ce209af47ed285eba9a555a9",
+      accounts: process.env.PRIVATE_KEY !== undefined ? [process.env.PRIVATE_KEY] : [],
     },
     ropsten: {
       url: process.env.ROPSTEN_URL || "",
