@@ -20,10 +20,13 @@ async function main() {
   // We get the contract to deploy
   const Inbox = await ethers.getContractFactory("Inbox");
   const inbox = await Inbox.deploy();
-
   await inbox.deployed();
-
   console.log("Inbox deployed to:", inbox.address);
+
+  const BridgeCreator = await ethers.getContractFactory("BridgeCreator");
+  const bridgeCreator = await BridgeCreator.deploy();
+  await bridgeCreator.deployed();
+  console.log("BridgeCreator deployed to:", bridgeCreator.address);
 }
 
 // We recommend this pattern to be able to use async/await everywhere
