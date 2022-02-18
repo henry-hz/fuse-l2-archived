@@ -1,16 +1,10 @@
-// See config instructions:
-// https://medium.com/coinmonks/hardhat-configuration-c96415d4fcba
-import * as dotenv from "dotenv";
-
+import { envconfig } from "./utils/config";
 import { HardhatUserConfig, task } from "hardhat/config";
-import "@nomiclabs/hardhat-etherscan";
-import "@nomiclabs/hardhat-waffle";
 import "@typechain/hardhat";
-import "hardhat-gas-reporter";
-import "solidity-coverage";
+import "@nomiclabs/hardhat-ethers";
 import "hardhat-deploy";
-
-dotenv.config();
+import "hardhat-gas-reporter";
+import "hardhat-contract-sizer";
 
 // This is a sample Hardhat task. To learn how to create your own go to
 // https://hardhat.org/guides/create-task.html
@@ -24,7 +18,6 @@ task("accounts", "Prints the list of accounts", async (taskArgs, hre) => {
 
 // You need to export an object to set up your config
 // Go to https://hardhat.org/config/ to learn more
-
 const config: HardhatUserConfig = {
   solidity: {
     compilers: [
@@ -48,37 +41,42 @@ const config: HardhatUserConfig = {
       },
     ],
   },
-  typechain: {
-    outDir: "typechain",
-    target: "ethers-v5"
-  },
   networks: {
-    goerli: {
-      url: "https://goerli.infura.io/v3/17509665a88549b9a5a5f8f3e291120c",
-      gasPrice: 1000000000,
-      from: "0x4828699dcbe7d449ce209af47ed285eba9a555a9",
-      accounts: process.env.PRIVATE_KEY !== undefined ? [process.env.PRIVATE_KEY] : [],
+    fuse: {
+      url: envconfig.fuse.provider_url,
+      gasPrice: 1000000000,  // MUST be 1Gwei
     },
     sparknet: {
-      url: "https://rpc.fusespark.io",
+      url: envconfig.sparknet.provider_url,
       gasPrice: 1000000000,  // MUST be 1Gwei for sparknet
       chainId: 123,
-      from: "0x4828699dcbe7d449ce209af47ed285eba9a555a9",
-      accounts: process.env.PRIVATE_KEY !== undefined ? [process.env.PRIVATE_KEY] : [],
+      accounts: [`0x${envconfig.sparknet.private_key}`],
     },
-    ropsten: {
-      url: process.env.ROPSTEN_URL || "",
-      accounts:
-        process.env.PRIVATE_KEY !== undefined ? [process.env.PRIVATE_KEY] : [],
+    goerli: {
+      url: envconfig.goerli.provider_url,
+      accounts: [`0x${envconfig.goerli.private_key}`],
+    },
+    rinkeby: {
+      url: envconfig.rinkeby.provider_url,
+      //   accounts: [`0x${envconfig.rinkeby.private_key}`],
+    },
+    mainnet: {
+      url: envconfig.mainnet.provider_url,
+      //   accounts: [`0x${envconfig.mainnet.private_key}`],
     },
   },
-  gasReporter: {
-    enabled: process.env.REPORT_GAS !== undefined,
-    currency: "USD",
+  namedAccounts: {
+    deployer: {
+      default: 0,
+      rinkeby: `privatekey://${envconfig.rinkeby.private_key}`,
+      mainnet: `privatekey://${envconfig.mainnet.private_key}`,
+    },
   },
-  etherscan: {
-    apiKey: process.env.ETHERSCAN_API_KEY,
+  typechain: {
+    outDir: "typechain",
+    target: "ethers-v5",
   },
+  contractSizer: {},
 };
 
 export default config;

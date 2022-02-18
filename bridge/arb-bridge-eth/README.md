@@ -1,11 +1,46 @@
-# Bridge
+# Fuse Arbritrum 
+
+## Commands
+
+- `yarn build` clears cache and compiles smart contracts
+- `yarn hardhat --network [network name] deploy --tags [tag(s)]` runs the deploy scripts to the specified network with the specified tags
+- `yarn hardhat test [test file(s)]` runs the unit tests specified
+- `yarn size` reports the size of your compiled smart contracts in KB
 
 
-## Steps
+### Typechain
 
-1. created a standard hardhat boilerplate
-2. added the contracts from arbitrum
-3. configured for multiple compilers
+Generates typings for your contracts after compiling automatically (in `./typechain`)
+
+### Hardhat-deploy
+
+Allows for more modular deployments. See [their docs](https://github.com/wighawag/hardhat-deploy) for more on how to unleash its power
+
+### Mocha, chai, chai-ethers, chai-as-promised
+
+Allows for easy testing with improved compatability with asynchronous functions and smart contracts (reverts, BigNumber, etc.)
+
+### Hadhat-contract-sizer
+
+Size matters on the blockchain. See [their docs](https://github.com/ItsNickBarry/hardhat-contract-sizer) for configuration details, but you can simply run `yarn size` and you'll get a breakdown of how big each contract is.
+
+### Prettier
+
+Configured for both your Solidity and Typescript code
+
+### .env parsing
+
+In `./utils/config.ts` you can configure your environment variables to have default values so things don't break midway through your script because you forgot an environment variable.
+
+### Hooks
+
+#### Precommit
+
+Via Husky, check styling
+
+#### On PR
+
+Check that contracts compile and tests pass
 
 
 ## Contracts Components
@@ -61,45 +96,3 @@ This folder contains a bunch of libraries implementing various general functiona
 This folder contains interfaces to external libraries that are used by this package
 
 
-
-
-## Tips
-
-```shell
-npx hardhat accounts
-npx hardhat compile
-npx hardhat clean
-npx hardhat test
-npx hardhat node
-npx hardhat help
-REPORT_GAS=true npx hardhat test
-npx hardhat coverage
-npx hardhat run scripts/deploy.ts
-TS_NODE_FILES=true npx ts-node scripts/deploy.ts
-npx eslint '**/*.{js,ts}'
-npx eslint '**/*.{js,ts}' --fix
-npx prettier '**/*.{json,sol,md}' --check
-npx prettier '**/*.{json,sol,md}' --write
-npx solhint 'contracts/**/*.sol'
-npx solhint 'contracts/**/*.sol' --fix
-```
-
-# Etherscan verification
-
-To try out Etherscan verification, you first need to deploy a contract to an Ethereum network that's supported by Etherscan, such as Ropsten.
-
-In this project, copy the .env.example file to a file named .env, and then edit it to fill in the details. Enter your Etherscan API key, your Ropsten node URL (eg from Alchemy), and the private key of the account which will send the deployment transaction. With a valid .env file in place, first deploy your contract:
-
-```shell
-hardhat run --network ropsten scripts/sample-script.ts
-```
-
-Then, copy the deployment address and paste it in to replace `DEPLOYED_CONTRACT_ADDRESS` in this command:
-
-```shell
-npx hardhat verify --network ropsten DEPLOYED_CONTRACT_ADDRESS "Hello, Hardhat!"
-```
-
-# Performance optimizations
-
-For faster runs of your tests and scripts, consider skipping ts-node's type checking by setting the environment variable `TS_NODE_TRANSPILE_ONLY` to `1` in hardhat's environment. For more details see [the documentation](https://hardhat.org/guides/typescript.html#performance-optimizations).
