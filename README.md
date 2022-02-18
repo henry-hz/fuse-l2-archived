@@ -38,3 +38,4 @@ L2 Virtual Machine + Arb-OS
 
 
 * [hardhat-deploy](https://levelup.gitconnected.com/deploying-smart-contracts-with-hardhat-e1a76212df94)
+* [hardhat-template](https://github.com/wighawag/template-ethereum-contracts/)
