@@ -48,6 +48,10 @@ const config: HardhatUserConfig = {
       },
     ],
   },
+  typechain: {
+    outDir: "typechain",
+    target: "ethers-v5"
+  },
   networks: {
     goerli: {
       url: "https://goerli.infura.io/v3/17509665a88549b9a5a5f8f3e291120c",
