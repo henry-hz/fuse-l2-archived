@@ -54,15 +54,15 @@ const config: HardhatUserConfig = {
     },
     goerli: {
       url: envconfig.goerli.provider_url,
-      accounts: [`0x${envconfig.goerli.private_key}`],
+      //accounts: [`0x${envconfig.goerli.private_key}`],
     },
     rinkeby: {
       url: envconfig.rinkeby.provider_url,
-      //   accounts: [`0x${envconfig.rinkeby.private_key}`],
+      accounts: [`0x${envconfig.rinkeby.private_key}`],
     },
     mainnet: {
       url: envconfig.mainnet.provider_url,
-      //   accounts: [`0x${envconfig.mainnet.private_key}`],
+      accounts: [`0x${envconfig.mainnet.private_key}`],
     },
   },
   namedAccounts: {

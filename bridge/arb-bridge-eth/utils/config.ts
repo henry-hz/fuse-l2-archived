@@ -51,4 +51,16 @@ export const envconfig: IConfig = {
     provider_url: getEnv("MAINNET_PROVIDER_URL", ""),
     private_key: getEnv("MAINNET_PRIVATE_KEY", ""),
   },
+  fuse: {
+    provider_url: getEnv("FUSE_PROVIDER_URL", ""),
+    private_key: getEnv("FUSE_PRIVATE_KEY", ""),
+  },
+  sparknet: {
+    provider_url: getEnv("SPARKNET_PROVIDER_URL", ""),
+    private_key: getEnv("SPARKNET_PRIVATE_KEY", ""),
+  },
+  goerli: {
+    provider_url: getEnv("GOERLI_PROVIDER_URL", ""),
+    private_key: getEnv("GOERLI_PRIVATE_KEY", ""),
+  },
 };
