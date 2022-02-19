@@ -8,11 +8,11 @@ const func: DeployFunction = async function (hre: HardhatRuntimeEnvironment) {
 
   const { deployer } = await getNamedAccounts();
 
-  const res: DeployResult = await deploy("GasRefunder", {
+  const res: DeployResult = await deploy("Inbox", {
     from: deployer,
+    args: [],
     log: true,
-    autoMine: true,
   });
 };
 export default func;
-func.tags = ["GasRefunder","test"];
+func.tags = ["Inbox", "patch2"];

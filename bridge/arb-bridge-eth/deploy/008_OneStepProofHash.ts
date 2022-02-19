@@ -6,21 +6,12 @@ const func: DeployFunction = async (hre: HardhatRuntimeEnvironment) => {
   const { deploy } = deployments
   const { deployer } = await getNamedAccounts()
 
-  await deploy('Rollup', {
-    from: deployer,
-    args: [1],
-  })
-
-  await deploy('RollupUserFacet', {
+  const res: DeployResult = await deploy("OneStepProofHash", {
     from: deployer,
     args: [],
-  })
-
-  await deploy('RollupAdminFacet', {
-    from: deployer,
-    args: [],
-  })
+    log: true,
+  });
 }
 
-module.exports = func
-module.exports.tags = ['Rollup', 'live', 'test']
+export default func;
+func.tags = ['OneStepProofHash', 'live', 'test'];
