@@ -1,13 +1,10 @@
-import * as dotenv from "dotenv";
-
+import { envconfig } from "./utils/config";
 import { HardhatUserConfig, task } from "hardhat/config";
-import "@nomiclabs/hardhat-etherscan";
-import "@nomiclabs/hardhat-waffle";
 import "@typechain/hardhat";
+import "@nomiclabs/hardhat-ethers";
+import "hardhat-deploy";
 import "hardhat-gas-reporter";
-import "solidity-coverage";
-
-dotenv.config();
+import "hardhat-contract-sizer";
 
 // This is a sample Hardhat task. To learn how to create your own go to
 // https://hardhat.org/guides/create-task.html
@@ -21,7 +18,6 @@ task("accounts", "Prints the list of accounts", async (taskArgs, hre) => {
 
 // You need to export an object to set up your config
 // Go to https://hardhat.org/config/ to learn more
-
 const config: HardhatUserConfig = {
   solidity: {
     compilers: [
@@ -46,19 +42,41 @@ const config: HardhatUserConfig = {
     ],
   },
   networks: {
-    ropsten: {
-      url: process.env.ROPSTEN_URL || "",
-      accounts:
-        process.env.PRIVATE_KEY !== undefined ? [process.env.PRIVATE_KEY] : [],
+    fuse: {
+      url: envconfig.fuse.provider_url,
+      gasPrice: 1000000000,  // MUST be 1Gwei
+    },
+    sparknet: {
+      url: envconfig.sparknet.provider_url,
+      gasPrice: 1000000000,  // MUST be 1Gwei for sparknet
+      chainId: 123,
+      accounts: [`0x${envconfig.sparknet.private_key}`],
+    },
+    goerli: {
+      url: envconfig.goerli.provider_url,
+      //accounts: [`0x${envconfig.goerli.private_key}`],
+    },
+    rinkeby: {
+      url: envconfig.rinkeby.provider_url,
+      accounts: [`0x${envconfig.rinkeby.private_key}`],
+    },
+    mainnet: {
+      url: envconfig.mainnet.provider_url,
+      accounts: [`0x${envconfig.mainnet.private_key}`],
     },
   },
-  gasReporter: {
-    enabled: process.env.REPORT_GAS !== undefined,
-    currency: "USD",
+  namedAccounts: {
+    deployer: {
+      default: 0,
+      rinkeby: `privatekey://${envconfig.rinkeby.private_key}`,
+      mainnet: `privatekey://${envconfig.mainnet.private_key}`,
+    },
   },
-  etherscan: {
-    apiKey: process.env.ETHERSCAN_API_KEY,
+  typechain: {
+    outDir: "typechain",
+    target: "ethers-v5",
   },
+  contractSizer: {},
 };
 
 export default config;

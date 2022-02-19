@@ -1,11 +1,6 @@
 {
   "name": "hardhat-deploy-ts-template",
   "version": "1.0.0",
-  "description": "Template to develop EVM smart contracts with Hardhat and Typescript for testing ",
-  "main": "index.js",
-  "repository": "git@github.com:djh58/hardhat-deploy-ts-template.git",
-  "author": "Dan Hepworth <danhep@gmail.com>",
-  "license": "MIT",
   "scripts": {
     "clean:contracts": "npx hardhat clean",
     "compile": "npx hardhat compile",
