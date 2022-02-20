@@ -39,6 +39,8 @@ run-mainnet:
 		-v ~/arb-db/mainnet/:/home/user/.arbitrum/mainnet \
 		-p 0.0.0.0:8547:8547 -p 0.0.0.0:8548:8548 $(CONTAINER_NAME) \
 		--l1.url https://mainnet.infura.io/v3/17509665a88549b9a5a5f8f3e291120c
+
+# --sequencer  --password=jim state https://rpc.fusespark.io 0xa2D6322FeAcAE2df3245F62e3Ae884FCDC975cdd
 run-sparknet:
 	docker run --rm -it \
 		-v ~/arb-db/sparknet/:/home/user/.arbitrum/sparknet \

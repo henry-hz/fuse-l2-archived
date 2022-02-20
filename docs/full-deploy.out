@@ -1,0 +1,1395 @@
+yarn run v1.22.17
+$ ./scripts/arb_deploy.py -p jim rollup
+Sending build context to Docker daemon  2.048kB
+Step 1/5 : FROM alpine:3.9
+3.9: Pulling from library/alpine
+31603596830f: Pulling fs layer
+31603596830f: Download complete
+31603596830f: Pull complete
+Digest: sha256:414e0518bb9228d35e4cd5165567fb91d26c6a214e9c95899e1e056fcd349011
+Status: Downloaded newer image for alpine:3.9
+ ---> 78a2ce922f86
+Step 2/5 : RUN mkdir /build /cpp-build /rocksdb
+ ---> Running in c465fdaae51b
+Removing intermediate container c465fdaae51b
+ ---> b70060559889
+Step 3/5 : FROM scratch
+ ---> 
+Step 4/5 : COPY --from=0 /cpp-build /cpp-build
+ ---> 8be30416955e
+Step 5/5 : COPY --from=0 /build /build
+ ---> fc448def75d6
+Successfully built fc448def75d6
+Successfully tagged arb-avm-cpp:latest
+Sending build context to Docker daemon  2.048kB
+Step 1/5 : FROM alpine:3.9
+ ---> 78a2ce922f86
+Step 2/5 : RUN mkdir /build /cpp-build /rocksdb
+ ---> Using cache
+ ---> b70060559889
+Step 3/5 : FROM scratch
+ ---> 
+Step 4/5 : COPY --from=0 /cpp-build /cpp-build
+ ---> Using cache
+ ---> 8be30416955e
+Step 5/5 : COPY --from=0 /build /build
+ ---> Using cache
+ ---> fc448def75d6
+Successfully built fc448def75d6
+Successfully tagged arb-node:latest
+Sending build context to Docker daemon  1.307GB
+Step 1/39 : FROM offchainlabs/cpp-base:0.4.1 as arb-avm-cpp
+0.4.1: Pulling from offchainlabs/cpp-base
+31d64ed241e5: Pulling fs layer
+3e459f8e844a: Pulling fs layer
+229097cee77c: Pulling fs layer
+229097cee77c: Verifying Checksum
+31d64ed241e5: Verifying Checksum
+31d64ed241e5: Download complete
+31d64ed241e5: Pull complete
+3e459f8e844a: Verifying Checksum
+3e459f8e844a: Download complete
+3e459f8e844a: Pull complete
+229097cee77c: Pull complete
+Digest: sha256:f06f710d44c2ac402924fa217d337f476e658319edb7eec29c3eea66f201dfcf
+Status: Downloaded newer image for offchainlabs/cpp-base:0.4.1
+ ---> 679ebdb9f94c
+Step 2/39 : COPY --chown=user arb-avm-cpp/CMakeLists.txt /home/user/arb-avm-cpp/
+ ---> 11be907a9048
+Step 3/39 : COPY --chown=user arb-avm-cpp/external /home/user/arb-avm-cpp/external
+ ---> 061dca8a79c9
+Step 4/39 : COPY --chown=user arb-avm-cpp/cmake /home/user/arb-avm-cpp/cmake
+ ---> 13aee884310d
+Step 5/39 : RUN mkdir -p arb-avm-cpp/build && cd arb-avm-cpp/build &&     cmake .. -DCMAKE_BUILD_TYPE=RelWithDebInfo -DBUILD_TESTING=0 -DENABLE_TCMALLOC=true &&     cmake --build . -j $(nproc)
+ ---> Running in e6e5acecdd56
+-- Found Git: /usr/bin/git (found version "2.30.2") 
+-- [cable ] Cable 0.5.0 initialized
+-- [hunter] Initializing Hunter workspace (13775235910a3fa85644568d1c5be8271de72e1c)
+-- [hunter]   https://github.com/cpp-pm/hunter/archive/v0.23.260.tar.gz
+-- [hunter]   -> /home/user/.hunter/_Base/Download/Hunter/0.23.260/1377523
+-- Build type: RelWithDebInfo
+-- The C compiler identification is GNU 10.2.1
+-- The CXX compiler identification is GNU 10.2.1
+-- Detecting C compiler ABI info
+-- Detecting C compiler ABI info - done
+-- Check for working C compiler: /usr/bin/cc - skipped
+-- Detecting C compile features
+-- Detecting C compile features - done
+-- Detecting CXX compiler ABI info
+-- Detecting CXX compiler ABI info - done
+-- Check for working CXX compiler: /usr/bin/c++ - skipped
+-- Detecting CXX compile features
+-- Detecting CXX compile features - done
+-- Looking for pthread.h
+-- Looking for pthread.h - found
+-- Performing Test CMAKE_HAVE_LIBC_PTHREAD
+-- Performing Test CMAKE_HAVE_LIBC_PTHREAD - Failed
+-- Looking for pthread_create in pthreads
+-- Looking for pthread_create in pthreads - not found
+-- Looking for pthread_create in pthread
+-- Looking for pthread_create in pthread - found
+-- Found Threads: TRUE  
+-- Found GMP: /usr/lib/x86_64-linux-gnu/libgmp.so
+-- Found GMPXX: /usr/lib/x86_64-linux-gnu/libgmpxx.so
+-- Found Gperftools: /usr/lib/x86_64-linux-gnu/libtcmalloc_and_profiler.so  
+-- Using tcmalloc
+-- Found OpenSSL: /usr/lib/x86_64-linux-gnu/libssl.so;/usr/lib/x86_64-linux-gnu/libcrypto.so;dl (found version "1.1.1k") 
+[91mBoost 1.65 found.
+Found Boost components:
+   filesystem;system
+[0m-- Found RocksDB: /usr/lib/librocksdb.so  
+-- Found rocksdb 6.20 in /usr/include;/usr/lib/librocksdb.so
+-- clang-format not found!
+-- cmake-format not found!
+-- [hunter] Calculating Toolchain-SHA1
+-- [hunter] Calculating Config-SHA1
+-- [hunter] HUNTER_ROOT: /home/user/.hunter
+-- [hunter] [ Hunter-ID: 1377523 | Toolchain-ID: 4dd6905 | Config-ID: 1f8c6e1 ]
+-- [hunter] ETHASH_ROOT: /home/user/.hunter/_Base/1377523/4dd6905/1f8c6e1/Install (ver.: 0.5.0)
+-- [hunter] Building ethash
+loading initial cache file /home/user/.hunter/_Base/1377523/4dd6905/1f8c6e1/cache.cmake
+loading initial cache file /home/user/.hunter/_Base/1377523/4dd6905/1f8c6e1/Build/ethash/args.cmake
+-- The C compiler identification is GNU 10.2.1
+-- The CXX compiler identification is GNU 10.2.1
+-- Check for working C compiler: /usr/bin/cc - skipped
+-- Detecting C compile features
+-- Detecting C compile features - done
+-- Check for working CXX compiler: /usr/bin/c++ - skipped
+-- Detecting CXX compile features
+-- Detecting CXX compile features - done
+-- Configuring done
+-- Generating done
+-- Build files have been written to: /home/user/.hunter/_Base/1377523/4dd6905/1f8c6e1/Build/ethash/Build
+Scanning dependencies of target ethash-Release
+[  6%] Creating directories for 'ethash-Release'
+[ 12%] Performing download step (download, verify and extract) for 'ethash-Release'
+-- Downloading...
+   dst='/home/user/.hunter/_Base/Download/ethash/0.5.0/674af68/v0.5.0.tar.gz'
+   timeout='none'
+-- Using src='https://github.com/chfast/ethash/archive/v0.5.0.tar.gz'
+-- [download 100% complete]
+-- verifying file...
+       file='/home/user/.hunter/_Base/Download/ethash/0.5.0/674af68/v0.5.0.tar.gz'
+-- Downloading... done
+-- extracting...
+     src='/home/user/.hunter/_Base/Download/ethash/0.5.0/674af68/v0.5.0.tar.gz'
+     dst='/home/user/.hunter/_Base/1377523/4dd6905/1f8c6e1/Build/ethash/Source'
+-- extracting... [tar xfz]
+-- extracting... [analysis]
+-- extracting... [rename]
+-- extracting... [clean up]
+-- extracting... done
+[ 18%] No update step for 'ethash-Release'
+[ 25%] No patch step for 'ethash-Release'
+[ 31%] Performing configure step for 'ethash-Release'
+loading initial cache file /home/user/.hunter/_Base/1377523/4dd6905/1f8c6e1/cache.cmake
+loading initial cache file /home/user/.hunter/_Base/1377523/4dd6905/1f8c6e1/Build/ethash/args.cmake
+-- [cable ] Cable 0.2.16 initialized
+-- The C compiler identification is GNU 10.2.1
+-- The CXX compiler identification is GNU 10.2.1
+-- Check for working C compiler: /usr/bin/cc - skipped
+-- Detecting C compile features
+-- Detecting C compile features - done
+-- Check for working CXX compiler: /usr/bin/c++ - skipped
+-- Detecting CXX compile features
+-- Detecting CXX compile features - done
+-- [cable ] Build type: Release
+-- Performing Test fstack-protector
+-- Performing Test fstack-protector - Success
+-- Performing Test Wimplicit-fallthrough
+-- Performing Test Wimplicit-fallthrough - Success
+-- Performing Test mtune=generic
+-- Performing Test mtune=generic - Success
+-- Configuring done
+-- Generating done
+-- Build files have been written to: /home/user/.hunter/_Base/1377523/4dd6905/1f8c6e1/Build/ethash/Build/ethash-Release-prefix/src/ethash-Release-build
+[ 37%] Performing build step for 'ethash-Release'
+Scanning dependencies of target keccak
+[ 11%] Building C object lib/keccak/CMakeFiles/keccak.dir/keccakf1600.c.o
+[ 22%] Building C object lib/keccak/CMakeFiles/keccak.dir/keccak.c.o
+[ 33%] Building C object lib/keccak/CMakeFiles/keccak.dir/keccakf800.c.o
+[ 44%] Linking C static library libkeccak.a
+[ 44%] Built target keccak
+Scanning dependencies of target ethash
+[ 55%] Building CXX object lib/ethash/CMakeFiles/ethash.dir/ethash.cpp.o
+[ 77%] Building CXX object lib/ethash/CMakeFiles/ethash.dir/managed.cpp.o
+[ 77%] Building C object lib/ethash/CMakeFiles/ethash.dir/primes.c.o
+[ 88%] Building CXX object lib/ethash/CMakeFiles/ethash.dir/progpow.cpp.o
+[100%] Linking CXX static library libethash.a
+[100%] Built target ethash
+[ 43%] Performing install step for 'ethash-Release'
+[ 44%] Built target keccak
+[100%] Built target ethash
+Install the project...
+-- Install configuration: "Release"
+-- Installing: /home/user/.hunter/_Base/1377523/4dd6905/1f8c6e1/Build/ethash/Install/include
+-- Installing: /home/user/.hunter/_Base/1377523/4dd6905/1f8c6e1/Build/ethash/Install/include/ethash
+-- Installing: /home/user/.hunter/_Base/1377523/4dd6905/1f8c6e1/Build/ethash/Install/include/ethash/ethash.hpp
+-- Installing: /home/user/.hunter/_Base/1377523/4dd6905/1f8c6e1/Build/ethash/Install/include/ethash/version.h
+-- Installing: /home/user/.hunter/_Base/1377523/4dd6905/1f8c6e1/Build/ethash/Install/include/ethash/hash_types.hpp
+-- Installing: /home/user/.hunter/_Base/1377523/4dd6905/1f8c6e1/Build/ethash/Install/include/ethash/progpow.hpp
+-- Installing: /home/user/.hunter/_Base/1377523/4dd6905/1f8c6e1/Build/ethash/Install/include/ethash/hash_types.h
+-- Installing: /home/user/.hunter/_Base/1377523/4dd6905/1f8c6e1/Build/ethash/Install/include/ethash/keccak.hpp
+-- Installing: /home/user/.hunter/_Base/1377523/4dd6905/1f8c6e1/Build/ethash/Install/include/ethash/keccak.h
+-- Installing: /home/user/.hunter/_Base/1377523/4dd6905/1f8c6e1/Build/ethash/Install/include/ethash/ethash.h
+-- Installing: /home/user/.hunter/_Base/1377523/4dd6905/1f8c6e1/Build/ethash/Install/lib/cmake/ethash/ethashTargets.cmake
+-- Installing: /home/user/.hunter/_Base/1377523/4dd6905/1f8c6e1/Build/ethash/Install/lib/cmake/ethash/ethashTargets-release.cmake
+-- Installing: /home/user/.hunter/_Base/1377523/4dd6905/1f8c6e1/Build/ethash/Install/lib/cmake/ethash/ethashConfig.cmake
+-- Installing: /home/user/.hunter/_Base/1377523/4dd6905/1f8c6e1/Build/ethash/Install/lib/cmake/ethash/ethashConfigVersion.cmake
+-- Installing: /home/user/.hunter/_Base/1377523/4dd6905/1f8c6e1/Build/ethash/Install/lib/libkeccak.a
+-- Installing: /home/user/.hunter/_Base/1377523/4dd6905/1f8c6e1/Build/ethash/Install/lib/libethash.a
+loading initial cache file /home/user/.hunter/_Base/1377523/4dd6905/1f8c6e1/Build/ethash/args.cmake
+[ 50%] Completed 'ethash-Release'
+[ 50%] Built target ethash-Release
+Scanning dependencies of target ethash-Debug
+[ 56%] Creating directories for 'ethash-Debug'
+[ 62%] Performing download step (download, verify and extract) for 'ethash-Debug'
+-- verifying file...
+       file='/home/user/.hunter/_Base/Download/ethash/0.5.0/674af68/v0.5.0.tar.gz'
+-- File already exists and hash match (skip download):
+  file='/home/user/.hunter/_Base/Download/ethash/0.5.0/674af68/v0.5.0.tar.gz'
+  SHA1='674af68ac051e46895ad74f68c9378311fe89b2b'
+-- extracting...
+     src='/home/user/.hunter/_Base/Download/ethash/0.5.0/674af68/v0.5.0.tar.gz'
+     dst='/home/user/.hunter/_Base/1377523/4dd6905/1f8c6e1/Build/ethash/Source'
+-- extracting... [tar xfz]
+-- extracting... [analysis]
+-- extracting... [rename]
+-- extracting... [clean up]
+-- extracting... done
+[ 68%] No update step for 'ethash-Debug'
+[ 75%] No patch step for 'ethash-Debug'
+[ 81%] Performing configure step for 'ethash-Debug'
+loading initial cache file /home/user/.hunter/_Base/1377523/4dd6905/1f8c6e1/cache.cmake
+loading initial cache file /home/user/.hunter/_Base/1377523/4dd6905/1f8c6e1/Build/ethash/args.cmake
+-- [cable ] Cable 0.2.16 initialized
+-- The C compiler identification is GNU 10.2.1
+-- The CXX compiler identification is GNU 10.2.1
+-- Check for working C compiler: /usr/bin/cc - skipped
+-- Detecting C compile features
+-- Detecting C compile features - done
+-- Check for working CXX compiler: /usr/bin/c++ - skipped
+-- Detecting CXX compile features
+-- Detecting CXX compile features - done
+-- [cable ] Build type: Debug
+-- Performing Test fstack-protector
+-- Performing Test fstack-protector - Success
+-- Performing Test Wimplicit-fallthrough
+-- Performing Test Wimplicit-fallthrough - Success
+-- Performing Test mtune=generic
+-- Performing Test mtune=generic - Success
+-- Configuring done
+-- Generating done
+-- Build files have been written to: /home/user/.hunter/_Base/1377523/4dd6905/1f8c6e1/Build/ethash/Build/ethash-Debug-prefix/src/ethash-Debug-build
+[ 87%] Performing build step for 'ethash-Debug'
+Scanning dependencies of target keccak
+[ 11%] Building C object lib/keccak/CMakeFiles/keccak.dir/keccakf800.c.o
+[ 22%] Building C object lib/keccak/CMakeFiles/keccak.dir/keccak.c.o
+[ 33%] Building C object lib/keccak/CMakeFiles/keccak.dir/keccakf1600.c.o
+[ 44%] Linking C static library libkeccakd.a
+[ 44%] Built target keccak
+Scanning dependencies of target ethash
+[ 55%] Building CXX object lib/ethash/CMakeFiles/ethash.dir/ethash.cpp.o
+[ 77%] Building C object lib/ethash/CMakeFiles/ethash.dir/primes.c.o
+[ 77%] Building CXX object lib/ethash/CMakeFiles/ethash.dir/managed.cpp.o
+[ 88%] Building CXX object lib/ethash/CMakeFiles/ethash.dir/progpow.cpp.o
+[100%] Linking CXX static library libethashd.a
+[100%] Built target ethash
+[ 93%] Performing install step for 'ethash-Debug'
+[ 44%] Built target keccak
+[100%] Built target ethash
+Install the project...
+-- Install configuration: "Debug"
+-- Up-to-date: /home/user/.hunter/_Base/1377523/4dd6905/1f8c6e1/Build/ethash/Install/include
+-- Up-to-date: /home/user/.hunter/_Base/1377523/4dd6905/1f8c6e1/Build/ethash/Install/include/ethash
+-- Up-to-date: /home/user/.hunter/_Base/1377523/4dd6905/1f8c6e1/Build/ethash/Install/include/ethash/ethash.hpp
+-- Up-to-date: /home/user/.hunter/_Base/1377523/4dd6905/1f8c6e1/Build/ethash/Install/include/ethash/version.h
+-- Up-to-date: /home/user/.hunter/_Base/1377523/4dd6905/1f8c6e1/Build/ethash/Install/include/ethash/hash_types.hpp
+-- Up-to-date: /home/user/.hunter/_Base/1377523/4dd6905/1f8c6e1/Build/ethash/Install/include/ethash/progpow.hpp
+-- Up-to-date: /home/user/.hunter/_Base/1377523/4dd6905/1f8c6e1/Build/ethash/Install/include/ethash/hash_types.h
+-- Up-to-date: /home/user/.hunter/_Base/1377523/4dd6905/1f8c6e1/Build/ethash/Install/include/ethash/keccak.hpp
+-- Up-to-date: /home/user/.hunter/_Base/1377523/4dd6905/1f8c6e1/Build/ethash/Install/include/ethash/keccak.h
+-- Up-to-date: /home/user/.hunter/_Base/1377523/4dd6905/1f8c6e1/Build/ethash/Install/include/ethash/ethash.h
+-- Installing: /home/user/.hunter/_Base/1377523/4dd6905/1f8c6e1/Build/ethash/Install/lib/cmake/ethash/ethashTargets.cmake
+-- Installing: /home/user/.hunter/_Base/1377523/4dd6905/1f8c6e1/Build/ethash/Install/lib/cmake/ethash/ethashTargets-debug.cmake
+-- Installing: /home/user/.hunter/_Base/1377523/4dd6905/1f8c6e1/Build/ethash/Install/lib/cmake/ethash/ethashConfig.cmake
+-- Installing: /home/user/.hunter/_Base/1377523/4dd6905/1f8c6e1/Build/ethash/Install/lib/cmake/ethash/ethashConfigVersion.cmake
+-- Installing: /home/user/.hunter/_Base/1377523/4dd6905/1f8c6e1/Build/ethash/Install/lib/libkeccakd.a
+-- Installing: /home/user/.hunter/_Base/1377523/4dd6905/1f8c6e1/Build/ethash/Install/lib/libethashd.a
+loading initial cache file /home/user/.hunter/_Base/1377523/4dd6905/1f8c6e1/Build/ethash/args.cmake
+[100%] Completed 'ethash-Debug'
+[100%] Built target ethash-Debug
+-- [hunter] Build step successful (dir: /home/user/.hunter/_Base/1377523/4dd6905/1f8c6e1/Build/ethash)
+-- [hunter] Cache saved: /home/user/.hunter/_Base/Cache/raw/a9b2f66ee3fe2fe58ec13ee201f27e970a915e93.tar.bz2
+-- [hunter] INTX_ROOT: /home/user/.hunter/_Base/1377523/4dd6905/1f8c6e1/Install (ver.: 0.5.0)
+-- [hunter] Building intx
+loading initial cache file /home/user/.hunter/_Base/1377523/4dd6905/1f8c6e1/cache.cmake
+loading initial cache file /home/user/.hunter/_Base/1377523/4dd6905/1f8c6e1/Build/intx/args.cmake
+-- The C compiler identification is GNU 10.2.1
+-- The CXX compiler identification is GNU 10.2.1
+-- Check for working C compiler: /usr/bin/cc - skipped
+-- Detecting C compile features
+-- Detecting C compile features - done
+-- Check for working CXX compiler: /usr/bin/c++ - skipped
+-- Detecting CXX compile features
+-- Detecting CXX compile features - done
+-- Configuring done
+-- Generating done
+-- Build files have been written to: /home/user/.hunter/_Base/1377523/4dd6905/1f8c6e1/Build/intx/Build
+Scanning dependencies of target intx-Release
+[  6%] Creating directories for 'intx-Release'
+[ 12%] Performing download step (download, verify and extract) for 'intx-Release'
+-- Downloading...
+   dst='/home/user/.hunter/_Base/Download/intx/0.5.0/7f917cf/v0.5.0.tar.gz'
+   timeout='none'
+-- Using src='https://github.com/chfast/intx/archive/v0.5.0.tar.gz'
+-- [download 100% complete]
+-- verifying file...
+       file='/home/user/.hunter/_Base/Download/intx/0.5.0/7f917cf/v0.5.0.tar.gz'
+-- Downloading... done
+-- extracting...
+     src='/home/user/.hunter/_Base/Download/intx/0.5.0/7f917cf/v0.5.0.tar.gz'
+     dst='/home/user/.hunter/_Base/1377523/4dd6905/1f8c6e1/Build/intx/Source'
+-- extracting... [tar xfz]
+-- extracting... [analysis]
+-- extracting... [rename]
+-- extracting... [clean up]
+-- extracting... done
+[ 18%] No update step for 'intx-Release'
+[ 25%] No patch step for 'intx-Release'
+[ 31%] Performing configure step for 'intx-Release'
+loading initial cache file /home/user/.hunter/_Base/1377523/4dd6905/1f8c6e1/cache.cmake
+loading initial cache file /home/user/.hunter/_Base/1377523/4dd6905/1f8c6e1/Build/intx/args.cmake
+-- The CXX compiler identification is GNU 10.2.1
+-- Check for working CXX compiler: /usr/bin/c++ - skipped
+-- Detecting CXX compile features
+-- Detecting CXX compile features - done
+-- Performing Test fstack-protector
+-- Performing Test fstack-protector - Success
+-- Performing Test Wimplicit-fallthrough
+-- Performing Test Wimplicit-fallthrough - Success
+-- Configuring done
+-- Generating done
+-- Build files have been written to: /home/user/.hunter/_Base/1377523/4dd6905/1f8c6e1/Build/intx/Build/intx-Release-prefix/src/intx-Release-build
+[ 37%] Performing build step for 'intx-Release'
+[ 43%] Performing install step for 'intx-Release'
+Install the project...
+-- Install configuration: "Release"
+-- Installing: /home/user/.hunter/_Base/1377523/4dd6905/1f8c6e1/Build/intx/Install/lib/cmake/intx/intxTargets.cmake
+-- Installing: /home/user/.hunter/_Base/1377523/4dd6905/1f8c6e1/Build/intx/Install/lib/cmake/intx/intxConfig.cmake
+-- Installing: /home/user/.hunter/_Base/1377523/4dd6905/1f8c6e1/Build/intx/Install/lib/cmake/intx/intxConfigVersion.cmake
+-- Installing: /home/user/.hunter/_Base/1377523/4dd6905/1f8c6e1/Build/intx/Install/include
+-- Installing: /home/user/.hunter/_Base/1377523/4dd6905/1f8c6e1/Build/intx/Install/include/intx
+-- Installing: /home/user/.hunter/_Base/1377523/4dd6905/1f8c6e1/Build/intx/Install/include/intx/intx.hpp
+-- Installing: /home/user/.hunter/_Base/1377523/4dd6905/1f8c6e1/Build/intx/Install/include/intx/int128.hpp
+loading initial cache file /home/user/.hunter/_Base/1377523/4dd6905/1f8c6e1/Build/intx/args.cmake
+[ 50%] Completed 'intx-Release'
+[ 50%] Built target intx-Release
+Scanning dependencies of target intx-Debug
+[ 56%] Creating directories for 'intx-Debug'
+[ 62%] Performing download step (download, verify and extract) for 'intx-Debug'
+-- verifying file...
+       file='/home/user/.hunter/_Base/Download/intx/0.5.0/7f917cf/v0.5.0.tar.gz'
+-- File already exists and hash match (skip download):
+  file='/home/user/.hunter/_Base/Download/intx/0.5.0/7f917cf/v0.5.0.tar.gz'
+  SHA1='7f917cfe9046278d348a5cf36c20f9847d351807'
+-- extracting...
+     src='/home/user/.hunter/_Base/Download/intx/0.5.0/7f917cf/v0.5.0.tar.gz'
+     dst='/home/user/.hunter/_Base/1377523/4dd6905/1f8c6e1/Build/intx/Source'
+-- extracting... [tar xfz]
+-- extracting... [analysis]
+-- extracting... [rename]
+-- extracting... [clean up]
+-- extracting... done
+[ 68%] No update step for 'intx-Debug'
+[ 75%] No patch step for 'intx-Debug'
+[ 81%] Performing configure step for 'intx-Debug'
+loading initial cache file /home/user/.hunter/_Base/1377523/4dd6905/1f8c6e1/cache.cmake
+loading initial cache file /home/user/.hunter/_Base/1377523/4dd6905/1f8c6e1/Build/intx/args.cmake
+-- The CXX compiler identification is GNU 10.2.1
+-- Check for working CXX compiler: /usr/bin/c++ - skipped
+-- Detecting CXX compile features
+-- Detecting CXX compile features - done
+-- Performing Test fstack-protector
+-- Performing Test fstack-protector - Success
+-- Performing Test Wimplicit-fallthrough
+-- Performing Test Wimplicit-fallthrough - Success
+-- Configuring done
+-- Generating done
+-- Build files have been written to: /home/user/.hunter/_Base/1377523/4dd6905/1f8c6e1/Build/intx/Build/intx-Debug-prefix/src/intx-Debug-build
+[ 87%] Performing build step for 'intx-Debug'
+[ 93%] Performing install step for 'intx-Debug'
+Install the project...
+-- Install configuration: "Debug"
+-- Installing: /home/user/.hunter/_Base/1377523/4dd6905/1f8c6e1/Build/intx/Install/lib/cmake/intx/intxTargets.cmake
+-- Installing: /home/user/.hunter/_Base/1377523/4dd6905/1f8c6e1/Build/intx/Install/lib/cmake/intx/intxConfig.cmake
+-- Installing: /home/user/.hunter/_Base/1377523/4dd6905/1f8c6e1/Build/intx/Install/lib/cmake/intx/intxConfigVersion.cmake
+-- Up-to-date: /home/user/.hunter/_Base/1377523/4dd6905/1f8c6e1/Build/intx/Install/include
+-- Up-to-date: /home/user/.hunter/_Base/1377523/4dd6905/1f8c6e1/Build/intx/Install/include/intx
+-- Up-to-date: /home/user/.hunter/_Base/1377523/4dd6905/1f8c6e1/Build/intx/Install/include/intx/intx.hpp
+-- Up-to-date: /home/user/.hunter/_Base/1377523/4dd6905/1f8c6e1/Build/intx/Install/include/intx/int128.hpp
+loading initial cache file /home/user/.hunter/_Base/1377523/4dd6905/1f8c6e1/Build/intx/args.cmake
+[100%] Completed 'intx-Debug'
+[100%] Built target intx-Debug
+-- [hunter] Build step successful (dir: /home/user/.hunter/_Base/1377523/4dd6905/1f8c6e1/Build/intx)
+-- [hunter] Cache saved: /home/user/.hunter/_Base/Cache/raw/b080487e319f8025ca77a13c6c50d11ce762d94c.tar.bz2
+-- GMP: /usr/lib/x86_64-linux-gnu/libgmp.so, /usr/include/x86_64-linux-gnu
+-- Using the single-header code from /home/user/arb-avm-cpp/external/json/single_include/
+-- Configuring done
+-- Generating done
+-- Build files have been written to: /home/user/arb-avm-cpp/build
+Scanning dependencies of target secp256k1_ext
+Scanning dependencies of target zm
+[  2%] Creating directories for 'secp256k1_ext'
+[  4%] Building CXX object external/libff/depends/CMakeFiles/zm.dir/ate-pairing/src/zm.cpp.o
+[  7%] Building CXX object external/libff/depends/CMakeFiles/zm.dir/ate-pairing/src/zm2.cpp.o
+[  9%] No download step for 'secp256k1_ext'
+[ 11%] No update step for 'secp256k1_ext'
+[ 14%] No patch step for 'secp256k1_ext'
+[ 16%] Performing configure step for 'secp256k1_ext'
+libtoolize: putting auxiliary files in AC_CONFIG_AUX_DIR, 'build-aux'.
+libtoolize: copying file 'build-aux/ltmain.sh'
+libtoolize: putting macros in AC_CONFIG_MACRO_DIRS, 'build-aux/m4'.
+libtoolize: copying file 'build-aux/m4/libtool.m4'
+libtoolize: copying file 'build-aux/m4/ltoptions.m4'
+libtoolize: copying file 'build-aux/m4/ltsugar.m4'
+libtoolize: copying file 'build-aux/m4/ltversion.m4'
+libtoolize: copying file 'build-aux/m4/lt~obsolete.m4'
+[91mconfigure.ac:15: installing 'build-aux/compile'
+[0m[91mconfigure.ac:9: installing 'build-aux/missing'
+[0m[91mMakefile.am: installing 'build-aux/depcomp'
+[0mchecking build system type... x86_64-pc-linux-gnu
+checking host system type... x86_64-pc-linux-gnu
+checking for a BSD-compatible install... /usr/bin/install -c
+checking whether build environment is sane... yes
+checking for a thread-safe mkdir -p... /bin/mkdir -p
+checking for gawk... no
+checking for mawk... mawk
+checking whether make sets $(MAKE)... yes
+checking whether make supports nested variables... yes
+checking how to print strings... printf
+checking whether make supports the include directive... yes (GNU style)
+checking for gcc... gcc
+checking whether the C compiler works... yes
+checking for C compiler default output file name... a.out
+checking for suffix of executables... 
+checking whether we are cross compiling... no
+checking for suffix of object files... o
+checking whether we are using the GNU C compiler... yes
+checking whether gcc accepts -g... yes
+checking for gcc option to accept ISO C89... none needed
+checking whether gcc understands -c and -o together... yes
+checking dependency style of gcc... gcc3
+checking for a sed that does not truncate output... /bin/sed
+checking for grep that handles long lines and -e... /bin/grep
+checking for egrep... /bin/grep -E
+checking for fgrep... /bin/grep -F
+checking for ld used by gcc... /usr/bin/ld
+checking if the linker (/usr/bin/ld) is GNU ld... yes
+checking for BSD- or MS-compatible name lister (nm)... /usr/bin/nm -B
+checking the name lister (/usr/bin/nm -B) interface... BSD nm
+checking whether ln -s works... yes
+checking the maximum length of command line arguments... 1572864
+checking how to convert x86_64-pc-linux-gnu file names to x86_64-pc-linux-gnu format... func_convert_file_noop
+checking how to convert x86_64-pc-linux-gnu file names to toolchain format... func_convert_file_noop
+checking for /usr/bin/ld option to reload object files... -r
+checking for objdump... objdump
+checking how to recognize dependent libraries... pass_all
+checking for dlltool... no
+checking how to associate runtime and link libraries... printf %s\n
+checking for ar... ar
+checking for archiver @FILE support... @
+checking for strip... strip
+checking for ranlib... ranlib
+checking command to parse /usr/bin/nm -B output from gcc object... ok
+checking for sysroot... no
+checking for a working dd... /bin/dd
+checking how to truncate binary pipes... /bin/dd bs=4096 count=1
+checking for mt... no
+checking if : is a manifest tool... no
+checking how to run the C preprocessor... gcc -E
+checking for ANSI C header files... yes
+checking for sys/types.h... yes
+checking for sys/stat.h... yes
+checking for stdlib.h... yes
+checking for string.h... yes
+checking for memory.h... yes
+checking for strings.h... yes
+checking for inttypes.h... yes
+checking for stdint.h... yes
+checking for unistd.h... yes
+checking for dlfcn.h... yes
+checking for objdir... .libs
+checking if gcc supports -fno-rtti -fno-exceptions... no
+checking for gcc option to produce PIC... -fPIC -DPIC
+checking if gcc PIC flag -fPIC -DPIC works... yes
+checking if gcc static flag -static works... yes
+checking if gcc supports -c -o file.o... yes
+checking if gcc supports -c -o file.o... (cached) yes
+checking whether the gcc linker (/usr/bin/ld -m elf_x86_64) supports shared libraries... yes
+checking whether -lc should be explicitly linked in... no
+checking dynamic linker characteristics... GNU/Linux ld.so
+checking how to hardcode library paths into programs... immediate
+checking whether stripping libraries is possible... yes
+checking if libtool supports shared libraries... yes
+checking whether to build shared libraries... yes
+checking whether to build static libraries... yes
+checking whether make supports nested variables... (cached) yes
+checking for pkg-config... /usr/bin/pkg-config
+checking pkg-config is at least version 0.9.0... yes
+checking for ar... /usr/bin/ar
+checking for ranlib... /usr/bin/ranlib
+checking for strip... /usr/bin/strip
+checking for gcc... gcc
+checking whether we are using the GNU C compiler... (cached) yes
+checking whether gcc accepts -g... yes
+checking for gcc option to accept ISO C89... (cached) none needed
+checking whether gcc understands -c and -o together... (cached) yes
+checking dependency style of gcc... (cached) gcc3
+checking how to run the C preprocessor... gcc -E
+checking for gcc option to accept ISO C89... (cached) none needed
+checking dependency style of gcc... gcc3
+checking if gcc supports -std=c89 -pedantic -Wall -Wextra -Wcast-align -Wnested-externs -Wshadow -Wstrict-prototypes -Wno-unused-function -Wno-long-long -Wno-overlength-strings... yes
+checking if gcc supports -fvisibility=hidden... yes
+checking for __int128... yes
+checking valgrind/memcheck.h usability... no
+checking valgrind/memcheck.h presence... no
+checking for valgrind/memcheck.h... no
+checking if native gcc supports -Wall -Wextra -Wno-unused-function... yes
+checking for working native compiler: gcc... yes
+checking for x86_64 assembly availability... yes
+checking gmp.h usability... yes
+checking gmp.h presence... yes
+checking for gmp.h... yes
+checking for __gmpz_init in -lgmp... yes
+checking for libcrypto... yes
+checking for main in -lcrypto... yes
+checking for EC functions in libcrypto... yes
+checking whether byte ordering is bigendian... no
+checking that generated files are newer than configure... done
+configure: creating ./config.status
+config.status: creating Makefile
+config.status: creating libsecp256k1.pc
+config.status: creating src/libsecp256k1-config.h
+config.status: src/libsecp256k1-config.h is unchanged
+config.status: executing depfiles commands
+config.status: executing libtool commands
+
+Build Options:
+  with endomorphism       = no
+  with ecmult precomp     = yes
+  with external callbacks = no
+  with benchmarks         = yes
+  with coverage           = no
+  module ecdh             = no
+  module recovery         = yes
+
+  asm                     = x86_64
+  bignum                  = gmp
+  field                   = 64bit
+  scalar                  = 64bit
+  ecmult window size      = 15
+  ecmult gen prec. bits   = 4
+
+  valgrind                = no
+  CC                      = gcc
+  CFLAGS                  = -O2 -fvisibility=hidden -std=c89 -pedantic -Wall -Wextra -Wcast-align -Wnested-externs -Wshadow -Wstrict-prototypes -Wno-unused-function -Wno-long-long -Wno-overlength-strings -W -g
+  CPPFLAGS                = 
+  LDFLAGS                 = 
+
+[ 19%] Performing build step for 'secp256k1_ext'
+[91mmake[3]: warning: jobserver unavailable: using -j1.  Add '+' to parent make rule.
+[0m  CC       src/bench_verify-bench_verify.o
+[ 21%] Linking CXX static library ../../../lib/libzm.a
+[ 21%] Built target zm
+Scanning dependencies of target ff
+[ 23%] Building CXX object external/libff/libff/CMakeFiles/ff.dir/algebra/curves/alt_bn128/alt_bn128_g1.cpp.o
+[ 26%] Building CXX object external/libff/libff/CMakeFiles/ff.dir/algebra/curves/alt_bn128/alt_bn128_init.cpp.o
+[ 28%] Building CXX object external/libff/libff/CMakeFiles/ff.dir/algebra/curves/alt_bn128/alt_bn128_g2.cpp.o
+  CC       src/libsecp256k1_la-secp256k1.lo
+[ 30%] Building CXX object external/libff/libff/CMakeFiles/ff.dir/algebra/curves/alt_bn128/alt_bn128_pairing.cpp.o
+[ 35%] Building CXX object external/libff/libff/CMakeFiles/ff.dir/algebra/curves/alt_bn128/alt_bn128_pp.cpp.o
+[ 35%] Building CXX object external/libff/libff/CMakeFiles/ff.dir/algebra/curves/edwards/edwards_g1.cpp.o
+[ 38%] Building CXX object external/libff/libff/CMakeFiles/ff.dir/algebra/curves/edwards/edwards_g2.cpp.o
+[ 40%] Building CXX object external/libff/libff/CMakeFiles/ff.dir/algebra/curves/edwards/edwards_init.cpp.o
+[ 42%] Building CXX object external/libff/libff/CMakeFiles/ff.dir/algebra/curves/edwards/edwards_pairing.cpp.o
+[ 45%] Building CXX object external/libff/libff/CMakeFiles/ff.dir/algebra/curves/edwards/edwards_pp.cpp.o
+[ 47%] Building CXX object external/libff/libff/CMakeFiles/ff.dir/algebra/curves/mnt/mnt4/mnt4_g1.cpp.o
+[ 50%] Building CXX object external/libff/libff/CMakeFiles/ff.dir/algebra/curves/mnt/mnt4/mnt4_g2.cpp.o
+  CCLD     libsecp256k1.la
+  CCLD     bench_verify
+  CC       src/bench_sign.o
+  CCLD     bench_sign
+[ 52%] Building CXX object external/libff/libff/CMakeFiles/ff.dir/algebra/curves/mnt/mnt4/mnt4_init.cpp.o
+  CC       src/bench_internal-bench_internal.o
+[ 54%] Building CXX object external/libff/libff/CMakeFiles/ff.dir/algebra/curves/mnt/mnt4/mnt4_pairing.cpp.o
+[ 57%] Building CXX object external/libff/libff/CMakeFiles/ff.dir/algebra/curves/mnt/mnt4/mnt4_pp.cpp.o
+[ 59%] Building CXX object external/libff/libff/CMakeFiles/ff.dir/algebra/curves/mnt/mnt46_common.cpp.o
+[ 61%] Building CXX object external/libff/libff/CMakeFiles/ff.dir/algebra/curves/mnt/mnt6/mnt6_g1.cpp.o
+[ 64%] Building CXX object external/libff/libff/CMakeFiles/ff.dir/algebra/curves/mnt/mnt6/mnt6_g2.cpp.o
+[ 66%] Building CXX object external/libff/libff/CMakeFiles/ff.dir/algebra/curves/mnt/mnt6/mnt6_init.cpp.o
+  CCLD     bench_internal
+  CC       src/bench_ecmult-bench_ecmult.o
+[ 69%] Building CXX object external/libff/libff/CMakeFiles/ff.dir/algebra/curves/mnt/mnt6/mnt6_pairing.cpp.o
+[ 71%] Building CXX object external/libff/libff/CMakeFiles/ff.dir/algebra/curves/mnt/mnt6/mnt6_pp.cpp.o
+[ 73%] Building CXX object external/libff/libff/CMakeFiles/ff.dir/common/double.cpp.o
+[ 76%] Building CXX object external/libff/libff/CMakeFiles/ff.dir/common/profiling.cpp.o
+[ 78%] Building CXX object external/libff/libff/CMakeFiles/ff.dir/common/utils.cpp.o
+  CCLD     bench_ecmult
+  CC       src/tests-tests.o
+[ 80%] Building CXX object external/libff/libff/CMakeFiles/ff.dir/algebra/curves/bn128/bn128_g1.cpp.o
+[91m/home/user/arb-avm-cpp/external/libff/libff/common/profiling.cpp: In function 'void libff::print_mem(const string&)':
+/home/user/arb-avm-cpp/external/libff/libff/common/profiling.cpp:333:35: warning: unused parameter 's' [-Wunused-parameter]
+  333 | void print_mem(const std::string &s)
+      |                ~~~~~~~~~~~~~~~~~~~^
+[0m[ 83%] Building CXX object external/libff/libff/CMakeFiles/ff.dir/algebra/curves/bn128/bn128_g2.cpp.o
+[ 85%] Building CXX object external/libff/libff/CMakeFiles/ff.dir/algebra/curves/bn128/bn128_gt.cpp.o
+[ 88%] Building CXX object external/libff/libff/CMakeFiles/ff.dir/algebra/curves/bn128/bn128_init.cpp.o
+[ 90%] Building CXX object external/libff/libff/CMakeFiles/ff.dir/algebra/curves/bn128/bn128_pairing.cpp.o
+[ 92%] Building CXX object external/libff/libff/CMakeFiles/ff.dir/algebra/curves/bn128/bn128_pp.cpp.o
+[ 95%] Linking CXX static library ../../../lib/libff.a
+[ 95%] Built target ff
+  CCLD     tests
+  CC       src/exhaustive_tests-tests_exhaustive.o
+  CCLD     exhaustive_tests
+  CC       src/bench_recover.o
+  CCLD     bench_recover
+[ 97%] Performing install step for 'secp256k1_ext'
+ /bin/mkdir -p '/home/user/arb-avm-cpp/build/include'
+ /bin/mkdir -p '/home/user/arb-avm-cpp/build/lib/pkgconfig'
+ /bin/mkdir -p '/home/user/arb-avm-cpp/build/lib'
+ /bin/bash ./libtool   --mode=install /usr/bin/install -c   libsecp256k1.la '/home/user/arb-avm-cpp/build/lib'
+ /usr/bin/install -c -m 644 include/secp256k1.h include/secp256k1_preallocated.h include/secp256k1_recovery.h '/home/user/arb-avm-cpp/build/include'
+ /usr/bin/install -c -m 644 libsecp256k1.pc '/home/user/arb-avm-cpp/build/lib/pkgconfig'
+libtool: install: /usr/bin/install -c .libs/libsecp256k1.so.0.0.0 /home/user/arb-avm-cpp/build/lib/libsecp256k1.so.0.0.0
+libtool: install: (cd /home/user/arb-avm-cpp/build/lib && { ln -s -f libsecp256k1.so.0.0.0 libsecp256k1.so.0 || { rm -f libsecp256k1.so.0 && ln -s libsecp256k1.so.0.0.0 libsecp256k1.so.0; }; })
+libtool: install: (cd /home/user/arb-avm-cpp/build/lib && { ln -s -f libsecp256k1.so.0.0.0 libsecp256k1.so || { rm -f libsecp256k1.so && ln -s libsecp256k1.so.0.0.0 libsecp256k1.so; }; })
+libtool: install: /usr/bin/install -c .libs/libsecp256k1.lai /home/user/arb-avm-cpp/build/lib/libsecp256k1.la
+libtool: install: /usr/bin/install -c .libs/libsecp256k1.a /home/user/arb-avm-cpp/build/lib/libsecp256k1.a
+libtool: install: chmod 644 /home/user/arb-avm-cpp/build/lib/libsecp256k1.a
+libtool: install: /usr/bin/ranlib /home/user/arb-avm-cpp/build/lib/libsecp256k1.a
+libtool: finish: PATH="/home/user/go/bin:/home/user/bin:/home/user/.local/bin:/usr/local/go/bin:/home/user/.npm-global/bin:/home/user/.yarn/bin:/usr/local/sbin:/usr/local/bin:/usr/sbin:/usr/bin:/sbin:/bin:/sbin" ldconfig -n /home/user/arb-avm-cpp/build/lib
+----------------------------------------------------------------------
+Libraries have been installed in:
+   /home/user/arb-avm-cpp/build/lib
+
+If you ever happen to want to link against installed libraries
+in a given directory, LIBDIR, you must either use libtool, and
+specify the full pathname of the library, or use the '-LLIBDIR'
+flag during linking and do at least one of the following:
+   - add LIBDIR to the 'LD_LIBRARY_PATH' environment variable
+     during execution
+   - add LIBDIR to the 'LD_RUN_PATH' environment variable
+     during linking
+   - use the '-Wl,-rpath -Wl,LIBDIR' linker flag
+   - have your system administrator add LIBDIR to '/etc/ld.so.conf'
+
+See any operating system documentation about shared libraries for
+more information, such as the ld(1) and ld.so(8) manual pages.
+----------------------------------------------------------------------
+[100%] Completed 'secp256k1_ext'
+[100%] Built target secp256k1_ext
+Removing intermediate container e6e5acecdd56
+ ---> e828b334a28f
+Step 6/39 : COPY --chown=user arb-avm-cpp/avm_values /home/user/arb-avm-cpp/avm_values
+ ---> cf0e1dd4d614
+Step 7/39 : RUN cd arb-avm-cpp/build &&     cmake .. &&     cmake --build . -j $(nproc)
+ ---> Running in 3a9d2c6bdd1d
+-- [cable ] Cable 0.5.0 initialized
+-- Build type: RelWithDebInfo
+-- Found GMP: /usr/lib/x86_64-linux-gnu/libgmp.so
+-- Found GMPXX: /usr/lib/x86_64-linux-gnu/libgmpxx.so
+-- Using tcmalloc
+[91mBoost 1.65 found.
+Found Boost components:
+   filesystem;system
+[0m-- Found rocksdb 6.20 in /usr/include;/usr/lib/librocksdb.so
+-- clang-format not found!
+-- cmake-format not found!
+-- [hunter] Calculating Toolchain-SHA1
+-- [hunter] Calculating Config-SHA1
+-- [hunter] HUNTER_ROOT: /home/user/.hunter
+-- [hunter] [ Hunter-ID: 1377523 | Toolchain-ID: 4dd6905 | Config-ID: 1f8c6e1 ]
+-- [hunter] ETHASH_ROOT: /home/user/.hunter/_Base/1377523/4dd6905/1f8c6e1/Install (ver.: 0.5.0)
+-- [hunter] INTX_ROOT: /home/user/.hunter/_Base/1377523/4dd6905/1f8c6e1/Install (ver.: 0.5.0)
+-- GMP: /usr/lib/x86_64-linux-gnu/libgmp.so, /usr/include/x86_64-linux-gnu
+-- Using the single-header code from /home/user/arb-avm-cpp/external/json/single_include/
+-- Configuring done
+-- Generating done
+-- Build files have been written to: /home/user/arb-avm-cpp/build
+Scanning dependencies of target avm_values
+[ 14%] Built target secp256k1_ext
+[ 20%] Built target zm
+[ 24%] Building CXX object avm_values/CMakeFiles/avm_values.dir/src/buffer.cpp.o
+[ 24%] Building CXX object avm_values/CMakeFiles/avm_values.dir/src/bigint.cpp.o
+[ 25%] Building CXX object avm_values/CMakeFiles/avm_values.dir/src/codepoint.cpp.o
+[ 83%] Built target ff
+[ 85%] Building CXX object avm_values/CMakeFiles/avm_values.dir/src/codepointstub.cpp.o
+[91m/home/user/arb-avm-cpp/avm_values/src/buffer.cpp: In member function 'std::vector<Buffer> Buffer::serialize(std::vector<unsigned char>&) const':
+/home/user/arb-avm-cpp/avm_values/src/buffer.cpp:384:37: warning: conversion from 'size_t' {aka 'long unsigned int'} to 'std::vector<unsigned char>::value_type' {aka 'unsigned char'} may change value [-Wconversion]
+  384 |     value_vector.push_back((*this)->depth);
+      |                            ~~~~~~~~~^~~~~
+[0m[ 87%] Building CXX object avm_values/CMakeFiles/avm_values.dir/src/exceptions.cpp.o
+[ 88%] Building CXX object avm_values/CMakeFiles/avm_values.dir/src/pool.cpp.o
+[ 90%] Building CXX object avm_values/CMakeFiles/avm_values.dir/src/tuple.cpp.o
+[ 92%] Building CXX object avm_values/CMakeFiles/avm_values.dir/src/tuplestub.cpp.o
+[ 94%] Building CXX object avm_values/CMakeFiles/avm_values.dir/src/value.cpp.o
+[ 96%] Building CXX object avm_values/CMakeFiles/avm_values.dir/src/vmValueParser.cpp.o
+[ 98%] Building CXX object avm_values/CMakeFiles/avm_values.dir/src/unloadedvalue.cpp.o
+[100%] Linking CXX static library ../lib/libavm_values.a
+[100%] Built target avm_values
+Removing intermediate container 3a9d2c6bdd1d
+ ---> d94a36001ab4
+Step 8/39 : COPY --chown=user arb-avm-cpp/avm /home/user/arb-avm-cpp/avm
+ ---> 795e30ee1366
+Step 9/39 : RUN cd arb-avm-cpp/build &&     cmake .. &&     cmake --build . -j $(nproc)
+ ---> Running in 265c938233f7
+-- [cable ] Cable 0.5.0 initialized
+-- Build type: RelWithDebInfo
+-- Found GMP: /usr/lib/x86_64-linux-gnu/libgmp.so
+-- Found GMPXX: /usr/lib/x86_64-linux-gnu/libgmpxx.so
+-- Using tcmalloc
+[91mBoost 1.65 found.
+Found Boost components:
+   filesystem;system
+[0m-- Found rocksdb 6.20 in /usr/include;/usr/lib/librocksdb.so
+-- clang-format not found!
+-- cmake-format not found!
+-- [hunter] Calculating Toolchain-SHA1
+-- [hunter] Calculating Config-SHA1
+-- [hunter] HUNTER_ROOT: /home/user/.hunter
+-- [hunter] [ Hunter-ID: 1377523 | Toolchain-ID: 4dd6905 | Config-ID: 1f8c6e1 ]
+-- [hunter] ETHASH_ROOT: /home/user/.hunter/_Base/1377523/4dd6905/1f8c6e1/Install (ver.: 0.5.0)
+-- [hunter] INTX_ROOT: /home/user/.hunter/_Base/1377523/4dd6905/1f8c6e1/Install (ver.: 0.5.0)
+-- GMP: /usr/lib/x86_64-linux-gnu/libgmp.so, /usr/include/x86_64-linux-gnu
+-- Using the single-header code from /home/user/arb-avm-cpp/external/json/single_include/
+-- Found GMP: /usr/lib/x86_64-linux-gnu/libgmp.so
+-- Found GMPXX: /usr/lib/x86_64-linux-gnu/libgmpxx.so
+-- Configuring done
+-- Generating done
+-- Build files have been written to: /home/user/arb-avm-cpp/build
+[ 19%] Built target avm_values
+[ 31%] Built target secp256k1_ext
+[ 36%] Built target zm
+[ 85%] Built target ff
+Scanning dependencies of target avm
+[ 87%] Building CXX object avm/CMakeFiles/avm.dir/src/inboxmessage.cpp.o
+[ 88%] Building CXX object avm/CMakeFiles/avm.dir/src/machine.cpp.o
+[ 90%] Building CXX object avm/CMakeFiles/avm.dir/src/machinestate/blockreason.cpp.o
+[ 92%] Building CXX object avm/CMakeFiles/avm.dir/src/machinestate/datastack.cpp.o
+[ 93%] Building CXX object avm/CMakeFiles/avm.dir/src/machinestate/ecops.cpp.o
+[ 95%] Building CXX object avm/CMakeFiles/avm.dir/src/machinestate/machineoperation.cpp.o
+[ 96%] Building CXX object avm/CMakeFiles/avm.dir/src/machinestate/machinestate.cpp.o
+[ 98%] Building CXX object avm/CMakeFiles/avm.dir/src/machinethread.cpp.o
+[100%] Linking CXX static library ../lib/libavm.a
+[100%] Built target avm
+Removing intermediate container 265c938233f7
+ ---> 97c598c13798
+Step 10/39 : COPY --chown=user arb-avm-cpp/data_storage /home/user/arb-avm-cpp/data_storage
+ ---> d7a42a7233f2
+Step 11/39 : RUN cd arb-avm-cpp/build &&     cmake .. &&     cmake --build . -j $(nproc)
+ ---> Running in 0c45c52c06c7
+-- [cable ] Cable 0.5.0 initialized
+-- Build type: RelWithDebInfo
+-- Found GMP: /usr/lib/x86_64-linux-gnu/libgmp.so
+-- Found GMPXX: /usr/lib/x86_64-linux-gnu/libgmpxx.so
+-- Using tcmalloc
+[91mBoost 1.65 found.
+Found Boost components:
+   filesystem;system
+[0m-- Found rocksdb 6.20 in /usr/include;/usr/lib/librocksdb.so
+-- clang-format not found!
+-- cmake-format not found!
+-- [hunter] Calculating Toolchain-SHA1
+-- [hunter] Calculating Config-SHA1
+-- [hunter] HUNTER_ROOT: /home/user/.hunter
+-- [hunter] [ Hunter-ID: 1377523 | Toolchain-ID: 4dd6905 | Config-ID: 1f8c6e1 ]
+-- [hunter] ETHASH_ROOT: /home/user/.hunter/_Base/1377523/4dd6905/1f8c6e1/Install (ver.: 0.5.0)
+-- [hunter] INTX_ROOT: /home/user/.hunter/_Base/1377523/4dd6905/1f8c6e1/Install (ver.: 0.5.0)
+-- GMP: /usr/lib/x86_64-linux-gnu/libgmp.so, /usr/include/x86_64-linux-gnu
+-- Using the single-header code from /home/user/arb-avm-cpp/external/json/single_include/
+-- Found GMP: /usr/lib/x86_64-linux-gnu/libgmp.so
+-- Found GMPXX: /usr/lib/x86_64-linux-gnu/libgmpxx.so
+-- Configuring done
+-- Generating done
+-- Build files have been written to: /home/user/arb-avm-cpp/build
+[ 14%] Built target avm_values
+[ 24%] Built target secp256k1_ext
+[ 27%] Built target zm
+[ 65%] Built target ff
+[ 75%] Built target avm
+Scanning dependencies of target data_storage
+[ 77%] Building CXX object data_storage/CMakeFiles/data_storage.dir/src/aggregator.cpp.o
+[ 78%] Building CXX object data_storage/CMakeFiles/data_storage.dir/src/arbcore.cpp.o
+[ 79%] Building CXX object data_storage/CMakeFiles/data_storage.dir/src/arbstorage.cpp.o
+[ 80%] Building CXX object data_storage/CMakeFiles/data_storage.dir/src/basicmachinecache.cpp.o
+[91m/home/user/arb-avm-cpp/data_storage/src/arbcore.cpp: In member function 'rocksdb::Status ArbCore::reorgCheckpoints(const std::function<bool(const MachineOutput&)>&, bool, ValueCache&)':
+/home/user/arb-avm-cpp/data_storage/src/arbcore.cpp:1134:11: warning: unused variable 'output' [-Wunused-variable]
+ 1134 |     auto& output = core_machine->machine_state.output;
+      |           ^~~~~~
+[0m[ 81%] Building CXX object data_storage/CMakeFiles/data_storage.dir/src/combinedmachinecache.cpp.o
+[ 83%] Building CXX object data_storage/CMakeFiles/data_storage.dir/src/datastorage.cpp.o
+[ 84%] Building CXX object data_storage/CMakeFiles/data_storage.dir/src/datacursor.cpp.o
+[ 85%] Building CXX object data_storage/CMakeFiles/data_storage.dir/src/executioncursor.cpp.o
+[ 86%] Building CXX object data_storage/CMakeFiles/data_storage.dir/src/lrumachinecache.cpp.o
+[ 87%] Building CXX object data_storage/CMakeFiles/data_storage.dir/src/messageentry.cpp.o
+[ 89%] Building CXX object data_storage/CMakeFiles/data_storage.dir/src/readtransaction.cpp.o
+[ 90%] Building CXX object data_storage/CMakeFiles/data_storage.dir/src/readwritetransaction.cpp.o
+[ 91%] Building CXX object data_storage/CMakeFiles/data_storage.dir/src/timedmachinecache.cpp.o
+[ 92%] Building CXX object data_storage/CMakeFiles/data_storage.dir/src/value/code.cpp.o
+[ 93%] Building CXX object data_storage/CMakeFiles/data_storage.dir/src/value/machine.cpp.o
+[ 95%] Building CXX object data_storage/CMakeFiles/data_storage.dir/src/value/referencecount.cpp.o
+[ 96%] Building CXX object data_storage/CMakeFiles/data_storage.dir/src/value/value.cpp.o
+[ 97%] Building CXX object data_storage/CMakeFiles/data_storage.dir/src/value/valuecache.cpp.o
+[ 98%] Building CXX object data_storage/CMakeFiles/data_storage.dir/src/value/corevalueloader.cpp.o
+[100%] Linking CXX static library ../lib/libdata_storage.a
+[100%] Built target data_storage
+Removing intermediate container 0c45c52c06c7
+ ---> 1353aa9b91c8
+Step 12/39 : COPY --chown=user arb-avm-cpp/cavm /home/user/arb-avm-cpp/cavm
+ ---> 3f8e797e544b
+Step 13/39 : COPY --chown=user arb-avm-cpp/cmachine/flags.go.in /home/user/arb-avm-cpp/cmachine/
+ ---> e3d23befc522
+Step 14/39 : RUN cd arb-avm-cpp/build &&     cmake .. &&     cmake --build . -j $(nproc)
+ ---> Running in ef1ee63e2e7d
+-- [cable ] Cable 0.5.0 initialized
+-- Build type: RelWithDebInfo
+-- Found GMP: /usr/lib/x86_64-linux-gnu/libgmp.so
+-- Found GMPXX: /usr/lib/x86_64-linux-gnu/libgmpxx.so
+-- Using tcmalloc
+[91mBoost 1.65 found.
+Found Boost components:
+   filesystem;system
+[0m-- Found rocksdb 6.20 in /usr/include;/usr/lib/librocksdb.so
+-- clang-format not found!
+-- cmake-format not found!
+-- [hunter] Calculating Toolchain-SHA1
+-- [hunter] Calculating Config-SHA1
+-- [hunter] HUNTER_ROOT: /home/user/.hunter
+-- [hunter] [ Hunter-ID: 1377523 | Toolchain-ID: 4dd6905 | Config-ID: 1f8c6e1 ]
+-- [hunter] ETHASH_ROOT: /home/user/.hunter/_Base/1377523/4dd6905/1f8c6e1/Install (ver.: 0.5.0)
+-- [hunter] INTX_ROOT: /home/user/.hunter/_Base/1377523/4dd6905/1f8c6e1/Install (ver.: 0.5.0)
+-- GMP: /usr/lib/x86_64-linux-gnu/libgmp.so, /usr/include/x86_64-linux-gnu
+-- Using the single-header code from /home/user/arb-avm-cpp/external/json/single_include/
+-- Found GMP: /usr/lib/x86_64-linux-gnu/libgmp.so
+-- Found GMPXX: /usr/lib/x86_64-linux-gnu/libgmpxx.so
+-- Configuring done
+-- Generating done
+-- Build files have been written to: /home/user/arb-avm-cpp/build
+[ 13%] Built target avm_values
+[ 22%] Built target secp256k1_ext
+[ 25%] Built target zm
+[ 60%] Built target ff
+[ 70%] Built target avm
+Scanning dependencies of target cavm
+[ 71%] Building CXX object cavm/CMakeFiles/cavm.dir/caggregator.cpp.o
+[ 73%] Building CXX object cavm/CMakeFiles/cavm.dir/carbcore.cpp.o
+[ 74%] Building CXX object cavm/CMakeFiles/cavm.dir/carbstorage.cpp.o
+[ 75%] Building CXX object cavm/CMakeFiles/cavm.dir/cexecutioncursor.cpp.o
+[ 76%] Building CXX object cavm/CMakeFiles/cavm.dir/cmachine.cpp.o
+[ 77%] Linking CXX static library ../lib/libcavm.a
+[ 77%] Built target cavm
+Scanning dependencies of target data_storage
+[ 78%] Building CXX object data_storage/CMakeFiles/data_storage.dir/src/aggregator.cpp.o
+[ 79%] Building CXX object data_storage/CMakeFiles/data_storage.dir/src/arbcore.cpp.o
+[ 80%] Building CXX object data_storage/CMakeFiles/data_storage.dir/src/arbstorage.cpp.o
+[ 82%] Building CXX object data_storage/CMakeFiles/data_storage.dir/src/basicmachinecache.cpp.o
+[91m/home/user/arb-avm-cpp/data_storage/src/arbcore.cpp: In member function 'rocksdb::Status ArbCore::reorgCheckpoints(const std::function<bool(const MachineOutput&)>&, bool, ValueCache&)':
+/home/user/arb-avm-cpp/data_storage/src/arbcore.cpp:1134:11: warning: unused variable 'output' [-Wunused-variable]
+ 1134 |     auto& output = core_machine->machine_state.output;
+      |           ^~~~~~
+[0m[ 83%] Building CXX object data_storage/CMakeFiles/data_storage.dir/src/combinedmachinecache.cpp.o
+[ 84%] Building CXX object data_storage/CMakeFiles/data_storage.dir/src/datastorage.cpp.o
+[ 85%] Building CXX object data_storage/CMakeFiles/data_storage.dir/src/datacursor.cpp.o
+[ 86%] Building CXX object data_storage/CMakeFiles/data_storage.dir/src/executioncursor.cpp.o
+[ 87%] Building CXX object data_storage/CMakeFiles/data_storage.dir/src/lrumachinecache.cpp.o
+[ 88%] Building CXX object data_storage/CMakeFiles/data_storage.dir/src/messageentry.cpp.o
+[ 89%] Building CXX object data_storage/CMakeFiles/data_storage.dir/src/readtransaction.cpp.o
+[ 91%] Building CXX object data_storage/CMakeFiles/data_storage.dir/src/readwritetransaction.cpp.o
+[ 92%] Building CXX object data_storage/CMakeFiles/data_storage.dir/src/timedmachinecache.cpp.o
+[ 93%] Building CXX object data_storage/CMakeFiles/data_storage.dir/src/value/code.cpp.o
+[ 94%] Building CXX object data_storage/CMakeFiles/data_storage.dir/src/value/machine.cpp.o
+[ 95%] Building CXX object data_storage/CMakeFiles/data_storage.dir/src/value/referencecount.cpp.o
+[ 96%] Building CXX object data_storage/CMakeFiles/data_storage.dir/src/value/value.cpp.o
+[ 97%] Building CXX object data_storage/CMakeFiles/data_storage.dir/src/value/valuecache.cpp.o
+[ 98%] Building CXX object data_storage/CMakeFiles/data_storage.dir/src/value/corevalueloader.cpp.o
+[100%] Linking CXX static library ../lib/libdata_storage.a
+[100%] Built target data_storage
+Removing intermediate container ef1ee63e2e7d
+ ---> 643866cfc961
+Step 15/39 : FROM offchainlabs/backend-base:0.4.2 as arb-node-builder
+0.4.2: Pulling from offchainlabs/backend-base
+eff15d958d66: Pulling fs layer
+e71bb33ada0a: Pulling fs layer
+4f4fb700ef54: Pulling fs layer
+170ed032d9f6: Pulling fs layer
+170ed032d9f6: Waiting
+4f4fb700ef54: Verifying Checksum
+4f4fb700ef54: Download complete
+eff15d958d66: Verifying Checksum
+eff15d958d66: Download complete
+170ed032d9f6: Verifying Checksum
+170ed032d9f6: Download complete
+eff15d958d66: Pull complete
+e71bb33ada0a: Verifying Checksum
+e71bb33ada0a: Download complete
+e71bb33ada0a: Pull complete
+4f4fb700ef54: Pull complete
+170ed032d9f6: Pull complete
+Digest: sha256:40bef6cc27927f701b29d47dbcba8d9988e4c339899771d342c8f8e0da3a02f2
+Status: Downloaded newer image for offchainlabs/backend-base:0.4.2
+ ---> bfcea2a0d7ee
+Step 16/39 : COPY --chown=user arb-avm-cpp/go.* /home/user/arb-avm-cpp/
+ ---> 4d57b467aa11
+Step 17/39 : COPY --chown=user arb-util/go.* /home/user/arb-util/
+ ---> a8f4dc06cfbf
+Step 18/39 : COPY --chown=user arb-node-core/go.* /home/user/arb-node-core/
+ ---> be0e1cb2f2ba
+Step 19/39 : COPY --chown=user arb-rpc-node/go.* /home/user/arb-rpc-node/
+ ---> 1703bd87cb2e
+Step 20/39 : COPY --chown=user arb-evm/go.* /home/user/arb-evm/
+ ---> 1617f7b3458e
+Step 21/39 : RUN cd arb-rpc-node && go mod download
+ ---> Running in 4ca0c8c6c87e
+Removing intermediate container 4ca0c8c6c87e
+ ---> 4e711cd7189c
+Step 22/39 : COPY --chown=user arb-util/ /home/user/arb-util/
+ ---> eab87fd73d20
+Step 23/39 : RUN cd arb-util && go build -v ./...
+ ---> Running in 8eb736cfa610
+[91mgo: downloading github.com/deckarep/golang-set v0.0.0-20180603214616-504e848d77ea
+[0m[91mgo: downloading github.com/rjeczalik/notify v0.9.1
+[0m[91mgo: downloading github.com/prometheus/tsdb v0.7.1
+[0m[91mgo: downloading github.com/cespare/xxhash/v2 v2.1.1
+[0m[91mgolang.org/x/sys/internal/unsafeheader
+[0m[91mgithub.com/gobwas/pool/internal/pmath
+[0m[91mgithub.com/ethereum/go-ethereum/internal/syncx
+[0m[91mgolang.org/x/crypto/sha3
+[0m[91mgithub.com/ethereum/go-ethereum/common/hexutil
+[0m[91mgithub.com/ethereum/go-ethereum/common/math
+[0m[91mgithub.com/ethereum/go-ethereum/crypto/secp256k1
+[0m[91mgithub.com/ethereum/go-ethereum/rlp
+[0m[91mgithub.com/ethereum/go-ethereum/common
+[0m[91mgithub.com/golang-jwt/jwt
+[0m[91mgithub.com/ethereum/go-ethereum/params
+[0m[91mgithub.com/mitchellh/reflectwalk
+[0m[91mgithub.com/mitchellh/mapstructure
+[0m[91mgithub.com/mitchellh/copystructure
+[0m[91mgithub.com/knadh/koanf/parsers/json
+[0m[91mgolang.org/x/sys/unix
+[0m[91mgithub.com/knadh/koanf/maps
+[0m[91mgithub.com/knadh/koanf/providers/confmap
+[0m[91mgithub.com/knadh/koanf/providers/env
+[0m[91mgithub.com/spf13/pflag
+[0m[91mgithub.com/knadh/koanf
+[0m[91mgithub.com/knadh/koanf/providers/rawbytes
+[0m[91mgithub.com/rhnvrm/simples3
+[0m[91mgithub.com/knadh/koanf/providers/s3
+[0m[91mgithub.com/ethereum/go-ethereum/common/mclock
+[0m[91mgithub.com/fsnotify/fsnotify
+[0m[91mgithub.com/ethereum/go-ethereum/event
+[0m[91mgithub.com/knadh/koanf/providers/file
+[0m[91mgithub.com/go-stack/stack
+[0m[91mgithub.com/knadh/koanf/providers/posflag
+[0m[91mgithub.com/deckarep/golang-set
+[0m[91mgithub.com/shirou/gopsutil/internal/common
+[0m[91mgithub.com/ethereum/go-ethereum/log
+[0m[91mgithub.com/tklauser/numcpus
+[0m[91mgithub.com/tklauser/go-sysconf
+[0m[91mgithub.com/ethereum/go-ethereum/p2p/netutil
+[0m[91mgithub.com/gorilla/websocket
+[0m[91mgithub.com/google/uuid
+[0m[91mgithub.com/shirou/gopsutil/cpu
+[0m[91mgithub.com/rjeczalik/notify
+[0m[91mgithub.com/ethereum/go-ethereum/metrics
+[0m[91mgolang.org/x/crypto/pbkdf2
+[0m[91mgolang.org/x/crypto/scrypt
+[0m[91mgithub.com/edsrzf/mmap-go
+[0m[91mgithub.com/ethereum/go-ethereum/common/bitutil
+[0m[91mgithub.com/cespare/xxhash/v2
+[0m[91mgithub.com/golang/snappy
+[0m[91mgithub.com/ethereum/go-ethereum/common/prque
+[0m[91mgithub.com/VictoriaMetrics/fastcache
+[0m[91mgithub.com/ethereum/go-ethereum/ethdb
+[0m[91mgithub.com/syndtr/goleveldb/leveldb/util
+[0m[91mgithub.com/syndtr/goleveldb/leveldb/comparer
+[0m[91mgithub.com/syndtr/goleveldb/leveldb/storage
+[0m[91mgithub.com/syndtr/goleveldb/leveldb/cache
+[0m[91mgithub.com/ethereum/go-ethereum/rpc
+[0m[91mgithub.com/syndtr/goleveldb/leveldb/filter
+[0m[91mgithub.com/syndtr/goleveldb/leveldb/opt
+[0m[91mgithub.com/syndtr/goleveldb/leveldb/errors
+[0m[91mgithub.com/syndtr/goleveldb/leveldb/iterator
+[0m[91mgithub.com/syndtr/goleveldb/leveldb/journal
+[0m[91mgithub.com/ethereum/go-ethereum/ethdb/memorydb
+[0m[91mgithub.com/syndtr/goleveldb/leveldb/memdb
+[0m[91mgithub.com/syndtr/goleveldb/leveldb/table
+[0m[91mgithub.com/mattn/go-runewidth
+[0m[91mgithub.com/olekukonko/tablewriter
+[0m[91mgithub.com/syndtr/goleveldb/leveldb
+[0m[91mgithub.com/prometheus/tsdb/fileutil
+[0m[91mgithub.com/holiman/bloomfilter/v2
+[0m[91mgithub.com/hashicorp/golang-lru/simplelru
+[0m[91mgithub.com/holiman/uint256
+[0m[91mgithub.com/hashicorp/golang-lru
+[0m[91mgolang.org/x/sys/cpu
+[0m[91mgithub.com/ethereum/go-ethereum/crypto/blake2b
+[0m[91mgithub.com/ethereum/go-ethereum/crypto/bls12381
+[0m[91mgithub.com/ethereum/go-ethereum/crypto/bn256/cloudflare
+[0m[91mgithub.com/ethereum/go-ethereum/ethdb/leveldb
+[0m[91mgolang.org/x/crypto/ripemd160
+[0m[91mgithub.com/ethereum/go-ethereum/crypto/bn256
+[0m[91mgithub.com/rs/zerolog/internal/json
+[0m[91mgithub.com/offchainlabs/arbitrum/packages/arb-util/fireblocks/accounttype
+[0m[91mgithub.com/offchainlabs/arbitrum/packages/arb-util/fireblocks/operationtype
+[0m[91mgithub.com/ethereum/go-ethereum/common/compiler
+[0m[91mgithub.com/gobwas/httphead
+[0m[91mgithub.com/rs/zerolog
+[0m[91mgithub.com/gobwas/pool
+[0m[91mgithub.com/gobwas/pool/pbufio
+[0m[91mgithub.com/offchainlabs/go-solidity-sha3
+[0m[91mgithub.com/gobwas/ws
+[0m[91mgithub.com/gobwas/ws-examples/src/gopool
+[0m[91mgithub.com/gobwas/pool/pbytes
+[0m[91mgithub.com/mailru/easygo/netpoll
+[0m[91mgithub.com/gobwas/ws/wsutil
+[0m[91mgithub.com/rs/zerolog/log
+[0m[91mgithub.com/offchainlabs/arbitrum/packages/arb-util/common
+[0m[91mgithub.com/offchainlabs/arbitrum/packages/arb-util/hashing
+[0m[91mgithub.com/offchainlabs/arbitrum/packages/arb-util/monitor
+[0m[91mgithub.com/offchainlabs/arbitrum/packages/arb-util/value
+[0m[91mgithub.com/offchainlabs/arbitrum/packages/arb-util/protocol
+[0m[91mgithub.com/offchainlabs/arbitrum/packages/arb-util/inbox
+[0m[91mgithub.com/ethereum/go-ethereum/crypto
+[0m[91mgithub.com/ethereum/go-ethereum/accounts/abi
+[0m[91mgithub.com/ethereum/go-ethereum/core/types
+[0m[91mgithub.com/ethereum/go-ethereum/signer/core/apitypes
+[0m[91mgithub.com/ethereum/go-ethereum/core/bloombits
+[0m[91mgithub.com/ethereum/go-ethereum
+[0m[91mgithub.com/ethereum/go-ethereum/core/rawdb
+[0m[91mgithub.com/ethereum/go-ethereum/core/vm
+[0m[91mgithub.com/ethereum/go-ethereum/accounts
+[0m[91mgithub.com/ethereum/go-ethereum/ethclient
+[0m[91mgithub.com/ethereum/go-ethereum/accounts/external
+[0m[91mgithub.com/ethereum/go-ethereum/accounts/keystore
+[0m[91mgithub.com/offchainlabs/arbitrum/packages/arb-util/machine
+[0m[91mgithub.com/offchainlabs/arbitrum/packages/arb-util/core
+[0m[91mgithub.com/ethereum/go-ethereum/accounts/abi/bind
+[0m[91mgithub.com/ethereum/go-ethereum/trie
+[0m[91mgithub.com/offchainlabs/arbitrum/packages/arb-util/binding
+[0m[91mgithub.com/offchainlabs/arbitrum/packages/arb-util/ethbridgetestcontracts
+[0m[91mgithub.com/offchainlabs/arbitrum/packages/arb-util/ethbridgecontracts
+[0m[91mgithub.com/ethereum/go-ethereum/core/state/snapshot
+[0m[91mgithub.com/ethereum/go-ethereum/core/state
+[0m[91mgithub.com/ethereum/go-ethereum/consensus
+github.com/ethereum/go-ethereum/consensus/misc
+[0m[91mgithub.com/ethereum/go-ethereum/consensus/ethash
+[0m[91mgithub.com/ethereum/go-ethereum/core
+[0m[91mgithub.com/ethereum/go-ethereum/eth/filters
+[0m[91mgithub.com/ethereum/go-ethereum/accounts/abi/bind/backends
+[0m[91mgithub.com/offchainlabs/arbitrum/packages/arb-util/ethutils
+[0m[91mgithub.com/offchainlabs/arbitrum/packages/arb-util/test
+[0m[91mgithub.com/offchainlabs/arbitrum/packages/arb-util/proofmachine
+[0m[91mgithub.com/offchainlabs/arbitrum/packages/arb-util/configuration
+[0m[91mgithub.com/offchainlabs/arbitrum/packages/arb-util/fireblocks
+[0m[91mgithub.com/offchainlabs/arbitrum/packages/arb-util/wsbroadcastserver
+[0m[91mgithub.com/offchainlabs/arbitrum/packages/arb-util/broadcaster
+[0m[91mgithub.com/offchainlabs/arbitrum/packages/arb-util/arbtransaction
+[0m[91mgithub.com/offchainlabs/arbitrum/packages/arb-util/transactauth
+[0m[91mgithub.com/offchainlabs/arbitrum/packages/arb-util/broadcastclient
+[0mRemoving intermediate container 8eb736cfa610
+ ---> dfe03d3d8787
+Step 24/39 : COPY --chown=user arb-evm/ /home/user/arb-evm/
+ ---> f68ef1a2fc35
+Step 25/39 : RUN cd arb-evm && go build -v ./...
+ ---> Running in 1d8cb5cbb1fb
+[91mgithub.com/offchainlabs/arbitrum/packages/arb-evm/message
+[0m[91mgithub.com/offchainlabs/arbitrum/packages/arb-evm/arboscontracts
+[0m[91mgithub.com/offchainlabs/arbitrum/packages/arb-evm/arbos
+[0m[91mgithub.com/offchainlabs/arbitrum/packages/arb-evm/evm
+[0mRemoving intermediate container 1d8cb5cbb1fb
+ ---> 7480c018fe6c
+Step 26/39 : RUN cd arb-node-core && go build -v ./...
+ ---> Running in 472e7c1b3eae
+[91mgo: warning: "./..." matched no packages
+[0mRemoving intermediate container 472e7c1b3eae
+ ---> 730952176170
+Step 27/39 : COPY --chown=user arb-avm-cpp/ /home/user/arb-avm-cpp/
+ ---> 7fb32185de6c
+Step 28/39 : COPY --chown=user arb-node-core/ /home/user/arb-node-core/
+ ---> 3a8110f3c2a0
+Step 29/39 : COPY --chown=user arb-rpc-node/ /home/user/arb-rpc-node/
+ ---> 17354508366b
+Step 30/39 : COPY --from=arb-avm-cpp /home/user/arb-avm-cpp/build/lib /home/user/arb-avm-cpp/build/lib
+ ---> ddcdc7ce4e3e
+Step 31/39 : COPY --from=arb-avm-cpp /home/user/arb-avm-cpp/cmachine/flags.go /home/user/arb-avm-cpp/cmachine/
+ ---> ed76afc79563
+Step 32/39 : COPY --from=arb-avm-cpp /home/user/.hunter /home/user/.hunter
+ ---> 1ce03049b408
+Step 33/39 : RUN cd arb-node-core && go install -v ./cmd/arb-validator && go install -v ./cmd/arb-relay &&     cd ../arb-rpc-node && go install -v ./cmd/arb-node && go install -v ./cmd/arb-dev-node
+ ---> Running in 7c332a6e8d52
+[91mgo: downloading github.com/golang/protobuf v1.4.3
+[0m[91mgo: downloading google.golang.org/protobuf v1.26.0-rc.1
+[0m[91mgoogle.golang.org/protobuf/internal/flags
+[0m[91mgoogle.golang.org/protobuf/internal/set
+[0m[91mgithub.com/rjeczalik/notify
+[0m[91mgolang.org/x/term
+[0m[91mgithub.com/ethereum/go-ethereum/metrics/prometheus
+[0m[91mgithub.com/beorn7/perks/quantile
+[0m[91mgithub.com/ethereum/go-ethereum/metrics/exp
+[0m[91mgoogle.golang.org/protobuf/internal/detrand
+[0m[91mgolang.org/x/crypto/ssh/terminal
+[0m[91mgoogle.golang.org/protobuf/internal/pragma
+[0m[91mgoogle.golang.org/protobuf/internal/errors
+[0m[91mgoogle.golang.org/protobuf/internal/version
+[0m[91mgithub.com/prometheus/common/internal/bitbucket.org/ww/goautoneg
+[0m[91mgithub.com/prometheus/common/model
+[0m[91mgoogle.golang.org/protobuf/encoding/protowire
+[0m[91mgithub.com/prometheus/procfs/internal/fs
+[0m[91mgoogle.golang.org/protobuf/reflect/protoreflect
+[0m[91mgithub.com/prometheus/procfs/internal/util
+[0m[91mgithub.com/ethereum/go-ethereum/accounts/keystore
+[0m[91mgithub.com/prometheus/procfs
+[0m[91mgithub.com/rs/zerolog/pkgerrors
+[0m[91mgoogle.golang.org/protobuf/internal/encoding/messageset
+[0m[91mgoogle.golang.org/protobuf/internal/strs
+[0m[91mgithub.com/ethereum/go-ethereum/accounts/abi/bind
+[0m[91mgoogle.golang.org/protobuf/internal/genid
+[0m[91mgoogle.golang.org/protobuf/internal/encoding/text
+[0m[91mgoogle.golang.org/protobuf/internal/order
+[0m[91mgoogle.golang.org/protobuf/reflect/protoregistry
+[0m[91mgoogle.golang.org/protobuf/runtime/protoiface
+[0m[91mgithub.com/ethereum/go-ethereum/accounts/abi/bind/backends
+[0m[91mgithub.com/offchainlabs/arbitrum/packages/arb-util/binding
+[0m[91mgoogle.golang.org/protobuf/proto
+[0m[91mgithub.com/offchainlabs/arbitrum/packages/arb-util/ethbridgecontracts
+[0m[91mgithub.com/offchainlabs/arbitrum/packages/arb-util/ethutils
+[0m[91mgithub.com/offchainlabs/arbitrum/packages/arb-evm/arboscontracts
+[0m[91mgoogle.golang.org/protobuf/encoding/prototext
+[0m[91mgithub.com/offchainlabs/arbitrum/packages/arb-util/configuration
+[0m[91mgoogle.golang.org/protobuf/internal/descfmt
+[0m[91mgithub.com/offchainlabs/arbitrum/packages/arb-avm-cpp/cmachine
+[0m[91mgithub.com/offchainlabs/arbitrum/packages/arb-util/transactauth
+[0m[91mgithub.com/offchainlabs/arbitrum/packages/arb-node-core/metrics
+[0m[91mgithub.com/offchainlabs/arbitrum/packages/arb-evm/arbos
+[0m[91mgoogle.golang.org/protobuf/internal/descopts
+[0m[91mgoogle.golang.org/protobuf/internal/encoding/defval
+[0m[91mgoogle.golang.org/protobuf/internal/filedesc
+[0m[91mgithub.com/offchainlabs/arbitrum/packages/arb-util/test
+[0m[91mgoogle.golang.org/protobuf/internal/encoding/tag
+[0m[91mgoogle.golang.org/protobuf/internal/impl
+[0m[91mgithub.com/offchainlabs/arbitrum/packages/arb-node-core/ethbridge
+[0m[91mgithub.com/offchainlabs/arbitrum/packages/arb-node-core/challenge
+[0m[91mgithub.com/offchainlabs/arbitrum/packages/arb-node-core/staker
+[0m[91mgoogle.golang.org/protobuf/internal/filetype
+[0m[91mgoogle.golang.org/protobuf/runtime/protoimpl
+[0m[91mgoogle.golang.org/protobuf/types/known/anypb
+[0m[91mgoogle.golang.org/protobuf/types/known/durationpb
+[0m[91mgithub.com/golang/protobuf/proto
+[0m[91mgithub.com/golang/protobuf/ptypes/duration
+[0m[91mgithub.com/golang/protobuf/ptypes/any
+[0m[91mgoogle.golang.org/protobuf/types/known/timestamppb
+[0m[91mgithub.com/golang/protobuf/ptypes/timestamp
+[0m[91mgithub.com/golang/protobuf/ptypes
+github.com/matttproud/golang_protobuf_extensions/pbutil
+[0m[91mgithub.com/prometheus/client_model/go
+[0m[91mgithub.com/prometheus/client_golang/prometheus/internal
+[0m[91mgithub.com/prometheus/common/expfmt
+[0m[91mgithub.com/prometheus/client_golang/prometheus
+[0m[91mgithub.com/heptiolabs/healthcheck
+[0m[91mgithub.com/offchainlabs/arbitrum/packages/arb-node-core/nodehealth
+[0m[91mgithub.com/offchainlabs/arbitrum/packages/arb-node-core/cmdhelp
+[0m[91mgithub.com/offchainlabs/arbitrum/packages/arb-node-core/monitor
+[0m[91mgithub.com/offchainlabs/arbitrum/packages/arb-node-core/cmd/arb-validator
+[0m[91mgithub.com/offchainlabs/arbitrum/packages/arb-node-core/cmd/arb-relay
+[0m[91mgoogle.golang.org/protobuf/internal/set
+[0m[91mgoogle.golang.org/protobuf/internal/flags
+[0m[91mgithub.com/dgryski/go-rendezvous
+[0m[91mgithub.com/deckarep/golang-set
+[0m[91mgithub.com/cespare/xxhash/v2
+[0m[91mgithub.com/prometheus/tsdb/fileutil
+[0m[91mgolang.org/x/term
+[0m[91mgithub.com/ethereum/go-ethereum/core/rawdb
+[0m[91mgithub.com/ethereum/go-ethereum/rpc
+[0m[91mgithub.com/ethereum/go-ethereum/accounts/keystore
+[0m[91mgithub.com/VictoriaMetrics/fastcache
+[0m[91mgolang.org/x/crypto/ssh/terminal
+[0m[91mgoogle.golang.org/protobuf/internal/detrand
+[0m[91mgoogle.golang.org/protobuf/internal/pragma
+[0m[91mgoogle.golang.org/protobuf/internal/errors
+[0m[91mgoogle.golang.org/protobuf/internal/version
+[0m[91mgoogle.golang.org/protobuf/encoding/protowire
+[0m[91mgithub.com/go-redis/redis/v8/internal/rand
+[0m[91mgithub.com/go-redis/redis/v8/internal/util
+[0m[91mgoogle.golang.org/protobuf/reflect/protoreflect
+[0m[91mgithub.com/go-redis/redis/v8/internal
+[0m[91mgithub.com/go-redis/redis/v8/internal/hashtag
+[0m[91mgithub.com/ethereum/go-ethereum/trie
+[0m[91mgithub.com/go-redis/redis/v8/internal/hscan
+[0m[91mgithub.com/go-redis/redis/v8/internal/proto
+[0m[91mgoogle.golang.org/protobuf/internal/encoding/messageset
+[0m[91mgoogle.golang.org/protobuf/internal/strs
+[0m[91mgoogle.golang.org/protobuf/internal/genid
+[0m[91mgithub.com/ethereum/go-ethereum/accounts/external
+[0m[91mgithub.com/ethereum/go-ethereum/ethclient
+[0m[91mgoogle.golang.org/protobuf/internal/encoding/text
+[0m[91mgithub.com/ethereum/go-ethereum/accounts/abi/bind
+[0m[91mgoogle.golang.org/protobuf/internal/order
+[0m[91mgoogle.golang.org/protobuf/reflect/protoregistry
+[0m[91mgoogle.golang.org/protobuf/runtime/protoiface
+[0m[91mgoogle.golang.org/protobuf/internal/encoding/defval
+[0m[91mgoogle.golang.org/protobuf/proto
+[0m[91mgithub.com/ethereum/go-ethereum/core/state/snapshot
+[0m[91mgithub.com/offchainlabs/arbitrum/packages/arb-util/binding
+[0m[91mgoogle.golang.org/protobuf/internal/descfmt
+[0m[91mgithub.com/offchainlabs/arbitrum/packages/arb-util/ethbridgecontracts
+[0m[91mgithub.com/offchainlabs/arbitrum/packages/arb-evm/arboscontracts
+[0m[91mgoogle.golang.org/protobuf/encoding/prototext
+[0m[91mgithub.com/ethereum/go-ethereum/core/state
+[0m[91mgoogle.golang.org/protobuf/internal/descopts
+[0m[91mgoogle.golang.org/protobuf/internal/filedesc
+[0m[91mgithub.com/offchainlabs/arbitrum/packages/arb-evm/arbos
+[0m[91mgithub.com/ethereum/go-ethereum/consensus
+[0m[91mgithub.com/offchainlabs/arbitrum/packages/arb-rpc-node/snapshot
+[0m[91mgithub.com/ethereum/go-ethereum/consensus/ethash
+[0m[91mgithub.com/ethereum/go-ethereum/core
+[0m[91mgoogle.golang.org/protobuf/internal/encoding/tag
+[0m[91mgoogle.golang.org/protobuf/internal/impl
+[0m[91mgithub.com/offchainlabs/arbitrum/packages/arb-rpc-node/blockcache
+[0m[91mgithub.com/go-redis/redis/v8/internal/pool
+[0m[91mgithub.com/go-redis/redis/v8
+[0m[91mgithub.com/felixge/httpsnoop
+[0m[91mgithub.com/ethereum/go-ethereum/eth/filters
+[0m[91mgithub.com/ethereum/go-ethereum/accounts/abi/bind/backends
+[0m[91mgithub.com/gorilla/handlers
+[0m[91mgithub.com/gorilla/mux
+[0m[91mgithub.com/offchainlabs/arbitrum/packages/arb-util/ethutils
+[0m[91mgithub.com/offchainlabs/arbitrum/packages/arb-util/test
+[0m[91mgoogle.golang.org/protobuf/internal/filetype
+[0m[91mgithub.com/offchainlabs/arbitrum/packages/arb-util/configuration
+[0m[91mgithub.com/offchainlabs/arbitrum/packages/arb-rpc-node/utils
+[0m[91mgoogle.golang.org/protobuf/runtime/protoimpl
+[0m[91mgoogle.golang.org/protobuf/types/known/anypb
+[0m[91mgoogle.golang.org/protobuf/types/descriptorpb
+[0m[91mgithub.com/golang/protobuf/ptypes/any
+[0m[91mgoogle.golang.org/protobuf/types/known/durationpb
+[0m[91mgithub.com/offchainlabs/arbitrum/packages/arb-node-core/cmdhelp
+[0m[91mgithub.com/offchainlabs/arbitrum/packages/arb-util/transactauth
+[0m[91mgithub.com/golang/protobuf/ptypes/duration
+[0m[91mgoogle.golang.org/protobuf/reflect/protodesc
+[0m[91mgoogle.golang.org/protobuf/types/known/timestamppb
+[0m[91mgithub.com/offchainlabs/arbitrum/packages/arb-node-core/ethbridge
+[0m[91mgithub.com/golang/protobuf/ptypes/timestamp
+[0m[91mgithub.com/offchainlabs/arbitrum/packages/arb-rpc-node/txdb
+[0m[91mgithub.com/gballet/go-libpcsclite
+[0m[91mgithub.com/golang/protobuf/proto
+[0m[91mgithub.com/status-im/keycard-go/derivationpath
+[0m[91mgolang.org/x/text/transform
+[0m[91mgolang.org/x/text/unicode/norm
+[0m[91mgithub.com/golang/protobuf/protoc-gen-go/descriptor
+[0m[91mgithub.com/karalabe/usb
+[0m[91mgithub.com/golang/protobuf/ptypes
+[0m[91mgithub.com/prometheus/client_model/go
+[0m[91mgithub.com/prometheus/client_golang/prometheus/internal
+[0m[91mgithub.com/matttproud/golang_protobuf_extensions/pbutil
+[0m[91mgithub.com/ethereum/go-ethereum/accounts/scwallet
+[0m[91mgithub.com/prometheus/common/expfmt
+[0m[91mgithub.com/ethereum/go-ethereum/accounts/usbwallet/trezor
+[0m[91mgithub.com/prometheus/client_golang/prometheus
+[0m[91mgithub.com/ethereum/go-ethereum/consensus/clique
+[0m[91mgithub.com/peterh/liner
+[0m[91mgithub.com/heptiolabs/healthcheck
+[0m[91mgithub.com/offchainlabs/arbitrum/packages/arb-node-core/nodehealth
+[0m[91mgithub.com/ethereum/go-ethereum/console/prompt
+[0m[91mgithub.com/offchainlabs/arbitrum/packages/arb-node-core/monitor
+[0m[91mgithub.com/davecgh/go-spew/spew
+[0m[91mgithub.com/offchainlabs/arbitrum/packages/arb-rpc-node/batcher
+[0m[91mgithub.com/ethereum/go-ethereum/p2p/enr
+[0m[91mgithub.com/ethereum/go-ethereum/p2p/enode
+[0m[91mgolang.org/x/crypto/hkdf
+[0m[91mgolang.org/x/sync/errgroup
+[0m[91mgithub.com/huin/goupnp/httpu
+[0m[91mgithub.com/offchainlabs/arbitrum/packages/arb-rpc-node/aggregator
+[0m[91mgithub.com/offchainlabs/arbitrum/packages/arb-rpc-node/rpc
+[0m[91mgithub.com/ethereum/go-ethereum/p2p/discover/v4wire
+[0m[91mgithub.com/ethereum/go-ethereum/p2p/discover/v5wire
+[0m[91mgithub.com/huin/goupnp/scpd
+[0m[91mgithub.com/huin/goupnp/soap
+[0m[91mgithub.com/huin/goupnp/ssdp
+[0m[91mgithub.com/ethereum/go-ethereum/p2p/discover
+[0m[91mgithub.com/jackpal/go-nat-pmp
+[0m[91mgithub.com/huin/goupnp
+[0m[91mgithub.com/ethereum/go-ethereum/crypto/ecies
+[0m[91mgithub.com/huin/goupnp/dcps/internetgateway1
+[0m[91mgithub.com/huin/goupnp/dcps/internetgateway2
+[0m[91mgithub.com/ethereum/go-ethereum/p2p/rlpx
+[0m[91mgithub.com/tyler-smith/go-bip39/wordlists
+[0m[91mgithub.com/tyler-smith/go-bip39
+[0m[91mgithub.com/ethereum/go-ethereum/signer/storage
+[0m[91mgithub.com/ethereum/go-ethereum/p2p/nat
+[0m[91mgithub.com/ethereum/go-ethereum/p2p
+[0m[91mgithub.com/ethereum/go-ethereum/internal/ethapi
+[0m[91mgithub.com/ethereum/go-ethereum/accounts/usbwallet
+[0m[91mgithub.com/ethereum/go-ethereum/signer/core
+[0m[91mgithub.com/ethersphere/bee/pkg/crypto/eip712
+[0m[91mgithub.com/offchainlabs/arbitrum/packages/arb-rpc-node/web3
+[0m[91mgithub.com/offchainlabs/arbitrum/packages/arb-rpc-node/cmd/arb-node
+[0m[91mgithub.com/btcsuite/btcd/chaincfg/chainhash
+[0m[91mgithub.com/btcsuite/btcutil/base58
+[0m[91mgithub.com/btcsuite/btcutil/bech32
+[0m[91mgithub.com/btcsuite/btcd/btcec
+[0m[91mgithub.com/btcsuite/btcd/wire
+[0m[91mgithub.com/offchainlabs/arbitrum/packages/arb-rpc-node/dev
+[0m[91mgithub.com/btcsuite/btcd/chaincfg
+[0m[91mgithub.com/btcsuite/btcutil
+[0m[91mgithub.com/btcsuite/btcutil/hdkeychain
+[0m[91mgithub.com/miguelmota/go-ethereum-hdwallet
+[0m[91mgithub.com/offchainlabs/arbitrum/packages/arb-rpc-node/cmd/arb-dev-node
+[0mRemoving intermediate container 7c332a6e8d52
+ ---> 375180db2814
+Step 34/39 : FROM offchainlabs/dist-base:0.4.2 as arb-node
+0.4.2: Pulling from offchainlabs/dist-base
+31d64ed241e5: Already exists
+dc9c0d252c62: Pulling fs layer
+38d2eb64230d: Pulling fs layer
+5a114cf45d46: Pulling fs layer
+a5a724dda38a: Pulling fs layer
+daeb2d0be118: Pulling fs layer
+a5a724dda38a: Waiting
+5a114cf45d46: Verifying Checksum
+5a114cf45d46: Download complete
+38d2eb64230d: Verifying Checksum
+38d2eb64230d: Download complete
+a5a724dda38a: Verifying Checksum
+a5a724dda38a: Download complete
+daeb2d0be118: Download complete
+dc9c0d252c62: Verifying Checksum
+dc9c0d252c62: Download complete
+dc9c0d252c62: Pull complete
+38d2eb64230d: Pull complete
+5a114cf45d46: Pull complete
+a5a724dda38a: Pull complete
+daeb2d0be118: Pull complete
+Digest: sha256:8ebd3a005c7c4daffc8deaac6fe78fb61e0e9dfc519ee5a978a9c0d4862f196d
+Status: Downloaded newer image for offchainlabs/dist-base:0.4.2
+ ---> dd61684fac36
+Step 35/39 : COPY --chown=user --from=arb-node-builder /home/user/go/bin /home/user/go/bin
+ ---> f0ad55270c31
+Step 36/39 : COPY --chown=user arb-os/arb_os/arbos.mexe /home/user/arb-os/arb_os/
+ ---> 77980c357fb5
+Step 37/39 : RUN mkdir -p /home/user/.arbitrum &&     chown 1000:1000 /home/user/.arbitrum &&     curl https://raw.githubusercontent.com/OffchainLabs/arb-os/48bdb999a703575d26a856499e6eb3e17691e99d/arb_os/arbos.mexe --output /home/user/.arbitrum/mainnet.arb1.mexe &&     curl https://raw.githubusercontent.com/OffchainLabs/arb-os/26ab8d7c818681c4ee40792aeb12981a8f2c3dfa/arb_os/arbos.mexe --output /home/user/.arbitrum/testnet.rinkeby.mexe
+ ---> Running in c44de5f9bc2f
+[91m  % Total    % Received % Xferd  Average Speed   Time    Time     Time  Current
+                         [0m[91m        Dload  Upload[0m[91m   Total   Spent    Left  Speed
+  0     0    0     0    0     0      0      0 --:--:-- --:--:-- --:--:--     0[0m[91m100 9931k  100 9931k    0     0  19.0M      0 --:--:-- --:--[0m[91m:-- --:--:-- 19.0M
+[0m[91m  % Total    % Received % Xferd  Average Speed   Time    Ti[0m[91mme     Time  Current
+[0m[91m                                 Dload  Upload   Total   Spent    Left  Speed
+ [0m[91m 0     0    0     0    0     0      0      0 --:--:-- --:--:-- --:--:--     0[0m[91m  0     0    0     0    0     0      0      0[0m[91m --:--:-- --:--:--[0m[91m --:--:--   [0m[91m  0[0m[91m100 9962k  100 9962k    0     0  17.4M      0 --:--:-- --:--[0m[91m:-- --:--:-- 17.4M
+[0mRemoving intermediate container c44de5f9bc2f
+ ---> 55f5378a156b
+Step 38/39 : ENTRYPOINT ["/home/user/go/bin/arb-node"]
+ ---> Running in 9974df046786
+Removing intermediate container 9974df046786
+ ---> 40906c16c870
+Step 39/39 : EXPOSE 8547 8548
+ ---> Running in b4cf21b7394c
+Removing intermediate container b4cf21b7394c
+ ---> acc487fd0577
+Successfully built acc487fd0577
+Successfully tagged arb-node:latest
+Continue with the new image? [yN]Gracefully stopping... (press Ctrl+C again to force)
+
+[1m$ ./scripts/create-network[0m
+
+[1m$ docker-compose -f ./docker-compose.yml down -t 0[0m
+
+[1m$ mkdir -p .tmp[0m
+
+[1m$ echo "FROM alpine:3.9
+RUN mkdir /build /cpp-build /rocksdb
+FROM scratch
+COPY --from=0 /cpp-build /cpp-build
+COPY --from=0 /build /build" > .tmp/Dockerfile[0m
+
+[1m$ docker build -t arb-avm-cpp .tmp[0m
+
+[1m$ rm -rf .tmp[0m
+
+[1m$ mkdir -p .tmp[0m
+
+[1m$ echo "FROM alpine:3.9
+RUN mkdir /build /cpp-build /rocksdb
+FROM scratch
+COPY --from=0 /cpp-build /cpp-build
+COPY --from=0 /build /build" > .tmp/Dockerfile[0m
+
+[1m$ docker build -t arb-node .tmp[0m
+
+[1m$ rm -rf .tmp[0m
+
+[1m$ git -C /home/ubuntu/arbitrum submodule update --init --recursive[0m
+
+[1m$ docker build -t arb-node -f /home/ubuntu/arbitrum/packages/arb-node.Dockerfile /home/ubuntu/arbitrum/packages[0m
+Deploying 1 validators for rollup 0xa2D6322FeAcAE2df3245F62e3Ae884FCDC975cdd
+
+[1m$ docker-compose -f /home/ubuntu/arbitrum/docker-compose.yml up[0m
