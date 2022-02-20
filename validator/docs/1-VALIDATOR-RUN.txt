@@ -1,0 +1,26 @@
+docker run --rm -it \
+	-v ~/arb-db/sparknet/:/home/user/.arbitrum/sparknet \
+	-p 0.0.0.0:8547:8547 -p 0.0.0.0:8548:8548 arb-node \
+	--l1.url https://rpc.fusespark.io
+{"level":"info","component":"configuration","l1url":"https://rpc.fusespark.io","chainid":"123","time":"2022-02-20T10:10:06Z","caller":"/home/user/arb-util/configuration/configuration.go:597","message":"connected to l1 chain"}
+{"level":"info","component":"arb-node","chainaddress":"c674399c6188ccb8e433a8b4b6d28ca0ba616104","chainid":"d753","type":"forwarder","fromBlock":12525700,"time":"2022-02-20T10:10:06Z","caller":"/home/user/arb-rpc-node/cmd/arb-node/arb-node.go:199","message":"Launching arbitrum node"}
+{"level":"info","component":"monitor","directory":"/home/user/.arbitrum/mainnet/db","time":"2022-02-20T10:10:07Z","caller":"/home/user/arb-node-core/monitor/monitor.go:57","message":"database opened"}
+Reloading chain to the last message saved
+Initial machine load
+{"level":"info","component":"monitor","time":"2022-02-20T10:10:07Z","caller":"/home/user/arb-node-core/monitor/monitor.go:64","message":"storage initialized"}
+{"level":"info","component":"broadcaster","url":"wss://fuse-arb.fuse.io/feed","time":"2022-02-20T10:10:07Z","caller":"/home/user/arb-util/broadcastclient/broadcastclient.go:115","message":"connecting to arbitrum inbox message broadcaster"}
+{"level":"warn","component":"arb-node","stack":[{"func":"(*Monitor).StartInboxReader","line":"102","source":"monitor.go"},{"func":"startup","line":"240","source":"arb-node.go"},{"func":"main","line":"82","source":"arb-node.go"},{"func":"main","line":"255","source":"proc.go"},{"func":"goexit","line":"1581","source":"asm_amd64.s"}],"error":"error checking initial chain state: One of the blocks specified in filter (fromBlock, toBlock or blockHash) cannot be found","url":"https://rpc.fusespark.io","rollup":"0xc674399C6188cCB8e433a8b4B6d28ca0BA616104","bridgeUtils":"0xc6ec791F3F9A83A88b01A8793eD3055aC3016DA6","fromBlock":12525700,"time":"2022-02-20T10:10:07Z","caller":"/home/user/arb-rpc-node/cmd/arb-node/arb-node.go:258","message":"failed to start inbox reader, waiting and retrying"}
+{"level":"warn","component":"broadcaster","error":"dial tcp: lookup fuse-arb.fuse.io on 172.31.0.2:53: no such host","time":"2022-02-20T10:10:07Z","caller":"/home/user/arb-util/broadcastclient/broadcastclient.go:122","message":"broadcast client unable to connect"}
+{"level":"warn","component":"broadcaster","url":"wss://fuse-arb.fuse.io/feed","error":"broadcast client unable to connect: dial tcp: lookup fuse-arb.fuse.io on 172.31.0.2:53: no such host","time":"2022-02-20T10:10:07Z","caller":"/home/user/arb-util/broadcastclient/broadcastclient.go:98","message":"failed connect to sequencer broadcast, waiting and retrying"}
+{"level":"warn","component":"arb-node","stack":[{"func":"(*Monitor).StartInboxReader","line":"102","source":"monitor.go"},{"func":"startup","line":"240","source":"arb-node.go"},{"func":"main","line":"82","source":"arb-node.go"},{"func":"main","line":"255","source":"proc.go"},{"func":"goexit","line":"1581","source":"asm_amd64.s"}],"error":"error checking initial chain state: One of the blocks specified in filter (fromBlock, toBlock or blockHash) cannot be found","url":"https://rpc.fusespark.io","rollup":"0xc674399C6188cCB8e433a8b4B6d28ca0BA616104","bridgeUtils":"0xc6ec791F3F9A83A88b01A8793eD3055aC3016DA6","fromBlock":12525700,"time":"2022-02-20T10:10:12Z","caller":"/home/user/arb-rpc-node/cmd/arb-node/arb-node.go:258","message":"failed to start inbox reader, waiting and retrying"}
+{"level":"info","component":"broadcaster","url":"wss://fuse-arb.fuse.io/feed","time":"2022-02-20T10:10:12Z","caller":"/home/user/arb-util/broadcastclient/broadcastclient.go:115","message":"connecting to arbitrum inbox message broadcaster"}
+{"level":"warn","component":"broadcaster","error":"dial tcp: lookup fuse-arb.fuse.io on 172.31.0.2:53: no such host","time":"2022-02-20T10:10:12Z","caller":"/home/user/arb-util/broadcastclient/broadcastclient.go:122","message":"broadcast client unable to connect"}
+{"level":"warn","component":"broadcaster","url":"wss://fuse-arb.fuse.io/feed","error":"broadcast client unable to connect: dial tcp: lookup fuse-arb.fuse.io on 172.31.0.2:53: no such host","time":"2022-02-20T10:10:12Z","caller":"/home/user/arb-util/broadcastclient/broadcastclient.go:98","message":"failed connect to sequencer broadcast, waiting and retrying"}
+^CAborting main ArbCore thread
+Exiting main ArbCore thread
+closing ArbStorage
+closed ArbStorage
+{"level":"info","component":"monitor","time":"2022-02-20T10:10:14Z","caller":"/home/user/arb-node-core/monitor/monitor.go:83","message":"Database closed"}
+{"component":"arb-node","time":"2022-02-20T10:10:14Z","caller":"/home/user/arb-rpc-node/cmd/arb-node/arb-node.go:262","message":"Cleanly shutting down node"}
+{"level":"error","component":"arb-node","stack":[{"func":"startup","line":"262","source":"arb-node.go"},{"func":"main","line":"82","source":"arb-node.go"},{"func":"main","line":"255","source":"proc.go"},{"func":"goexit","line":"1581","source":"asm_amd64.s"}],"error":"ctx cancelled StartInboxReader retry loop","time":"2022-02-20T10:10:14Z","caller":"/home/user/arb-rpc-node/cmd/arb-node/arb-node.go:83","message":"Error running node"}
+

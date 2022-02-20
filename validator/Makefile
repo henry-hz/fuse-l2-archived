@@ -10,6 +10,7 @@
 #  See docs/Running_Node.md
 #  LOCAL DISK MAP:  [you have to give docker usdr UID 1000 to access the host folder
 #  chmod -fR 777 /some/local/dir/arbitrum-mainnet
+#  [here we are using ~/arb-db/arbitrum]
 #  docker run -t -i -v <host_dir>:<container_dir>  ubuntu /bin/bash   <map folders>
 
 CONTAINER_NAME=arb-node
@@ -38,3 +39,8 @@ run-mainnet:
 		-v ~/arb-db/mainnet/:/home/user/.arbitrum/mainnet \
 		-p 0.0.0.0:8547:8547 -p 0.0.0.0:8548:8548 $(CONTAINER_NAME) \
 		--l1.url https://mainnet.infura.io/v3/17509665a88549b9a5a5f8f3e291120c
+run-sparknet:
+	docker run --rm -it \
+		-v ~/arb-db/sparknet/:/home/user/.arbitrum/sparknet \
+		-p 0.0.0.0:8547:8547 -p 0.0.0.0:8548:8548 $(CONTAINER_NAME) \
+		--l1.url https://rpc.fusespark.io
