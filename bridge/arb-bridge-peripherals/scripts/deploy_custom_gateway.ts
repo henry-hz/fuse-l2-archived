@@ -1,5 +1,5 @@
 import { ethers } from 'hardhat'
-import { instantiateBridge } from 'arb-ts/scripts/instantiate_bridge'
+import { instantiateBridge } from '../../arb-ts/scripts/instantiate_bridge'
 
 const l1privKey = process.env['L1_PRIVKEY']
 if (!l1privKey) throw new Error('No L1_PRIVKEY')

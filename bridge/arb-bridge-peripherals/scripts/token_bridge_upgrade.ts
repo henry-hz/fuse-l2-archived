@@ -2,7 +2,7 @@
 import { ethers } from 'hardhat'
 
 // import { ProxyAdmin__factory } from 'arb-ts/src/lib/abi/factories/ProxyAdmin__factory'
-import { networks } from 'arb-ts/src/lib/networks'
+import { networks } from '../../arb-ts/src/lib/networks'
 
 import MainnetAddresses from '../deployment-42161.json'
 // import RinkebyAddresses from '../deployment-421611.json'

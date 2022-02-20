@@ -1,7 +1,7 @@
 // import { Bridge } from 'arb-ts/src'
 import { ethers } from 'hardhat'
 
-import { ProxyAdmin__factory } from 'arb-ts/src/lib/abi/factories/ProxyAdmin__factory'
+import { ProxyAdmin__factory } from '../../arb-ts/src/lib/abi/factories/ProxyAdmin__factory'
 
 const l1Prov = new ethers.providers.JsonRpcProvider(
   'https://rinkeby.infura.io/v3/c13a0d6955b14bf181c924bf4c7797fc'

@@ -1,7 +1,7 @@
 import { BigNumber } from '@ethersproject/bignumber'
 import { ethers } from 'hardhat'
 // import { TransparentUpgradeableProxy__factory } from "arb-ts/src/lib/abi/factories/TransparentUpgradeableProxy__factory"
-import { ProxyAdmin__factory } from 'arb-ts/src/lib/abi/factories/ProxyAdmin__factory'
+import { ProxyAdmin__factory } from '../../arb-ts/src/lib/abi/factories/ProxyAdmin__factory'
 
 const main = async () => {
   const accounts = await ethers.getSigners()

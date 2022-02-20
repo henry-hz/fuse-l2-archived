@@ -1,6 +1,6 @@
 import { BigNumber } from '@ethersproject/bignumber'
 import { ethers } from 'hardhat'
-import { BridgeHelper } from 'arb-ts/src/lib/bridge_helpers'
+import { BridgeHelper } from '../../arb-ts/src/lib/bridge_helpers'
 
 const main = async () => {
   if (process.env.L2_TX_HASH && process.env.INBOX_SEQ_NUM)

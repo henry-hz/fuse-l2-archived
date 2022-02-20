@@ -618,6 +618,25 @@ func ParseNonRelay(ctx context.Context, f *flag.FlagSet, defaultWalletPathname s
 			if err != nil {
 				return nil, nil, nil, nil, errors.Wrap(err, "error setting mainnet.arb1 rollup parameters")
 			}
+	  } else {
+		if l1ChainId.Cmp(big.NewInt(123)) == 0 {  //sparknet chainid
+			err := k.Load(confmap.Provider(map[string]interface{}{
+				"bridge-utils-address":             "0xc6ec791F3F9A83A88b01A8793eD3055aC3016DA6",
+				"feed.input.url":                   []string{"wss://fuse-arb.fuse.io/feed"},
+				"node.aggregator.inbox-address":    "0x4Dbd4fc535Ac27206064B68FfCf827b0A60BAB3f",
+				"node.chain-id":                    "42161",
+				"node.forwarder.target":            "https://arb1.arbitrum.io/rpc",
+				"persistent.chain":                 "mainnet",
+				"rollup.address":                   "0xc674399C6188cCB8e433a8b4B6d28ca0BA616104",
+				"rollup.from-block":                "12525700",
+				"rollup.machine.filename":          "testnet.rinkeby.mexe",
+				"rollup.machine.url":               "https://raw.githubusercontent.com/OffchainLabs/arb-os/48bdb999a703575d26a856499e6eb3e17691e99d/arb_os/arbos.mexe",
+				"validator.utils-address":          "0xa766a6FD6e51F8AbDaB7B7Af7833225D53913DE1",
+				"validator.wallet-factory-address": "0x82070fc86B7609d3dD2b120d906D19B64D1b8D6B",
+			}, "."), nil)
+			if err != nil {
+				return nil, nil, nil, nil, errors.Wrap(err, "error setting mainnet.arb1 rollup parameters")
+			}
 		} else if l1ChainId.Cmp(big.NewInt(4)) == 0 {
 			err := k.Load(confmap.Provider(map[string]interface{}{
 				"bridge-utils-address":             "0xA556F0eF1A0E37a7837ceec5527aFC7771Bf9a67",

@@ -2,7 +2,7 @@
 import { ethers } from 'hardhat'
 // const Confirm = require('prompt-confirm');
 
-import { ProxyAdmin__factory } from 'arb-ts/src/lib/abi/factories/ProxyAdmin__factory'
+import { ProxyAdmin__factory } from '../../arb-ts/src/lib/abi/factories/ProxyAdmin__factory'
 
 import RinkebyAddresses from '../deployment-421611.json'
 import MainnetAddresses from '../deployment-42161.json'

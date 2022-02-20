@@ -1,7 +1,7 @@
 // import { Bridge } from 'arb-ts/src'
 import { ethers } from 'hardhat'
 
-import { instantiateBridge } from 'arb-ts/scripts/instantiate_bridge'
+import { instantiateBridge } from '../../arb-ts/scripts/instantiate_bridge'
 
 const infuraKey = process.env['INFURA_KEY']
 if (!infuraKey) throw new Error('No INFURA_KEY')
