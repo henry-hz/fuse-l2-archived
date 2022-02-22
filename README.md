@@ -1,6 +1,23 @@
 Fuse Arbitrum Fork
 ==================
 
+
+## Flow
+
+```
+L2 memory + storage + execution ---  send transaction--->  L1-inbox
+                                |--- send transaction--->  Aggregator  ---- batch ---> L1-inbox 
+
+```
+
+
+## Aggregator
+
+An aggregator plays the same role that a node plays in Ethereum. Client software can do remote procedure calls (RPCs) to an aggregator, using the standard API, to interact with an Arbitrum chain. The aggregator will then make calls to the EthBridge and produce transactions results to the client, just an an Ethereum node would.
+
+
+
+
 clone from: c678fae12f2a186cc9cf9b800f923e5ec37ae5f6 rev
 
 To clone and recursivelly clone all the submodules, use:
