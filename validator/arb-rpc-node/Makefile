@@ -9,12 +9,14 @@
 #          SEQUENCER: arb-node --l1.url=<L1 RPC> \
 #          	--node.type=sequencer \
 #          	[optional arguments] [--wallet.password=pass] [--wallet.gasprice==FloatInGwei]
+#
+#     TODO: add starters for the three kinds above
 
 
 PRIV_KEY=0x222323232323
-ETH_URL=http://
-ROLLUP_CREATOR_ADD=
-BRIDGE_UTILS_ADD=
+ROLLUP=0xEEf843d2A86EE6D746f4b79f8A8eECF5459e7FB7     	# Rollup creator address
+BRIDGE=0xc6ec791F3F9A83A88b01A8793eD3055aC3016DA6  	# Bridge Utils adddress
+ETH_URL=https://rpc.fusespark.io
 
 build:
 	go build -o bin/arb-cli cmd/arb-cli/arb-cli.go
@@ -29,8 +31,14 @@ dev-node:
 	./bin/arb-dev-node
 
 
+
+
 dev-sequencer:
-	./bin/arb-dev-sequencer <ethURL> <rollup_creator_address> <bridge_utils_adddress>
+	./bin/arb-dev-sequencer $(ETH_URL) $(ROLLUP) $(BRIDGE) 
+
+
+forwarder:
+	./bin/arb-node --l1.url=https://mainnet.infura.io/v3/17509665a88549b9a5a5f8f3e291120c
 
 
 node:

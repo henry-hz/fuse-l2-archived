@@ -60,3 +60,10 @@ a private key was in arb-dev-sequencer.go
 
 * just found they are using the https://github.com/gobwas/ws  (grep -inr --include \*.mod ws)
 
+
+* Fix gas for dev-sequencer
+
+```
+./bin/arb-dev-sequencer https://rpc.fusespark.io 0xEEf843d2A86EE6D746f4b79f8A8eECF5459e7FB7     	 0xc6ec791F3F9A83A88b01A8793eD3055aC3016DA6  	 
+^C{"level":"warn","component":"transactauth","stack":[{"func":"waitForReceiptWithResultsSimpleInternal","line":"120","source":"chain.go"},{"func":"WaitForReceiptWithResultsAndReplaceByFee","line":"222","source":"chain.go"},{"func":"WaitForReceiptWithResults","line":"248","source":"chain.go"},{"func":"startup","line":"213","source":"arb-dev-sequencer.go"},{"func":"main","line":"79","source":"arb-dev-sequencer.go"},{"func":"main","line":"255","source":"proc.go"},{"func":"goexit","line":"1581","source":"asm_amd64.s"}],"error":"receipt not found","tx":"7a764fe9f6c3b0e153e5a71b46a613b38705af732cf1a69b5dde8d66e58d5be1","time":"2022-02-21T21:36:37Z","caller":"/home/ubuntu/fuse-arb/validator/arb-util/transactauth/chain.go:224","message":"error while waiting for transaction receipt"}
+```
