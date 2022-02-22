@@ -56,3 +56,24 @@ L2 Virtual Machine + Arb-OS
 
 * [hardhat-deploy](https://levelup.gitconnected.com/deploying-smart-contracts-with-hardhat-e1a76212df94)
 * [hardhat-template](https://github.com/wighawag/template-ethereum-contracts/)
+
+
+
+## Tasks
+
+Log analysis software will help, start analyzing a working node.
+
+* Figure out how to run the ws [web-socket] server feed like the wss://arb1.arbitrum.io/feed or wss://rinkeby.arbitrum.io/feed . We are also looking for https://arb1.arbitrum.io/rpc 
+
+* Yeah! found, analyzing the ws with 
+
+```
+→ websocat wss://rinkeby.arbitrum.io/feed > out                                                              [12efabf]
+```
+
+found the validator/arb-util/inbox/sequencerBatchItem.go , seems that the arb-rpc-node is using 
+
+a private key was in arb-dev-sequencer.go
+
+* just found they are using the https://github.com/gobwas/ws  (grep -inr --include \*.mod ws)
+
