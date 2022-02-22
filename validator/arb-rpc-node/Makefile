@@ -40,6 +40,14 @@ dev-sequencer:
 forwarder:
 	./bin/arb-node --l1.url=https://mainnet.infura.io/v3/17509665a88549b9a5a5f8f3e291120c
 
+agg:
+	./bin/arb-node --l1.url=https://mainnet.infura.io/v3/17509665a88549b9a5a5f8f3e291120c \
+		--node.type=aggregator
+
+seq:
+	./bin/arb-node --l1.url=https://mainnet.infura.io/v3/17509665a88549b9a5a5f8f3e291120c \
+		--node.type=sequencer
+
 
 node:
 	./bin/arb-node
