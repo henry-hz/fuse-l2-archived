@@ -1,12 +1,26 @@
 Forwarder
 =========
 
+```
+#          FORWARDER node: arb-node --l1.url=<L1 RPC> [optional arguments]
+#
+#          AGGREGATOR node: arb-node --l1.url=<L1 RPC> \
+#          	--node.type=aggregator [optional arguments] \ 
+#          	[--wallet.password=pass] [--wallet.gasprice==FloatInGwei]
+#
+#          SEQUENCER: arb-node --l1.url=<L1 RPC> \
+#          	--node.type=sequencer \
+#          	[optional arguments] [--wallet.password=pass] [--wallet.gasprice==FloatInGwei]
+#
+
+```
 
 
 We runned the forwarder connected to L1 eth mainet, and got:
 
 ```
 ./bin/arb-node --l1.url=https://mainnet.infura.io/v3/17509665a88549b9a5a5f8f3e291120c
+
 {"level":"info","component":"configuration","l1url":"https://mainnet.infura.io/v3/17509665a88549b9a5a5f8f3e291120c","chainid":"1","time":"2022-02-22T15:02:57Z","caller":"/home/ubuntu/fuse-arb/validator/arb-util/configuration/configuration.go:597","message":"connected to l1 chain"}
 {"level":"info","component":"arb-node","chainaddress":"c12ba48c781f6e392b49db2e25cd0c28cd77531a","chainid":"a4b1","type":"forwarder","fromBlock":12525700,"time":"2022-02-22T15:02:58Z","caller":"/home/ubuntu/fuse-arb/validator/arb-rpc-node/cmd/arb-node/arb-node.go:199","message":"Launching arbitrum node"}
 {"level":"info","component":"monitor","directory":"/home/ubuntu/.arbitrum/mainnet/db","time":"2022-02-22T15:02:58Z","caller":"/home/ubuntu/fuse-arb/validator/arb-node-core/monitor/monitor.go:57","message":"database opened"}
@@ -45,5 +59,58 @@ Reorg took 19ms
 
 ```
 
+The forwarder has a websocket client to listen the inbox broadcaster server
 
 * who is the inbox websocket boradcaster ????
+
+* found: batcher/sequencerBatcher.go  at line 556
+
+```
+ubuntu@ip-172-31-11-183:~/fuse-arb/validator$ grep -rni --include=*.go ws:// .
+./arb-node-core/cmd/arb-relay/arb-relay_test.go:57:			URLs:    []string{"ws://127.0.0.1:9742"},
+./arb-node-core/cmd/arb-relay/arb-relay_test.go:99:	broadcastClient := broadcastclient.NewBroadcastClient("ws://127.0.0.1:7429/", nil, 20*time.Second)
+./arb-util/broadcaster/broadcaster_test.go:84:		conn, _, _, err := ws.DefaultDialer.Dial(context.Background(), "ws://127.0.0.1:9642/")
+./arb-util/broadcaster/broadcaster_test.go:177:	conn, _, _, err := ws.DefaultDialer.Dial(context.Background(), "ws://127.0.0.1:9643/")
+./arb-util/broadcaster/broadcasterload_test.go:74:	conn, _, _, err := ws.DefaultDialer.Dial(context.Background(), "ws://127.0.0.1:9942/")
+./arb-util/broadcastclient/broadcastclient_test.go:75:	broadcastClient := NewBroadcastClient("ws://127.0.0.1:9742/", nil, 20*time.Second)
+./arb-util/broadcastclient/broadcastclient_test.go:127:	broadcastClient := NewBroadcastClient("ws://127.0.0.1:9743/", nil, 20*time.Second)
+./arb-util/broadcastclient/broadcastclient_test.go:183:	broadcastClient := NewBroadcastClient("ws://127.0.0.1:9743/", nil, 2*time.Second)
+./arb-util/broadcastclient/broadcastclient_test.go:283:	broadcastClient := NewBroadcastClient("ws://127.0.0.1:9842/", nil, 60*time.Second)
+
+```
+
+
+* after analyzing the 'websocat wss://rinkeby.arbitrum.io/feed' output as below, the conclusion is that the sequencer server is runing the websocket inbox broadcaster:
+
+* found: vi ./arb-util/broadcaster/types.go with the feedItem
+```
+{
+  "version": 1,
+  "messages": [
+    {
+      "feedItem": {
+        "batchItem": {
+          "lastSequenceNumber": 19528372,
+          "accumulator": [
+            107,
+            184,
+            66,
+          ],
+          "totalDelayedCount": 201371,
+          "sequencerMessage": "A6YAChg3aqNYSgDqc4MNZJTFHwFhAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAACbutIAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAYhNV+AAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAABKfq0AAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAADggFIB/+CCkmD6vPMgwxjKZQ7YkNI/AaoYp4BB6ikCbg7YpfHe4Ax4PklAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAACAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAQAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAgAAAAAAAAAAAAAAAAgIj1eBmL0Vd16dU0+C+oJCJHHdMAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAQAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAABAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAACDZ1SB2Je7WhQU6uZ7ytOLDTELYL3vn1NbFGOGNtcaH9aj9ahXxeWOSGekLYKPF5wIKL52fvxMkHGWnRWZ6RQvB7AA=="
+        },
+        "prevAcc": [
+          242,
+          126,
+          214,
+          191,
+          113,
+        ]
+      },
+      "signature": "kJ7pqK3CsFr1geQw81RchMT8DtDDBM/Qk7UMxjWdV5NdMeHaUXf+JA5mOpVYSMRadSoQOznrpG8bNjeFmx+cNgA="
+    },
+    {
+      "feedItem": {
+        "batchItem": {
+
+```
