@@ -156,6 +156,8 @@ func (s *Staker) shouldAct(ctx context.Context) bool {
 	var gasPriceHigh = false
 	var gasPriceFloat float64
 	gasPrice, err := s.client.SuggestGasPrice(ctx)
+  // FUSE
+  gasPrice = big.NewInt(100000)
 	if err != nil {
 		logger.Warn().Err(err).Msg("error getting gas price")
 	} else {

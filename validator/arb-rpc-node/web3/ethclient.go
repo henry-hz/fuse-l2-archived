@@ -238,5 +238,7 @@ func (c *EthClient) HeaderByNumber(ctx context.Context, number *big.Int) (*types
 
 func (c *EthClient) SuggestGasTipCap(ctx context.Context) (*big.Int, error) {
 	gasPriceRaw, err := c.srv.GasPrice(ctx)
+  // FUSE
+  // gasPriceRaw = big.NewInt(100000)
 	return (*big.Int)(gasPriceRaw), err
 }

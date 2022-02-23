@@ -1183,6 +1183,8 @@ func (b *SequencerBatcher) Start(ctx context.Context) {
 		if creatingBatch && blockNum.Cmp(new(big.Int).Add(targetCreateBatch, big.NewInt(b.config.Node.Sequencer.L1PostingStrategy.HighGasDelayBlocks))) < 0 {
 			// Check if gas price is too high, and if so, hold off on creating a batch
 			gasPrice, err := b.client.SuggestGasPrice(ctx)
+      // FUSE
+      gasPrice = big.NewInt(100000)
 			if err != nil {
 				logger.Warn().Err(err).Msg("error getting gas price")
 			} else {

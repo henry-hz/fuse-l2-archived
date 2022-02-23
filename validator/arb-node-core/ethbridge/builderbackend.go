@@ -93,7 +93,9 @@ func (b *BuilderBackend) NonceAt(ctx context.Context, account common.Address, bl
 }
 
 func (b *BuilderBackend) SuggestGasPrice(ctx context.Context) (*big.Int, error) {
-	return big.NewInt(0), nil
+	//return big.NewInt(0), nil
+  // FUSE
+	return big.NewInt(100000), nil
 }
 
 func (b *BuilderBackend) EstimateGas(ctx context.Context, call ethereum.CallMsg) (gas uint64, err error) {
