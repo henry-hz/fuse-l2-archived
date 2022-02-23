@@ -129,8 +129,11 @@ func (c *EthClient) PendingNonceAt(ctx context.Context, account common.Address) 
 }
 
 func (c *EthClient) SuggestGasPrice(ctx context.Context) (*big.Int, error) {
-	gasPriceRaw, err := c.srv.GasPrice(ctx)
-	return (*big.Int)(gasPriceRaw), err
+	//gasPriceRaw, err := c.srv.GasPrice(ctx)
+	_ , err := c.srv.GasPrice(ctx)
+	//return (*big.Int)(gasPriceRaw), err
+	// FUSE
+	return (*big.Int)(big.NewInt(100000)), err
 }
 
 func (c *EthClient) ChainID(_ context.Context) (*big.Int, error) {
