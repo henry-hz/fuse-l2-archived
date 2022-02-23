@@ -78,3 +78,39 @@ ubuntu@ip-172-31-11-183:~/fuse-arb/validator$ grep -rni --include=*.go ws:// .
 ./arb-util/broadcastclient/broadcastclient_test.go:283:	broadcastClient := NewBroadcastClient("ws://127.0.0.1:9842/", nil, 60*time.Second)
 
 ```
+
+
+* after analyzing the 'websocat wss://rinkeby.arbitrum.io/feed' output as below, the conclusion is that the sequencer server is runing the websocket inbox broadcaster:
+
+* found: vi ./arb-util/broadcaster/types.go with the feedItem
+```
+{
+  "version": 1,
+  "messages": [
+    {
+      "feedItem": {
+        "batchItem": {
+          "lastSequenceNumber": 19528372,
+          "accumulator": [
+            107,
+            184,
+            66,
+          ],
+          "totalDelayedCount": 201371,
+          "sequencerMessage": "A6YAChg3aqNYSgDqc4MNZJTFHwFhAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAACbutIAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAYhNV+AAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAABKfq0AAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAADggFIB/+CCkmD6vPMgwxjKZQ7YkNI/AaoYp4BB6ikCbg7YpfHe4Ax4PklAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAACAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAQAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAgAAAAAAAAAAAAAAAAgIj1eBmL0Vd16dU0+C+oJCJHHdMAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAQAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAABAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAACDZ1SB2Je7WhQU6uZ7ytOLDTELYL3vn1NbFGOGNtcaH9aj9ahXxeWOSGekLYKPF5wIKL52fvxMkHGWnRWZ6RQvB7AA=="
+        },
+        "prevAcc": [
+          242,
+          126,
+          214,
+          191,
+          113,
+        ]
+      },
+      "signature": "kJ7pqK3CsFr1geQw81RchMT8DtDDBM/Qk7UMxjWdV5NdMeHaUXf+JA5mOpVYSMRadSoQOznrpG8bNjeFmx+cNgA="
+    },
+    {
+      "feedItem": {
+        "batchItem": {
+
+```
