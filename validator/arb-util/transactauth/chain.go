@@ -146,7 +146,7 @@ func WaitForReceiptWithResultsAndReplaceByFee(
 		attemptRbf := func() (*arbtransaction.ArbTransaction, error) {
 			auth := transactAuth.GetAuth(ctx)
 			if auth.GasPrice != nil && auth.GasPrice.Cmp(arbTx.GasPrice()) <= 0 {
-				return arbTx, nil
+				return arbTx, nil 
 			}
 			var rawTx *types.Transaction
 			tipCap, tipCapErr := client.SuggestGasTipCap(ctx)

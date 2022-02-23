@@ -14,8 +14,9 @@
 
 
 PRIV_KEY=0x222323232323
-ROLLUP=0xEEf843d2A86EE6D746f4b79f8A8eECF5459e7FB7     	# Rollup creator address
-BRIDGE=0xc6ec791F3F9A83A88b01A8793eD3055aC3016DA6  	# Bridge Utils adddress
+ROLLUP_CREATOR=0xEEf843d2A86EE6D746f4b79f8A8eECF5459e7FB7     	# Rollup creator address
+ROLLUP=0xE6CDeDb4Acd04D0f467ff06863C97A77619DE226		# Rollup address
+BRIDGE=0xc6ec791F3F9A83A88b01A8793eD3055aC3016DA6  		# Bridge Utils adddress
 ETH_URL=https://rpc.fusespark.io
 
 build:
@@ -34,7 +35,7 @@ dev-node:
 
 
 dev-sequencer:
-	./bin/arb-dev-sequencer $(ETH_URL) $(ROLLUP) $(BRIDGE) 
+	./bin/arb-dev-sequencer $(ETH_URL) $(ROLLUP_CREATOR) $(BRIDGE) 
 
 
 forwarder:
