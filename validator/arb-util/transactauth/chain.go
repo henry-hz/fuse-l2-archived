@@ -182,6 +182,8 @@ func WaitForReceiptWithResultsAndReplaceByFee(
 				rawTx = types.NewTx(baseTx)
 			} else {
 				gasPrice, err := client.SuggestGasPrice(ctx)
+        // FUSE
+        gasPrice = big.NewInt(100000)
 				if err != nil {
 					return nil, err
 				}
@@ -191,8 +193,7 @@ func WaitForReceiptWithResultsAndReplaceByFee(
 				}
 				baseTx := &types.LegacyTx{
 					Nonce:    arbTx.Nonce(),
-					//GasPrice: gasPrice,
-					GasPrice: 100000,
+					GasPrice: gasPrice,
 					Gas:      arbTx.Gas(),
 					To:       arbTx.To(),
 					Value:    arbTx.Value(),
