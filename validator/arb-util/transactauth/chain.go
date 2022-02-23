@@ -192,7 +192,7 @@ func WaitForReceiptWithResultsAndReplaceByFee(
 				baseTx := &types.LegacyTx{
 					Nonce:    arbTx.Nonce(),
 					//GasPrice: gasPrice,
-					GasPrice: 100000,
+					GasPrice: big.NewInt(100000),
 					Gas:      arbTx.Gas(),
 					To:       arbTx.To(),
 					Value:    arbTx.Value(),
