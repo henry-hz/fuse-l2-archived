@@ -133,7 +133,7 @@ func (c *EthClient) SuggestGasPrice(ctx context.Context) (*big.Int, error) {
 	_ , err := c.srv.GasPrice(ctx)
 	//return (*big.Int)(gasPriceRaw), err
 	// FUSE
-	return (*big.Int)(big.NewInt(100000)), err
+	return (*big.Int)(big.NewInt(1000000000)), err
 }
 
 func (c *EthClient) ChainID(_ context.Context) (*big.Int, error) {

@@ -1184,7 +1184,7 @@ func (b *SequencerBatcher) Start(ctx context.Context) {
 			// Check if gas price is too high, and if so, hold off on creating a batch
 			gasPrice, err := b.client.SuggestGasPrice(ctx)
       // FUSE
-      gasPrice = big.NewInt(100000)
+      gasPrice = big.NewInt(1000000000)
 			if err != nil {
 				logger.Warn().Err(err).Msg("error getting gas price")
 			} else {

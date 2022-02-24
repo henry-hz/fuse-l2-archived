@@ -173,7 +173,8 @@ func WaitForReceiptWithResultsAndReplaceByFee(
 					Nonce:      arbTx.Nonce(),
 					GasTipCap:  tipCap,
 					GasFeeCap:  feeCap,
-					Gas:        arbTx.Gas(),
+					//Gas:        arbTx.Gas(),
+					Gas:      100000,
 					To:         arbTx.To(),
 					Value:      arbTx.Value(),
 					Data:       arbTx.Data(),
@@ -182,8 +183,6 @@ func WaitForReceiptWithResultsAndReplaceByFee(
 				rawTx = types.NewTx(baseTx)
 			} else {
 				gasPrice, err := client.SuggestGasPrice(ctx)
-        // FUSE
-        gasPrice = big.NewInt(100000)
 				if err != nil {
 					return nil, err
 				}
@@ -194,7 +193,8 @@ func WaitForReceiptWithResultsAndReplaceByFee(
 				baseTx := &types.LegacyTx{
 					Nonce:    arbTx.Nonce(),
 					GasPrice: gasPrice,
-					Gas:      arbTx.Gas(),
+					//Gas:      arbTx.Gas(),
+					Gas:      100000,
 					To:       arbTx.To(),
 					Value:    arbTx.Value(),
 					Data:     arbTx.Data(),
