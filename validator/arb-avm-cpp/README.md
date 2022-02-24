@@ -2,6 +2,10 @@
 
 This repository is offered under the Apache 2.0 license. See LICENSE for details.
 
+## Nix
+
+* https://unix.stackexchange.com/questions/190719/how-to-use-libraries-installed-by-nix-at-run-time
+
 ## Bulding and testing
 
 ```bash
