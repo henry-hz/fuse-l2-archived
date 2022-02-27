@@ -1,5 +1,8 @@
 
-got stuck:
+got stuck trying to start the sequencer when the RollupCreator stuck:
+
+RollupCreator: 0xEEf843d2A86EE6D746f4b79f8A8eECF5459e7FB7
+
 
 
 {"level":"warn","component":"transactauth","stack":[{"func":"waitForReceiptWithResultsSimpleInternal","line":"120","source":"chain.go"},{"func":"WaitForReceiptWithResultsAndReplaceByFee","line":"224","source":"chain.go"},{"func":"WaitForReceiptWithResults","line":"250","source":"chain.go"},{"func":"startup","line":"214","source":"arb-dev-sequencer.go"},{"func":"main","line":"79","source":"arb-dev-sequencer.go"},{"func":"main","line":"225","source":"proc.go"},{"func":"goexit","line":"1371","source":"asm_amd64.s"}],"error":"receipt not found","tx":"f451631f5944020a0bfa5717feb4bd8920f401e831be0fd98ebbf23e32073a79","time":"2022-02-27T11:48:48+02:00","caller":"/home/henry/fuse-arb/validator/arb-util/transactauth/chain.go:226","message":"error while waiting for transaction receipt"}
@@ -9,6 +12,8 @@ got stuck:
 
 
 Now, fixed the RollupCreator,
+
+
 
 
 {"level":"info","component":"arb-node","chainaddress":"1d0decff9c3a5f6d3c5635411441b7502a14ab55","chainid":"68799","time":"2022-02-27T12:03:20+02:00","caller":"/home/henry/fuse-arb/validator/arb-rpc-node/cmd/arb-dev-sequencer/arb-dev-sequencer.go:232","message":"Launching arbitrum node"}
