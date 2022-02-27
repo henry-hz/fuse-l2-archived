@@ -54,3 +54,8 @@ node:
 	./bin/arb-node
 
 
+run:
+	go build -o bin/arb-dev-sequencer cmd/arb-dev-sequencer/arb-dev-sequencer.go
+	./bin/arb-dev-sequencer $(ETH_URL) $(ROLLUP_CREATOR) $(BRIDGE) 
+
+

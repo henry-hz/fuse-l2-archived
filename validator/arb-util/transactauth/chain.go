@@ -18,6 +18,7 @@ package transactauth
 
 import (
 	"context"
+	"fmt"
 	"math/big"
 	"time"
 
@@ -141,12 +142,13 @@ func WaitForReceiptWithResultsAndReplaceByFee(
 	transactAuth TransactAuth,
 	receiptFetcher ArbReceiptFetcher,
 ) (*types.Receipt, error) {
+	fmt.Println("executing WaitForReceiptWithResultsAndReplaceByFee [transactauth.go]")
 	var rbfInfo *attemptRbfInfo
 	if transactAuth != nil {
 		attemptRbf := func() (*arbtransaction.ArbTransaction, error) {
 			auth := transactAuth.GetAuth(ctx)
 			if auth.GasPrice != nil && auth.GasPrice.Cmp(arbTx.GasPrice()) <= 0 {
-				return arbTx, nil 
+				return arbTx, nil
 			}
 			var rawTx *types.Transaction
 			tipCap, tipCapErr := client.SuggestGasTipCap(ctx)
@@ -168,13 +170,14 @@ func WaitForReceiptWithResultsAndReplaceByFee(
 				if feeCap.Cmp(minFeeCap) < 0 {
 					feeCap = minFeeCap
 				}
+				fmt.Println("hardcoded determinig gas price for fuse against the dyanmic fee")
 				baseTx := &types.DynamicFeeTx{
-					ChainID:    arbTx.ChainId(),
-					Nonce:      arbTx.Nonce(),
-					GasTipCap:  tipCap,
-					GasFeeCap:  feeCap,
+					ChainID:   arbTx.ChainId(),
+					Nonce:     arbTx.Nonce(),
+					GasTipCap: tipCap,
+					GasFeeCap: feeCap,
 					//Gas:        arbTx.Gas(),
-					Gas:      100000,
+					Gas:        1000000000,
 					To:         arbTx.To(),
 					Value:      arbTx.Value(),
 					Data:       arbTx.Data(),
@@ -183,6 +186,8 @@ func WaitForReceiptWithResultsAndReplaceByFee(
 				rawTx = types.NewTx(baseTx)
 			} else {
 				gasPrice, err := client.SuggestGasPrice(ctx)
+				fmt.Println("hardcoded determinig gas price for fuse")
+				gasPrice = big.NewInt(1000000000)
 				if err != nil {
 					return nil, err
 				}
@@ -194,10 +199,10 @@ func WaitForReceiptWithResultsAndReplaceByFee(
 					Nonce:    arbTx.Nonce(),
 					GasPrice: gasPrice,
 					//Gas:      arbTx.Gas(),
-					Gas:      100000,
-					To:       arbTx.To(),
-					Value:    arbTx.Value(),
-					Data:     arbTx.Data(),
+					Gas:   1000000000,
+					To:    arbTx.To(),
+					Value: arbTx.Value(),
+					Data:  arbTx.Data(),
 				}
 				rawTx = types.NewTx(baseTx)
 			}

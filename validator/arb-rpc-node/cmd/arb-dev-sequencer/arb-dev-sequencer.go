@@ -123,6 +123,7 @@ func startup() error {
 
 	if fs.NArg() != 3 {
 		fmt.Println("usage: arb-dev-sequencer <ethURL> <rollup_creator_address> <bridge_utils_adddress>")
+		fmt.Println("exiting...")
 		return errors.New("invalid arguments")
 	}
 
@@ -143,6 +144,7 @@ func startup() error {
 	rollupCreator := common.HexToAddress(rollupCreatorAddresssString)
 	bridgeUtilsAddress := common.HexToAddress(bridgeUtilsAddressString)
 
+	fmt.Println("creating client...")
 	ethclint, err := ethutils.NewRPCEthClient(ethURL)
 	if err != nil {
 		return errors.Wrap(err, "error running NewRPcEthClient")
@@ -152,16 +154,20 @@ func startup() error {
 	if err != nil {
 		return err
 	}
+
+	fmt.Println("loading initial machine...")
 	initialMachine, err := cmachine.New(arbosPath)
 	if err != nil {
 		return err
 	}
 
+	fmt.Println("creating RollupCreator binding instance")
 	creator, err := ethbridgecontracts.NewRollupCreator(rollupCreator.ToEthAddress(), ethclint)
 	if err != nil {
 		return errors.Wrap(err, "error getting chain creator")
 	}
 
+	fmt.Println("getting chain id")
 	l1ChainId, err := ethclint.ChainID(ctx)
 	if err != nil {
 		return err
@@ -194,6 +200,7 @@ func startup() error {
 	owner := l1OwnerAuth.From
 	sequencer := crypto.PubkeyToAddress(seqPrivKey.PublicKey)
 
+	fmt.Println("generating rollup using the rollup-creator")
 	tx, err := creator.CreateRollup(
 		deployer,
 		initialMachine.Hash(),
@@ -211,6 +218,7 @@ func startup() error {
 	if err != nil {
 		return errors.Wrap(err, "error creating rollup")
 	}
+	fmt.Println("starting transaction for CreateRollup [arb-util/transactauth/chain.go]")
 	receipt, err := transactauth.WaitForReceiptWithResults(ctx, ethclint, deployer.From, arbtransaction.NewArbTransaction(tx), "CreateRollup", transactauth.NewEthArbReceiptFetcher(ethclint))
 	if err != nil {
 		return errors.Wrap(err, "error getting transaction receipt")
@@ -242,6 +250,7 @@ func startup() error {
 		}
 	}()
 
+	fmt.Println("creating new inbox monitor....")
 	mon, err := monitor.NewMonitor(dbPath, arbosPath, &config.Core)
 	if err != nil {
 		return errors.Wrap(err, "error opening monitor")
@@ -284,7 +293,7 @@ func startup() error {
 	}
 	transferTx := types.NewTx(&types.LegacyTx{
 		Nonce:    nonce,
-		GasPrice: big.NewInt(1000000000),
+		GasPrice: big.NewInt(1000000000), // modified from zero to 1Gwei to work with fusespark
 		Gas:      21000,
 		To:       &seqAuth.From,
 		Value:    transferSize,
