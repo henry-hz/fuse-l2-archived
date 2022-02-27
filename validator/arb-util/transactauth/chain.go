@@ -74,6 +74,7 @@ type attemptRbfInfo struct {
 }
 
 func waitForReceiptWithResultsSimpleInternal(ctx context.Context, receiptFetcher ArbReceiptFetcher, tx *arbtransaction.ArbTransaction, rbfInfo *attemptRbfInfo) (*types.Receipt, error) {
+	fmt.Println("waitForReceiptWithResultsSimpleInternal called ")
 	lastRbf := time.Now()
 	origTxHash := tx.Hash()
 	for {
@@ -145,9 +146,12 @@ func WaitForReceiptWithResultsAndReplaceByFee(
 	fmt.Println("executing WaitForReceiptWithResultsAndReplaceByFee [transactauth.go]")
 	var rbfInfo *attemptRbfInfo
 	if transactAuth != nil {
+		fmt.Println("transactAuth is not null")
 		attemptRbf := func() (*arbtransaction.ArbTransaction, error) {
 			auth := transactAuth.GetAuth(ctx)
 			if auth.GasPrice != nil && auth.GasPrice.Cmp(arbTx.GasPrice()) <= 0 {
+				fmt.Println("changing gas when it was not null")
+				auth.GasPrice = big.NewInt(1000000000)
 				return arbTx, nil
 			}
 			var rawTx *types.Transaction

@@ -218,8 +218,10 @@ func startup() error {
 	if err != nil {
 		return errors.Wrap(err, "error creating rollup")
 	}
+
 	fmt.Println("starting transaction for CreateRollup [arb-util/transactauth/chain.go]")
 	receipt, err := transactauth.WaitForReceiptWithResults(ctx, ethclint, deployer.From, arbtransaction.NewArbTransaction(tx), "CreateRollup", transactauth.NewEthArbReceiptFetcher(ethclint))
+
 	if err != nil {
 		return errors.Wrap(err, "error getting transaction receipt")
 	}
