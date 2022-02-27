@@ -84,17 +84,8 @@ I changed the config above to point to fuse-spark:
 
 ## SEQUENCER
 
-When trying to run the validator using the command:
-
-```
-
-cd ./validator/arb-rpc-node
-make build
-./bin/arb-node --l1.url=https://mainnet.infura.io/v3/17509665a88549b9a5a5f8f3e291120c \
-		--node.type=aggregator
-```
-
-I just noticed that we NEED a feed input url running... but what is this feed ? 
+When trying to run the validator using what I describe in the [forwarder](./FORWARDER.md) file,
+I just noticed that we NEED a feed input url running... but what is this feed ?
 So the first step is to check how the real one in the  wss://arb1.arbitrum.io/feed is running.
 
 So using the [websocat](https://github.com/vi/websocat) tool, I just connected to the arbitrum feed and found the following data there:
@@ -200,11 +191,65 @@ type SequencerBatchItem struct {
 ```
 
 
+### Running the Sequencer
+
+So when running the [sequencer](../validator/arb-rpc-node/cmd/arb-dev-sequencer/arb-dev-sequencer.go) and adding the three inputs requested there:
+
+```
+ROLLUP_CREATOR=0xEEf843d2A86EE6D746f4b79f8A8eECF5459e7FB7     	# Rollup creator address
+BRIDGE=0xc6ec791F3F9A83A88b01A8793eD3055aC3016DA6  		          # Bridge Utils adddress
+ETH_URL=https://rpc.fusespark.io
+
+```
+
+As you can see they are deployed in https://explorer.fusespark.io/, the first problem was the lack of Gas, that should be 1 Gwei (1+9 zeros), so after fixing it in the arb-dev-sequencer file around line 292:
+
+```go
+	transferTx := types.NewTx(&types.LegacyTx{
+		Nonce:    nonce,
+		GasPrice: big.NewInt(1000000000),
+		Gas:      21000,
+		To:       &seqAuth.From,
+		Value:    transferSize,
+		Data:     nil,
+	})
+```
+
+It worked once, but still having back the issue....
+
+
+#### log before fixing the gas
+
+RollupCreator: 0xEEf843d2A86EE6D746f4b79f8A8eECF5459e7FB7
+
+```json
+{"level":"warn","component":"transactauth","stack":[{"func":"waitForReceiptWithResultsSimpleInternal","line":"120","source":"chain.go"},{"func":"WaitForReceiptWithResultsAndReplaceByFee","line":"224","source":"chain.go"},{"func":"WaitForReceiptWithResults","line":"250","source":"chain.go"},{"func":"startup","line":"214","source":"arb-dev-sequencer.go"},{"func":"main","line":"79","source":"arb-dev-sequencer.go"},{"func":"main","line":"225","source":"proc.go"},{"func":"goexit","line":"1371","source":"asm_amd64.s"}],"error":"receipt not found","tx":"f451631f5944020a0bfa5717feb4bd8920f401e831be0fd98ebbf23e32073a79","time":"2022-02-27T11:48:48+02:00","caller":"/home/henry/fuse-arb/validator/arb-util/transactauth/chain.go:226","message":"error while waiting for transaction receipt"}
+{"component":"arb-node","time":"2022-02-27T11:48:48+02:00","caller":"/home/henry/fuse-arb/validator/arb-rpc-node/cmd/arb-dev-sequencer/arb-dev-sequencer.go:216","message":"Cleanly shutting down node"}
+{"level":"error","component":"arb-node","stack":[{"func":"startup","line":"216","source":"arb-dev-sequencer.go"},{"func":"main","line":"79","source":"arb-dev-sequencer.go"},{"func":"main","line":"225","source":"proc.go"},{"func":"goexit","line":"1371","source":"asm_amd64.s"}],"error":"error getting transaction receipt: receipt not found","time":"2022-02-27T11:48:48+02:00","caller":"/home/henry/fuse-arb/validator/arb-rpc-node/cmd/arb-dev-sequencer/arb-dev-sequencer.go:80","message":"Error running node"}
+
+```
+
+
+Now, fixed the RollupCreator, but also had issues... note the chainid also not pointing to the chain:123 [that is the spark fuse chainid]
+
+```
+{"level":"info","component":"arb-node","chainaddress":"1d0decff9c3a5f6d3c5635411441b7502a14ab55","chainid":"68799","time":"2022-02-27T12:03:20+02:00","caller":"/home/henry/fuse-arb/validator/arb-rpc-node/cmd/arb-dev-sequencer/arb-dev-sequencer.go:232","message":"Launching arbitrum node"}
+{"level":"info","component":"monitor","directory":"arbitrum102695120","time":"2022-02-27T12:03:21+02:00","caller":"/home/henry/fuse-arb/validator/arb-node-core/monitor/monitor.go:57","message":"database opened"}
+Reloading chain to the last message saved
+Initial machine load
+{"level":"info","component":"monitor","time":"2022-02-27T12:03:21+02:00","caller":"/home/henry/fuse-arb/validator/arb-node-core/monitor/monitor.go:64","message":"storage initialized"}
+{"level":"warn","component":"arb-node","stack":[{"func":"(*Monitor).StartInboxReader","line":"102","source":"monitor.go"},{"func":"startup","line":"254","source":"arb-dev-sequencer.go"},{"func":"main","line":"79","source":"arb-dev-sequencer.go"},{"func":"main","line":"225","source":"proc.go"},{"func":"goexit","line":"1371","source":"asm_amd64.s"}],"error":"error checking initial chain state: rollup not created","url":"https://rpc.fusespark.io","rollup":"0x1d0decff9c3a5f6d3c5635411441b7502a14ab55","bridgeUtils":"0xc6ec791f3f9a83a88b01a8793ed3055ac3016da6","time":"2022-02-27T12:03:21+02:00","caller":"/home/henry/fuse-arb/validator/arb-rpc-node/cmd/arb-dev-sequencer/arb-dev-sequencer.go:271","message":"failed to start inbox reader, waiting and retrying"}
+{"level":"warn","component":"arb-node","stack":[{"func":"(*Monitor).StartInboxReader","line":"102","source":"monitor.go"},{"func":"startup","line":"254","source":"arb-dev-sequencer.go"},{"func":"main","line":"79","source":"arb-dev-sequencer.go"},{"func":"main","line":"225","source":"proc.go"},{"func":"goexit","line":"1371","source":"asm_amd64.s"}],"error":"error checking initial chain state: rollup not created","url":"https://rpc.fusespark.io","rollup":"0x1d0decff9c3a5f6d3c5635411441b7502a14ab55","bridgeUtils":"0xc6ec791f3f9a83a88b01a8793ed3055ac3016da6","time":"2022-02-27T12:03:26+02:00","caller":"/home/henry/fuse-arb/validator/arb-rpc-node/cmd/arb-dev-sequencer/arb-dev-sequencer.go:271","message":"failed to start inbox reader, waiting and retrying"}
+^C{"level":"warn","component":"arb-node","stack":[{"func":"(*Monitor).StartInboxReader","line":"102","source":"monitor.go"},{"func":"startup","line":"254","source":"arb-dev-sequencer.go"},{"func":"main","line":"79","source":"arb-dev-sequencer.go"},{"func":"main","line":"225","source":"proc.go"},{"func":"goexit","line":"1371","source":"asm_amd64.s"}],"error":"error checking initial chain state: Post \"https://rpc.fusespark.io\": context canceled","url":"https://rpc.fusespark.io","rollup":"0x1d0decff9c3a5f6d3c5635411441b7502a14ab55","bridgeUtils":"0xc6ec791f3f9a83a88b01a8793ed3055ac3016da6","time":"2022-02-27T12:03:31+02:00","caller":"/home/henry/fuse-arb/validator/arb-rpc-node/cmd/arb-dev-sequencer/arb-dev-sequencer.go:271","message":"failed to start inbox reader, waiting and retrying"}
+
+```
+
+
 
 ## Questions
 
 * what is the data and why the sequencer calls the RollupCreator contract ?
-* what are the next steps of sync the sequencer make ?
+* what are the next steps of sync the sequencer make ? i.e. what are all the necessary calls and its expected results to have the system running.
 * why the aggregator connects to the sequencer ?
 * what are the message traffic when a transaction acually happens in the arbitrum-os node ?
 
