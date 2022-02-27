@@ -93,7 +93,7 @@ func startup() error {
 	gethLogLevel, arbLogLevel := cmdhelp.AddLogFlags(fs)
 	//privKeyString := fs.String("privkey", "979f020f6f6f71577c09db93ba944c89945f10fade64cfc7eb26137d5816fb76", "funded private key")
 	//fundedAccount := fs.String("account", "0x9a6C04fBf4108E2c1a1306534A126381F99644cf", "account to fund")
-  privKeyString := fs.String("privkey", "491c6c990d3916d956eddc3d291e2a063349421adc176332d985dbded2152c90", "funded private key")
+	privKeyString := fs.String("privkey", "491c6c990d3916d956eddc3d291e2a063349421adc176332d985dbded2152c90", "funded private key")
 	chainId64 := fs.Uint64("chainId", 68799, "chain id of chain")
 
 	config := configuration.Config{
@@ -284,7 +284,7 @@ func startup() error {
 	}
 	transferTx := types.NewTx(&types.LegacyTx{
 		Nonce:    nonce,
-		GasPrice: big.NewInt(0),
+		GasPrice: big.NewInt(1000000000),
 		Gas:      21000,
 		To:       &seqAuth.From,
 		Value:    transferSize,
