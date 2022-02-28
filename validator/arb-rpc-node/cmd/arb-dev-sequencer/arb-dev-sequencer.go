@@ -177,6 +177,8 @@ func startup() error {
 	if err != nil {
 		return err
 	}
+
+	// transactor-1
 	deployer, err := bind.NewKeyedTransactorWithChainID(privKey, l1ChainId)
 	if err != nil {
 		return err
@@ -186,11 +188,14 @@ func startup() error {
 	if err != nil {
 		return errors.Wrap(err, "error generating key")
 	}
+
+	// transactor-2
 	seqAuth, err := bind.NewKeyedTransactorWithChainID(seqPrivKey, l1ChainId)
 	if err != nil {
 		return err
 	}
 
+	// transactor-3
 	ownerPrivKey, err := crypto.GenerateKey()
 	l1OwnerAuth, err := bind.NewKeyedTransactorWithChainID(ownerPrivKey, l1ChainId)
 	if err != nil {
@@ -200,7 +205,11 @@ func startup() error {
 	owner := l1OwnerAuth.From
 	sequencer := crypto.PubkeyToAddress(seqPrivKey.PublicKey)
 
-	fmt.Println("generating rollup using the rollup-creator")
+	fmt.Println("setting gas for spark-fuse")
+	deployer.GasPrice = big.NewInt(1000000000)
+
+	// in this function call a transaction is generated [deployer is the TransactOpts]
+	fmt.Println("generating transaction rollup using the rollup-creator")
 	tx, err := creator.CreateRollup(
 		deployer,
 		initialMachine.Hash(),
