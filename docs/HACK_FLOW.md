@@ -427,3 +427,31 @@ Seeding cache
 
 ```
 
+
+
+When running as a forwarder with fuse spark, we see that even this forwarder mode also needs the WS [websocket] broadcaster on...
+
+```
+o build -o bin/arb-node cmd/arb-node/arb-node.go
+./bin/arb-node --l1.url=https://rpc.fusespark.io
+{"level":"info","component":"configuration","l1url":"https://rpc.fusespark.io","chainid":"123","time":"2022-03-01T13:28:01+02:00","caller":"/home/henry/fuse-arb/validator/arb-util/configuration/configuration.go:597","message":"connected to l1 chain"}
+{"level":"info","component":"arb-node","chainaddress":"c674399c6188ccb8e433a8b4b6d28ca0ba616104","chainid":"d753","type":"forwarder","fromBlock":12525700,"time":"2022-03-01T13:28:01+02:00","caller":"/home/henry/fuse-arb/validator/arb-rpc-node/cmd/arb-node/arb-node.go:199","message":"Launching arbitrum node"}
+{"level":"info","component":"monitor","directory":"/home/henry/.arbitrum/mainnet/db","time":"2022-03-01T13:28:01+02:00","caller":"/home/henry/fuse-arb/validator/arb-node-core/monitor/monitor.go:57","message":"database opened"}
+Reloading chain to the last message saved
+Initial machine load
+First database checkpoint,  total gas used: 28331570443, L1 block: 12691825, L2 block: 17636, log count: 36086, messages count: 35262, timestamp: Wed Jun 23 20:48:52 2021
+First valid database checkpoint,  total gas used: 28331570443, L1 block: 12691825, L2 block: 17636, log count: 36086, messages count: 35262, timestamp: Wed Jun 23 20:48:52 2021
+Loaded full machine,  total gas used: 28331570443, L1 block: 12691825, L2 block: 17636, log count: 36086, messages count: 35262, timestamp: Wed Jun 23 20:48:52 2021
+Reorg took 2809ms
+{"level":"info","component":"monitor","time":"2022-03-01T13:28:05+02:00","caller":"/home/henry/fuse-arb/validator/arb-node-core/monitor/monitor.go:64","message":"storage initialized"}
+{"level":"info","component":"broadcaster","url":"wss://localhost/feed","time":"2022-03-01T13:28:05+02:00","caller":"/home/henry/fuse-arb/validator/arb-util/broadcastclient/broadcastclient.go:115","message":"connecting to arbitrum inbox message broadcaster"}
+{"level":"warn","component":"broadcaster","error":"dial tcp [::1]:443: connect: connection refused","time":"2022-03-01T13:28:05+02:00","caller":"/home/henry/fuse-arb/validator/arb-util/broadcastclient/broadcastclient.go:122","message":"broadcast client unable to connect"}
+{"level":"warn","component":"broadcaster","url":"wss://localhost/feed","error":"broadcast client unable to connect: dial tcp [::1]:443: connect: connection refused","time":"2022-03-01T13:28:05+02:00","caller":"/home/henry/fuse-arb/validator/arb-util/broadcastclient/broadcastclient.go:98","message":"failed connect to sequencer broadcast, waiting and retrying"}
+{"level":"warn","component":"arb-node","stack":[{"func":"(*Monitor).StartInboxReader","line":"102","source":"monitor.go"},{"func":"startup","line":"240","source":"arb-node.go"},{"func":"main","line":"82","source":"arb-node.go"},{"func":"main","line":"225","source":"proc.go"},{"func":"goexit","line":"1371","source":"asm_amd64.s"}],"error":"error checking initial chain state: One of the blocks specified in filter (fromBlock, toBlock or blockHash) cannot be found","url":"https://rpc.fusespark.io","rollup":"0xc674399C6188cCB8e433a8b4B6d28ca0BA616104","bridgeUtils":"0xc6ec791F3F9A83A88b01A8793eD3055aC3016DA6","fromBlock":12525700,"time":"2022-03-01T13:28:05+02:00","caller":"/home/henry/fuse-arb/validator/arb-rpc-node/cmd/arb-node/arb-node.go:258","message":"failed to start inbox reader, waiting and retrying"}
+{"level":"info","component":"broadcaster","url":"wss://localhost/feed","time":"2022-03-01T13:28:10+02:00","caller":"/home/henry/fuse-arb/validator/arb-util/broadcastclient/broadcastclient.go:115","message":"connecting to arbitrum inbox message broadcaster"}
+{"level":"warn","component":"broadcaster","error":"dial tcp [::1]:443: connect: connection refused","time":"2022-03-01T13:28:10+02:00","caller":"/home/henry/fuse-arb/validator/arb-util/broadcastclient/broadcastclient.go:122","message":"broadcast client unable to connect"}
+
+```
+
+
+

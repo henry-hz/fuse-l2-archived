@@ -29,6 +29,7 @@ cli:
 	./bin/arb-cli https://rpc.fusespark.io $(PRIV_KEY)
 
 dev-node:
+	go build -o bin/arb-dev-node cmd/arb-dev-node/arb-dev-node.go
 	./bin/arb-dev-node
 
 
