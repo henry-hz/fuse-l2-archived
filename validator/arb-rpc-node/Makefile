@@ -33,28 +33,40 @@ dev-node:
 
 
 
-
-dev-sequencer:
-	./bin/arb-dev-sequencer $(ETH_URL) $(ROLLUP_CREATOR) $(BRIDGE) 
-
-
 forwarder:
+	go build -o bin/arb-node cmd/arb-node/arb-node.go
 	./bin/arb-node --l1.url=https://mainnet.infura.io/v3/17509665a88549b9a5a5f8f3e291120c
 
-agg:
+forwarder-spark:
+	go build -o bin/arb-node cmd/arb-node/arb-node.go
+	./bin/arb-node --l1.url=https://rpc.fusespark.io
+
+agg-rink:
+	rm -rf arbitrum*
+	go build -o bin/arb-node cmd/arb-node/arb-node.go
+	./bin/arb-node --l1.url=https://rinkeby.infura.io/v3/17509665a88549b9a5a5f8f3e291120c \
+		--node.type=aggregator
+
+agg-main:
+	rm -rf arbitrum*
+	go build -o bin/arb-node cmd/arb-node/arb-node.go
 	./bin/arb-node --l1.url=https://mainnet.infura.io/v3/17509665a88549b9a5a5f8f3e291120c \
 		--node.type=aggregator
 
+agg:
+	rm -rf arbitrum*
+	go build -o bin/arb-node cmd/arb-node/arb-node.go
+	./bin/arb-node --l1.url=https://rpc.fusespark.io \
+		--node.type=aggregator
+
 seq:
+	rm -rf arbitrum*
+	go build -o bin/arb-node cmd/arb-node/arb-node.go
 	./bin/arb-node --l1.url=https://mainnet.infura.io/v3/17509665a88549b9a5a5f8f3e291120c \
 		--node.type=sequencer
 
 
-node:
-	./bin/arb-node
-
-
-run:
+dev-seq:
 	go build -o bin/arb-dev-sequencer cmd/arb-dev-sequencer/arb-dev-sequencer.go
 	./bin/arb-dev-sequencer $(ETH_URL) $(ROLLUP_CREATOR) $(BRIDGE) 
 

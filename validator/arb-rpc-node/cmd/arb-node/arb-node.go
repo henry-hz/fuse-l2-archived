@@ -374,6 +374,7 @@ func startup() error {
 	if err != nil {
 		return err
 	}
+	fmt.Print("starting WS server")
 	go func() {
 		err := rpc.LaunchPublicServer(ctx, web3Server, config.Node.RPC, config.Node.WS)
 		if err != nil {

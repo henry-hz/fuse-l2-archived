@@ -238,6 +238,7 @@ func startup() error {
 	if err != nil {
 		return err
 	}
+	fmt.Println("getting rollupAddress")
 	rollupAddress := common.NewAddressFromEth(createdEvent.RollupAddress)
 	//inboxAddress := createdEvent.InboxAddress
 
@@ -261,14 +262,17 @@ func startup() error {
 		}
 	}()
 
-	fmt.Println("creating new inbox monitor....")
+	fmt.Println("creating new inbox monitor instance....")
 	mon, err := monitor.NewMonitor(dbPath, arbosPath, &config.Core)
 	if err != nil {
 		return errors.Wrap(err, "error opening monitor")
 	}
 	defer mon.Close()
 
+	fmt.Println("starting dummy sequencer feed")
 	dummySequencerFeed := make(chan broadcaster.BroadcastFeedMessage)
+
+	fmt.Println("starting the inbox reader....")
 	var inboxReader *monitor.InboxReader
 	for {
 		inboxReader, err = mon.StartInboxReader(

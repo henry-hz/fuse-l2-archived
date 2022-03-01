@@ -254,5 +254,176 @@ Initial machine load
 * what are the message traffic when a transaction acually happens in the arbitrum-os node ?
 
 
+## Production Nodes Outputs
 
+
+To run a production node as described in the [official](https://developer.offchainlabs.com/docs/running_node) documentation, we user the docker command below. As you can see, outputs for the arb-node executable. As you see, this doc starts only with the l1 address, so it runs as a forwarded node.
+
+
+
+```
+docker run --rm -it  -v ~/db/arbitrum-rinkeby/:/home/henry/.arbitrum/rinkeby \
+	-p 0.0.0.0:8547:8547 \
+	-p 0.0.0.0:8548:8548 \
+	offchainlabs/arb-node:v1.2.0-9214e38 \
+	--l1.url https://rinkeby.infura.io/v3/17509665a88549b9a5a5f8f3e291120c
+{"level":"info","component":"configuration","l1url":"https://rinkeby.infura.io/v3/17509665a88549b9a5a5f8f3e291120c","chainid":"4","time":"2022-03-01T11:13:16Z","caller":"/home/user/arb-util/configuration/configuration.go:566","message":"connected to l1 chain"}
+{"level":"info","component":"arb-node","chainaddress":"fe2c86cf40f89fe2f726cfbbacebae631300b50c","chainid":"066eeb","type":"forwarder","fromBlock":8700589,"time":"2022-03-01T11:13:16Z","caller":"/home/user/arb-rpc-node/cmd/arb-node/arb-node.go:195","message":"Launching arbitrum node"}
+{"level":"info","component":"monitor","directory":"/home/user/.arbitrum/rinkeby/db","time":"2022-03-01T11:13:16Z","caller":"/home/user/arb-node-core/monitor/monitor.go:54","message":"database opened"}
+Reloading chain starting with timestamp 1646131997
+Seeding cache
+{"level":"info","component":"monitor","time":"2022-03-01T11:13:17Z","caller":"/home/user/arb-node-core/monitor/monitor.go:61","message":"storage initialized"}
+{"level":"info","component":"broadcaster","url":"wss://rinkeby.arbitrum.io/feed","time":"2022-03-01T11:13:17Z","caller":"/home/user/arb-util/broadcastclient/broadcastclient.go:115","message":"connecting to arbitrum inbox message broadcaster"}
+{"level":"info","component":"arb-node","forwardTxURL":"https://rinkeby.arbitrum.io/rpc","time":"2022-03-01T11:13:17Z","caller":"/home/user/arb-rpc-node/cmd/arb-node/arb-node.go:266","message":"Arbitrum node starting in forwarder mode"}
+{"level":"info","component":"broadcaster","time":"2022-03-01T11:13:18Z","caller":"/home/user/arb-util/broadcastclient/broadcastclient.go:130","message":"Connected"}
+{"level":"info","component":"rpc","port":"8547","time":"2022-03-01T11:13:18Z","caller":"/home/user/arb-rpc-node/utils/rpc.go:100","message":"Launching rpc server over http"}
+{"level":"info","component":"rpc","port":"8548","time":"2022-03-01T11:13:18Z","caller":"/home/user/arb-rpc-node/utils/rpc.go:100","message":"Launching websocket server over http"}
+{"level":"info","component":"txdb","start":"0","count":1,"time":"2022-03-01T11:13:19Z","caller":"/home/user/arb-rpc-node/txdb/txdb.go:169","message":"adding logs"}
+{"level":"warn","component":"txdb","block":0,"time":"2022-03-01T11:13:19Z","caller":"/home/user/arb-rpc-node/txdb/txdb.go:298","message":"found empty block"}
+{"level":"info","component":"txdb","start":"1","count":1,"time":"2022-03-01T11:13:19Z","caller":"/home/user/arb-rpc-node/txdb/txdb.go:169","message":"adding logs"}
+{"level":"warn","component":"txdb","block":1,"time":"2022-03-01T11:13:19Z","caller":"/home/user/arb-rpc-node/txdb/txdb.go:298","message":"found empty block"}
+{"level":"info","component":"txdb","start":"2","count":1,"time":"2022-03-01T11:13:21Z","caller":"/home/user/arb-rpc-node/txdb/txdb.go:169","message":"adding logs"}
+{"level":"info","component":"txdb","start":"3","count":18,"time":"2022-03-01T11:13:21Z","caller":"/home/user/arb-rpc-node/txdb/txdb.go:169","message":"adding logs"}
+{"level":"info","component":"txdb","start":"21","count":2,"time":"2022-03-01T11:13:21Z","caller":"/home/user/arb-rpc-node/txdb/txdb.go:169","message":"adding logs"}
+{"level":"info","component":"txdb","start":"23","count":2,"time":"2022-03-01T11:13:21Z","caller":"/home/user/arb-rpc-node/txdb/txdb.go:169","message":"adding logs"}
+{"level":"info","component":"txdb","start":"25","count":2,"time":"2022-03-01T11:13:21Z","caller":"/home/user/arb-rpc-node/txdb/txdb.go:169","message":"adding logs"}
+{"level":"info","component":"txdb","start":"27","count":2,"time":"2022-03-01T11:13:22Z","caller":"/home/user/arb-rpc-node/txdb/txdb.go:169","message":"adding logs"}
+{"level":"info","component":"txdb","start":"29","count":4,"time":"2022-03-01T11:13:22Z","caller":"/home/user/arb-rpc-node/txdb/txdb.go:169","message":"adding logs"}
+{"level":"info","component":"txdb","start":"33","count":4,"time":"2022-03-01T11:13:22Z","caller":"/home/user/arb-rpc-node/txdb/txdb.go:169","message":"adding logs"}
+{"level":"info","component":"txdb","start":"37","count":8,"time":"2022-03-01T11:13:22Z","caller":"/home/user/arb-rpc-node/txdb/txdb.go:169","message":"adding logs"}
+{"level":"info","component":"txdb","start":"45","count":4,"time":"2022-03-01T11:13:22Z","caller":"/home/user/arb-rpc-node/txdb/txdb.go:169","message":"adding logs"}
+{"level":"info","component":"txdb","start":"49","count":4,"time":"2022-03-01T11:13:23Z","caller":"/home/user/arb-rpc-node/txdb/txdb.go:169","message":"adding logs"}
+{"level":"info","component":"txdb","start":"53","count":10,"time":"2022-03-01T11:13:23Z","caller":"/home/user/arb-rpc-node/txdb/txdb.go:169","message":"adding logs"}
+{"level":"warn","component":"txdb","hash":"4060c094759bd3dccdd9a2c253cf48652f6c2f368880c52c1a4571acd1e03ada","result":"","gas_used":944685,"gas_limit":1000000,"time":"2022-03-01T11:13:23Z","caller":"/home/user/arb-rpc-node/txdb/txdb.go:326","message":"tx reverted"}
+{"level":"info","component":"txdb","start":"63","count":4,"time":"2022-03-01T11:13:23Z","caller":"/home/user/arb-rpc-node/txdb/txdb.go:169","message":"adding logs"}
+{"level":"warn","component":"txdb","hash":"00569388411cece76cd074ef9d2dd15c8f3b2a0531dd9b5d1a64d72efa987906","result":"","gas_used":944685,"gas_limit":1000000,"time":"2022-03-01T11:13:23Z","caller":"/home/user/arb-rpc-node/txdb/txdb.go:326","message":"tx reverted"}
+{"level":"warn","component":"txdb","hash":"33a2f348dbc6b83930197c711e47224023a4f7e63dbd48bd9c3f49ec081bd0c6","result":"","gas_used":944685,"gas_limit":1000000,"time":"2022-03-01T11:13:23Z","caller":"/home/user/arb-rpc-node/txdb/txdb.go:326","message":"tx reverted"}
+{"level":"info","component":"txdb","start":"67","count":1,"time":"2022-03-01T11:13:24Z","caller":"/home/user/arb-rpc-node/txdb/txdb.go:169","message":"adding logs"}
+{"level":"info","component":"txdb","start":"68","count":7,"time":"2022-03-01T11:13:24Z","caller":"/home/user/arb-rpc-node/txdb/txdb.go:169","message":"adding logs"}
+{"level":"info","component":"txdb","start":"75","count":17,"time":"2022-03-01T11:13:24Z","caller":"/home/user/arb-rpc-node/txdb/txdb.go:169","message":"adding logs"}
+{"level":"info","component":"txdb","start":"92","count":1,"time":"2022-03-01T11:13:27Z","caller":"/home/user/arb-rpc-node/txdb/txdb.go:169","message":"adding logs"}
+{"level":"info","component":"txdb","start":"93","count":2,"time":"2022-03-01T11:13:28Z","caller":"/home/user/arb-rpc-node/txdb/txdb.go:169","message":"adding logs"}
+{"level":"info","component":"txdb","start":"95","count":1,"time":"2022-03-01T11:13:34Z","caller":"/home/user/arb-rpc-node/txdb/txdb.go:169","message":"adding logs"}
+{"level":"info","component":"txdb","start":"96","count":2,"time":"2022-03-01T11:13:35Z","caller":"/home/user/arb-rpc-node/txdb/txdb.go:169","message":"adding logs"}
+{"level":"info","component":"txdb","start":"98","count":2,"time":"2022-03-01T11:13:35Z","caller":"/home/user/arb-rpc-node/txdb/txdb.go:169","message":"adding logs"}
+{"level":"info","component":"txdb","start":"100","count":2,"time":"2022-03-01T11:13:35Z","caller":"/home/user/arb-rpc-node/txdb/txdb.go:169","message":"adding logs"}
+{"level":"info","component":"txdb","start":"102","count":2,"time":"2022-03-01T11:13:35Z","caller":"/home/user/arb-rpc-node/txdb/txdb.go:169","message":"adding logs"}
+{"level":"info","component":"txdb","start":"104","count":10,"time":"2022-03-01T11:13:36Z","caller":"/home/user/arb-rpc-node/txdb/txdb.go:169","message":"adding logs"}
+{"level":"info","component":"txdb","start":"114","count":4,"time":"2022-03-01T11:13:36Z","caller":"/home/user/arb-rpc-node/txdb/txdb.go:169","message":"adding logs"}
+{"level":"info","component":"txdb","start":"118","count":2,"time":"2022-03-01T11:13:36Z","caller":"/home/user/arb-rpc-node/txdb/txdb.go:169","message":"adding logs"}
+{"level":"info","component":"txdb","start":"120","count":6,"time":"2022-03-01T11:13:36Z","caller":"/home/user/arb-rpc-node/txdb/txdb.go:169","message":"adding logs"}
+{"level":"info","component":"txdb","start":"126","count":2,"time":"2022-03-01T11:13:37Z","caller":"/home/user/arb-rpc-node/txdb/txdb.go:169","message":"adding logs"}
+{"level":"info","component":"txdb","start":"128","count":4,"time":"2022-03-01T11:13:37Z","caller":"/home/user/arb-rpc-node/txdb/txdb.go:169","message":"adding logs"}
+{"level":"info","component":"txdb","start":"132","count":6,"time":"2022-03-01T11:13:37Z","caller":"/home/user/arb-rpc-node/txdb/txdb.go:169","message":"adding logs"}
+{"level":"info","component":"txdb","start":"138","count":6,"time":"2022-03-01T11:13:37Z","caller":"/home/user/arb-rpc-node/txdb/txdb.go:169","message":"adding logs"}
+{"level":"info","component":"txdb","start":"144","count":4,"time":"2022-03-01T11:13:37Z","caller":"/home/user/arb-rpc-node/txdb/txdb.go:169","message":"adding logs"}
+{"level":"info","component":"txdb","start":"148","count":2,"time":"2022-03-01T11:13:38Z","caller":"/home/user/arb-rpc-node/txdb/txdb.go:169","message":"adding logs"}
+{"level":"info","component":"txdb","start":"150","count":10,"time":"2022-03-01T11:13:38Z","caller":"/home/user/arb-rpc-node/txdb/txdb.go:169","message":"adding logs"}
+{"level":"info","component":"txdb","start":"160","count":2,"time":"2022-03-01T11:13:38Z","caller":"/home/user/arb-rpc-node/txdb/txdb.go:169","message":"adding logs"}
+{"level":"info","component":"txdb","start":"162","count":4,"time":"2022-03-01T11:13:38Z","caller":"/home/user/arb-rpc-node/txdb/txdb.go:169","message":"adding logs"}
+{"level":"info","component":"txdb","start":"166","count":6,"time":"2022-03-01T11:13:38Z","caller":"/home/user/arb-rpc-node/txdb/txdb.go:169","message":"adding logs"}
+{"level":"info","component":"txdb","start":"172","count":4,"time":"2022-03-01T11:13:39Z","caller":"/home/user/arb-rpc-node/txdb/txdb.go:169","message":"adding logs"}
+{"level":"info","component":"txdb","start":"176","count":4,"time":"2022-03-01T11:13:39Z","caller":"/home/user/arb-rpc-node/txdb/txdb.go:169","message":"adding logs"}
+{"level":"info","component":"txdb","start":"180","count":6,"time":"2022-03-01T11:13:39Z","caller":"/home/user/arb-rpc-node/txdb/txdb.go:169","message":"adding logs"}
+{"level":"info","component":"txdb","start":"186","count":10,"time":"2022-03-01T11:13:39Z","caller":"/home/user/arb-rpc-node/txdb/txdb.go:169","message":"adding logs"}
+{"level":"info","component":"txdb","start":"196","count":4,"time":"2022-03-01T11:13:39Z","caller":"/home/user/arb-rpc-node/txdb/txdb.go:169","message":"adding logs"}
+{"level":"info","component":"txdb","start":"200","count":2,"time":"2022-03-01T11:13:40Z","caller":"/home/user/arb-rpc-node/txdb/txdb.go:169","message":"adding logs"}
+{"level":"info","component":"txdb","start":"202","count":6,"time":"2022-03-01T11:13:40Z","caller":"/home/user/arb-rpc-node/txdb/txdb.go:169","message":"adding logs"}
+{"level":"info","component":"txdb","start":"208","count":16,"time":"2022-03-01T11:13:40Z","caller":"/home/user/arb-rpc-node/txdb/txdb.go:169","message":"adding logs"}
+{"level":"warn","component":"txdb","hash":"1d74d66908625e7b96ad19f1f8d0535642b4d0259a206cc25581d89fb490f20f","result":"08c379a0000000000000000000000000000000000000000000000000000000000000002000000000000000000000000000000000000000000000000000000000000000425472616e73706172656e745570677261646561626c6550726f78793a2061646d696e2063616e6e6f742066616c6c6261636b20746f2070726f787920746172676574000000000000000000000000000000000000000000000000000000000000","gas_used":1251,"gas_limit":8000000,"result_message":"TransparentUpgradeableProxy: admin cannot fallback to proxy target","time":"2022-03-01T11:13:40Z","caller":"/home/user/arb-rpc-node/txdb/txdb.go:326","message":"tx reverted"}
+{"level":"warn","component":"txdb","hash":"c7092293bdff39f87bbbbe93304cdcb216f9677bb416c8b1e024c344026a0306","result":"08c379a0000000000000000000000000000000000000000000000000000000000000002000000000000000000000000000000000000000000000000000000000000000425472616e73706172656e745570677261646561626c6550726f78793a2061646d696e2063616e6e6f742066616c6c6261636b20746f2070726f787920746172676574000000000000000000000000000000000000000000000000000000000000","gas_used":1243,"gas_limit":8000000,"result_message":"TransparentUpgradeableProxy: admin cannot fallback to proxy target","time":"2022-03-01T11:13:40Z","caller":"/home/user/arb-rpc-node/txdb/txdb.go:326","message":"tx reverted"}
+{"level":"info","component":"txdb","start":"224","count":4,"time":"2022-03-01T11:13:40Z","caller":"/home/user/arb-rpc-node/txdb/txdb.go:169","message":"adding logs"}
+{"level":"warn","component":"txdb","hash":"0f0df71f9ea6f1c14484228957bd5be58a02207259c878b6ca8c78fdabfd73be","result":"08c379a0000000000000000000000000000000000000000000000000000000000000002000000000000000000000000000000000000000000000000000000000000000425472616e73706172656e745570677261646561626c6550726f78793a2061646d696e2063616e6e6f742066616c6c6261636b20746f2070726f787920746172676574000000000000000000000000000000000000000000000000000000000000","gas_used":1275,"gas_limit":3000000,"result_message":"TransparentUpgradeableProxy: admin cannot fallback to proxy target","time":"2022-03-01T11:13:40Z","caller":"/home/user/arb-rpc-node/txdb/txdb.go:326","message":"tx reverted"}
+{"level":"info","component":"txdb","start":"228","count":4,"time":"2022-03-01T11:13:40Z","caller":"/home/user/arb-rpc-node/txdb/txdb.go:169","message":"adding logs"}
+Last checkpoint gas used: 1004378880, L1 block: 8722642, L2 block: 112
+{"level":"info","component":"txdb","start":"232","count":6,"time":"2022-03-01T11:13:41Z","caller":"/home/user/arb-rpc-node/txdb/txdb.go:169","message":"adding logs"}
+{"level":"info","component":"txdb","start":"238","count":11,"time":"2022-03-01T11:13:41Z","caller":"/home/user/arb-rpc-node/txdb/txdb.go:169","message":"adding logs"}
+{"level":"warn","component":"txdb","hash":"03e2be2664547408046079bdc01ce0035c3d3a763b19567cdb8df91f58db393d","result":"08c379a0000000000000000000000000000000000000000000000000000000000000002000000000000000000000000000000000000000000000000000000000000000425472616e73706172656e745570677261646561626c6550726f78793a2061646d696e2063616e6e6f742066616c6c6261636b20746f2070726f787920746172676574000000000000000000000000000000000000000000000000000000000000","gas_used":1251,"gas_limit":8000000,"result_message":"TransparentUpgradeableProxy: admin cannot fallback to proxy target","time":"2022-03-01T11:13:41Z","caller":"/home/user/arb-rpc-node/txdb/txdb.go:326","message":"tx reverted"}
+{"level":"info","component":"txdb","start":"249","count":4,"time":"2022-03-01T11:13:41Z","caller":"/home/user/arb-rpc-node/txdb/txdb.go:169","message":"adding logs"}
+{"level":"info","component":"txdb","start":"253","count":4,"time":"2022-03-01T11:13:41Z","caller":"/home/user/arb-rpc-node/txdb/txdb.go:169","message":"adding logs"}
+{"level":"info","component":"txdb","start":"257","count":8,"time":"2022-03-01T11:13:41Z","caller":"/home/user/arb-rpc-node/txdb/txdb.go:169","message":"adding logs"}
+
+```
+
+
+Mainet:
+
+```
+docker run --rm -it  -v ~/db/arbitrum-mainnet/:/home/henry/.arbitrum/mainnet \
+	-p 0.0.0.0:8547:8547 \
+	-p 0.0.0.0:8548:8548 \
+	offchainlabs/arb-node:v1.2.0-9214e38 \
+	--l1.url https://mainnet.infura.io/v3/17509665a88549b9a5a5f8f3e291120c
+{"level":"info","component":"configuration","l1url":"https://mainnet.infura.io/v3/17509665a88549b9a5a5f8f3e291120c","chainid":"1","time":"2022-03-01T11:19:17Z","caller":"/home/user/arb-util/configuration/configuration.go:566","message":"connected to l1 chain"}
+{"level":"info","component":"arb-node","chainaddress":"c12ba48c781f6e392b49db2e25cd0c28cd77531a","chainid":"a4b1","type":"forwarder","fromBlock":12525700,"time":"2022-03-01T11:19:17Z","caller":"/home/user/arb-rpc-node/cmd/arb-node/arb-node.go:195","message":"Launching arbitrum node"}
+{"level":"info","component":"monitor","directory":"/home/user/.arbitrum/mainnet/db","time":"2022-03-01T11:19:18Z","caller":"/home/user/arb-node-core/monitor/monitor.go:54","message":"database opened"}
+Reloading chain starting with timestamp 1646132358
+Seeding cache
+{"level":"info","component":"monitor","time":"2022-03-01T11:19:18Z","caller":"/home/user/arb-node-core/monitor/monitor.go:61","message":"storage initialized"}
+{"level":"info","component":"broadcaster","url":"wss://arb1.arbitrum.io/feed","time":"2022-03-01T11:19:18Z","caller":"/home/user/arb-util/broadcastclient/broadcastclient.go:115","message":"connecting to arbitrum inbox message broadcaster"}
+{"level":"info","component":"arb-node","forwardTxURL":"https://arb1.arbitrum.io/rpc","time":"2022-03-01T11:19:18Z","caller":"/home/user/arb-rpc-node/cmd/arb-node/arb-node.go:266","message":"Arbitrum node starting in forwarder mode"}
+{"level":"info","component":"broadcaster","time":"2022-03-01T11:19:19Z","caller":"/home/user/arb-util/broadcastclient/broadcastclient.go:130","message":"Connected"}
+{"level":"info","component":"rpc","port":"8547","time":"2022-03-01T11:19:19Z","caller":"/home/user/arb-rpc-node/utils/rpc.go:100","message":"Launching rpc server over http"}
+{"level":"info","component":"rpc","port":"8548","time":"2022-03-01T11:19:19Z","caller":"/home/user/arb-rpc-node/utils/rpc.go:100","message":"Launching websocket server over http"}
+{"level":"info","component":"txdb","start":"0","count":1,"time":"2022-03-01T11:19:20Z","caller":"/home/user/arb-rpc-node/txdb/txdb.go:169","message":"adding logs"}
+{"level":"warn","component":"txdb","block":0,"time":"2022-03-01T11:19:20Z","caller":"/home/user/arb-rpc-node/txdb/txdb.go:298","message":"found empty block"}
+{"level":"info","component":"txdb","start":"1","count":1,"time":"2022-03-01T11:19:20Z","caller":"/home/user/arb-rpc-node/txdb/txdb.go:169","message":"adding logs"}
+{"level":"warn","component":"txdb","block":1,"time":"2022-03-01T11:19:20Z","caller":"/home/user/arb-rpc-node/txdb/txdb.go:298","message":"found empty block"}
+{"level":"info","component":"txdb","start":"2","count":1,"time":"2022-03-01T11:19:21Z","caller":"/home/user/arb-rpc-node/txdb/txdb.go:169","message":"adding logs"}
+{"level":"info","component":"txdb","start":"3","count":8,"time":"2022-03-01T11:19:21Z","caller":"/home/user/arb-rpc-node/txdb/txdb.go:169","message":"adding logs"}
+{"level":"info","component":"txdb","start":"11","count":37,"time":"2022-03-01T11:19:21Z","caller":"/home/user/arb-rpc-node/txdb/txdb.go:169","message":"adding logs"}
+{"level":"info","component":"txdb","start":"48","count":1,"time":"2022-03-01T11:19:22Z","caller":"/home/user/arb-rpc-node/txdb/txdb.go:169","message":"adding logs"}
+{"level":"info","component":"txdb","start":"49","count":1,"time":"2022-03-01T11:19:22Z","caller":"/home/user/arb-rpc-node/txdb/txdb.go:169","message":"adding logs"}
+{"level":"info","component":"txdb","start":"50","count":1,"time":"2022-03-01T11:19:24Z","caller":"/home/user/arb-rpc-node/txdb/txdb.go:169","message":"adding logs"}
+{"level":"info","component":"txdb","start":"51","count":3,"time":"2022-03-01T11:19:24Z","caller":"/home/user/arb-rpc-node/txdb/txdb.go:169","message":"adding logs"}
+{"level":"info","component":"txdb","start":"54","count":1,"time":"2022-03-01T11:19:25Z","caller":"/home/user/arb-rpc-node/txdb/txdb.go:169","message":"adding logs"}
+{"level":"info","component":"txdb","start":"55","count":3,"time":"2022-03-01T11:19:25Z","caller":"/home/user/arb-rpc-node/txdb/txdb.go:169","message":"adding logs"}
+{"level":"info","component":"txdb","start":"58","count":1,"time":"2022-03-01T11:19:28Z","caller":"/home/user/arb-rpc-node/txdb/txdb.go:169","message":"adding logs"}
+{"level":"info","component":"txdb","start":"59","count":2,"time":"2022-03-01T11:19:28Z","caller":"/home/user/arb-rpc-node/txdb/txdb.go:169","message":"adding logs"}
+{"level":"info","component":"txdb","start":"61","count":2,"time":"2022-03-01T11:19:28Z","caller":"/home/user/arb-rpc-node/txdb/txdb.go:169","message":"adding logs"}
+{"level":"info","component":"txdb","start":"63","count":4,"time":"2022-03-01T11:19:28Z","caller":"/home/user/arb-rpc-node/txdb/txdb.go:169","message":"adding logs"}
+{"level":"info","component":"txdb","start":"67","count":2,"time":"2022-03-01T11:19:29Z","caller":"/home/user/arb-rpc-node/txdb/txdb.go:169","message":"adding logs"}
+{"level":"info","component":"txdb","start":"69","count":2,"time":"2022-03-01T11:19:29Z","caller":"/home/user/arb-rpc-node/txdb/txdb.go:169","message":"adding logs"}
+{"level":"info","component":"txdb","start":"71","count":31,"time":"2022-03-01T11:19:29Z","caller":"/home/user/arb-rpc-node/txdb/txdb.go:169","message":"adding logs"}
+{"level":"info","component":"txdb","start":"102","count":1,"time":"2022-03-01T11:19:29Z","caller":"/home/user/arb-rpc-node/txdb/txdb.go:169","message":"adding logs"}
+{"level":"info","component":"txdb","start":"103","count":3,"time":"2022-03-01T11:19:30Z","caller":"/home/user/arb-rpc-node/txdb/txdb.go:169","message":"adding logs"}
+{"level":"info","component":"txdb","start":"106","count":1,"time":"2022-03-01T11:19:30Z","caller":"/home/user/arb-rpc-node/txdb/txdb.go:169","message":"adding logs"}
+{"level":"info","component":"txdb","start":"107","count":19,"time":"2022-03-01T11:19:30Z","caller":"/home/user/arb-rpc-node/txdb/txdb.go:169","message":"adding logs"}
+{"level":"info","component":"txdb","start":"126","count":1,"time":"2022-03-01T11:19:31Z","caller":"/home/user/arb-rpc-node/txdb/txdb.go:169","message":"adding logs"}
+{"level":"info","component":"txdb","start":"127","count":1,"time":"2022-03-01T11:19:31Z","caller":"/home/user/arb-rpc-node/txdb/txdb.go:169","message":"adding logs"}
+{"level":"info","component":"txdb","start":"128","count":1,"time":"2022-03-01T11:19:31Z","caller":"/home/user/arb-rpc-node/txdb/txdb.go:169","message":"adding logs"}
+{"level":"info","component":"txdb","start":"129","count":5,"time":"2022-03-01T11:19:31Z","caller":"/home/user/arb-rpc-node/txdb/txdb.go:169","message":"adding logs"}
+{"level":"info","component":"txdb","start":"134","count":1,"time":"2022-03-01T11:19:32Z","caller":"/home/user/arb-rpc-node/txdb/txdb.go:169","message":"adding logs"}
+{"level":"info","component":"txdb","start":"135","count":1,"time":"2022-03-01T11:19:32Z","caller":"/home/user/arb-rpc-node/txdb/txdb.go:169","message":"adding logs"}
+{"level":"info","component":"txdb","start":"136","count":1,"time":"2022-03-01T11:19:32Z","caller":"/home/user/arb-rpc-node/txdb/txdb.go:169","message":"adding logs"}
+{"level":"info","component":"txdb","start":"137","count":2,"time":"2022-03-01T11:19:33Z","caller":"/home/user/arb-rpc-node/txdb/txdb.go:169","message":"adding logs"}
+{"level":"info","component":"txdb","start":"139","count":4,"time":"2022-03-01T11:19:33Z","caller":"/home/user/arb-rpc-node/txdb/txdb.go:169","message":"adding logs"}
+{"level":"info","component":"txdb","start":"143","count":2,"time":"2022-03-01T11:19:33Z","caller":"/home/user/arb-rpc-node/txdb/txdb.go:169","message":"adding logs"}
+{"level":"info","component":"txdb","start":"145","count":3,"time":"2022-03-01T11:19:33Z","caller":"/home/user/arb-rpc-node/txdb/txdb.go:169","message":"adding logs"}
+{"level":"info","component":"txdb","start":"148","count":1,"time":"2022-03-01T11:19:34Z","caller":"/home/user/arb-rpc-node/txdb/txdb.go:169","message":"adding logs"}
+{"level":"info","component":"txdb","start":"149","count":2,"time":"2022-03-01T11:19:34Z","caller":"/home/user/arb-rpc-node/txdb/txdb.go:169","message":"adding logs"}
+{"level":"warn","component":"txdb","block":76,"time":"2022-03-01T11:19:34Z","caller":"/home/user/arb-rpc-node/txdb/txdb.go:298","message":"found empty block"}
+{"level":"info","component":"txdb","start":"151","count":1,"time":"2022-03-01T11:19:37Z","caller":"/home/user/arb-rpc-node/txdb/txdb.go:169","message":"adding logs"}
+{"level":"info","component":"txdb","start":"152","count":6,"time":"2022-03-01T11:19:37Z","caller":"/home/user/arb-rpc-node/txdb/txdb.go:169","message":"adding logs"}
+{"level":"info","component":"txdb","start":"158","count":6,"time":"2022-03-01T11:19:37Z","caller":"/home/user/arb-rpc-node/txdb/txdb.go:169","message":"adding logs"}
+{"level":"info","component":"txdb","start":"164","count":4,"time":"2022-03-01T11:19:38Z","caller":"/home/user/arb-rpc-node/txdb/txdb.go:169","message":"adding logs"}
+{"level":"info","component":"txdb","start":"168","count":8,"time":"2022-03-01T11:19:38Z","caller":"/home/user/arb-rpc-node/txdb/txdb.go:169","message":"adding logs"}
+{"level":"info","component":"txdb","start":"176","count":6,"time":"2022-03-01T11:19:38Z","caller":"/home/user/arb-rpc-node/txdb/txdb.go:169","message":"adding logs"}
+{"level":"info","component":"txdb","start":"182","count":2,"time":"2022-03-01T11:19:39Z","caller":"/home/user/arb-rpc-node/txdb/txdb.go:169","message":"adding logs"}
+{"level":"info","component":"txdb","start":"184","count":2,"time":"2022-03-01T11:19:39Z","caller":"/home/user/arb-rpc-node/txdb/txdb.go:169","message":"adding logs"}
+{"level":"info","component":"txdb","start":"186","count":11,"time":"2022-03-01T11:19:39Z","caller":"/home/user/arb-rpc-node/txdb/txdb.go:169","message":"adding logs"}
+{"level":"info","component":"txdb","start":"197","count":6,"time":"2022-03-01T11:19:39Z","caller":"/home/user/arb-rpc-node/txdb/txdb.go:169","message":"adding logs"}
+{"level":"warn","component":"txdb","block":100,"time":"2022-03-01T11:19:39Z","caller":"/home/user/arb-rpc-node/txdb/txdb.go:298","message":"found empty block"}
+{"level":"info","component":"txdb","start":"203","count":4,"time":"2022-03-01T11:19:40Z","caller":"/home/user/arb-rpc-node/txdb/txdb.go:169","message":"adding logs"}
+{"level":"info","component":"txdb","start":"207","count":6,"time":"2022-03-01T11:19:40Z","caller":"/home/user/arb-rpc-node/txdb/txdb.go:169","message":"adding logs"}
+{"level":"info","component":"txdb","start":"213","count":8,"time":"2022-03-01T11:19:40Z","caller":"/home/user/arb-rpc-node/txdb/txdb.go:169","message":"adding logs"}
+{"level":"info","component":"txdb","start":"221","count":2,"time":"2022-03-01T11:19:40Z","caller":"/home/user/arb-rpc-node/txdb/txdb.go:169","message":"adding logs"}
+{"level":"info","component":"txdb","start":"223","count":6,"time":"2022-03-01T11:19:41Z","caller":"/home/user/arb-rpc-node/txdb/txdb.go:169","message":"adding logs"}
+{"level":"info","component":"txdb","start":"229","count":8,"time":"2022-03-01T11:19:41Z","caller":"/home/user/arb-rpc-node/txdb/txdb.go:169","message":"adding logs"}
+{"level":"info","component":"txdb","start":"237","count":4,"time":"2022-03-01T11:19:41Z","caller":"/home/user/arb-rpc-node/txdb/txdb.go:169","message":"adding logs"}
+{"level":"warn","component":"txdb","hash":"a3fefa25030cac6843fa05ea03b6005dd93933eeb09eacc58b9edd8f46cfbeef","result":"","gas_used":1091575,"gas_limit":6721975,"time":"2022-03-01T11:19:41Z","caller":"/home/user/arb-rpc-node/txdb/txdb.go:326","message":"tx reverted"}
+{"level":"info","component":"txdb","start":"241","count":10,"time":"2022-03-01T11:19:41Z","caller":"/home/user/arb-rpc-node/txdb/txdb.go:169","message":"adding logs"}
+{"level":"info","component":"txdb","start":"251","count":2,"time":"2022-03-01T11:19:41Z","caller":"/home/user/arb-rpc-node/txdb/txdb.go:169","message":"adding logs"}
+
+```
 
