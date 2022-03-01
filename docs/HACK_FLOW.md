@@ -454,4 +454,23 @@ Reorg took 2809ms
 ```
 
 
+## Broadcaster
 
+There is a (readme)[../validator/arb-util/broadcaster/README.md] explaining how to run a broadcaster, buy I only could find libs around it, not a cmd started....
+
+      ```
+      ❯ grep -rni broadcastersettings .
+./arb-node-core/cmd/arb-relay/arb-relay_test.go:36:     broadcasterSettings := configuration.FeedOutput{
+./arb-node-core/cmd/arb-relay/arb-relay_test.go:46:     bc := broadcaster.NewBroadcaster(broadcasterSettings)
+./arb-util/broadcaster/README.md:8:     broadcasterSettings := BroadcasterSettings{
+./arb-util/broadcaster/README.md:14:    broadcaster := NewBroadcaster(broadcasterSettings)
+./arb-util/broadcaster/broadcasterload_test.go:39:      broadcasterSettings := configuration.FeedOutput{
+./arb-util/broadcaster/broadcasterload_test.go:49:      b := NewBroadcaster(broadcasterSettings)
+./arb-util/broadcaster/broadcaster_test.go:38:  broadcasterSettings := configuration.FeedOutput{
+./arb-util/broadcaster/broadcaster_test.go:48:  b := NewBroadcaster(broadcasterSettings)
+./arb-util/broadcaster/broadcaster_test.go:159: broadcasterSettings := configuration.FeedOutput{
+./arb-util/broadcaster/broadcaster_test.go:169: b := NewBroadcaster(broadcasterSettings)
+./arb-util/broadcaster/broadcaster_test.go:217: broadcasterSettings := configuration.FeedOutput{
+./arb-util/broadcaster/broadcaster_test.go:227: b := NewBroadcaster(broadcasterSettings)
+
+      ```
