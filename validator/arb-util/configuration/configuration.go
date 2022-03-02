@@ -621,7 +621,7 @@ func ParseNonRelay(ctx context.Context, f *flag.FlagSet, defaultWalletPathname s
 		} else if l1ChainId.Cmp(big.NewInt(123)) == 0 { //sparknet chainid
 			err := k.Load(confmap.Provider(map[string]interface{}{
 				"bridge-utils-address":             "0xc6ec791F3F9A83A88b01A8793eD3055aC3016DA6",
-				"feed.input.url":                   []string{"h"},
+				"feed.input.url":                   []string{"ws://localhost:9642"},
 				"node.aggregator.inbox-address":    "0x4Dbd4fc535Ac27206064B68FfCf827b0A60BAB3f",
 				"node.chain-id":                    "55123",
 				"node.forwarder.target":            "https://localhost/rpc",
