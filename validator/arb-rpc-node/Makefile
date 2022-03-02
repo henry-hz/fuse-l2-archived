@@ -33,6 +33,9 @@ dev-node:
 	./bin/arb-dev-node
 
 
+broadcast:
+	go build -o bin/arb-broadcaster cmd/arb-broadcaster/arb-broadcaster.go
+	./bin/arb-broadcaster 
 
 forwarder:
 	go build -o bin/arb-node cmd/arb-node/arb-node.go

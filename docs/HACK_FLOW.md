@@ -454,4 +454,89 @@ Reorg took 2809ms
 ```
 
 
+## Validator
 
+
+there is an executable in the arb-node-core, called arb-validator,
+trying to run it, got:
+
+```
+[nix-shell:~/fuse-arb/validator/arb-node-core]$ make run-validator 
+./bin/arb-validator --l1.url=https://rpc.fusespark.io --feed.input.url=https:/rpc.fusespark.io:8546
+{"level":"info","component":"configuration","l1url":"https://rpc.fusespark.io","chainid":"123","time":"2022-03-02T10:02:26+02:00","caller":"/home/henry/fuse-arb/validator/arb-util/configuration/configuration.go:597","message":"connected to l1 chain"}
+{"level":"info","component":"cmdhelp","location":"/home/henry/.arbitrum/mainnet/validator-wallet","accounts":0,"time":"2022-03-02T10:02:27+02:00","caller":"/home/henry/fuse-arb/validator/arb-node-core/cmdhelp/wallet.go:169","message":"loading wallet"}
+Enter new account password: {"level":"info","component":"cmdhelp","address":"0ab6697a64de6a49aa7f207f5b0033f922a7c5af","description":"account","time":"2022-03-02T10:02:43+02:00","caller":"/home/henry/fuse-arb/validator/arb-node-core/cmdhelp/wallet.go:205","message":"created new wallet"}
+{"level":"info","component":"cmdhelp","signer":"0ab6697a64de6a49aa7f207f5b0033f922a7c5af","time":"2022-03-02T10:02:43+02:00","caller":"/home/henry/fuse-arb/validator/arb-node-core/cmdhelp/wallet.go:146","message":"wallet used as signer"}
+{"level":"info","component":"arb-validator","address":"0x0Ab6697a64de6A49aA7f207f5b0033F922a7c5AF","time":"2022-03-02T10:02:43+02:00","caller":"/home/henry/fuse-arb/validator/arb-node-core/cmd/arb-validator/arb-validator.go:141","message":"Loaded wallet"}
+{"level":"info","component":"monitor","directory":"/home/henry/.arbitrum/mainnet/validator-db","time":"2022-03-02T10:02:44+02:00","caller":"/home/henry/fuse-arb/validator/arb-node-core/monitor/monitor.go:57","message":"database opened"}
+Reloading chain to the last message saved
+Initial machine load
+{"level":"info","component":"monitor","time":"2022-03-02T10:02:44+02:00","caller":"/home/henry/fuse-arb/validator/arb-node-core/monitor/monitor.go:64","message":"storage initialized"}
+Aborting main ArbCore thread
+Exiting main ArbCore thread
+closing ArbStorage
+closed ArbStorage
+{"level":"info","component":"monitor","time":"2022-03-02T10:02:44+02:00","caller":"/home/henry/fuse-arb/validator/arb-node-core/monitor/monitor.go:83","message":"Database closed"}
+{"component":"arb-validator","time":"2022-03-02T10:02:44+02:00","caller":"/home/henry/fuse-arb/validator/arb-node-core/cmd/arb-validator/arb-validator.go:211","message":"Cleanly shutting down validator"}
+{"level":"error","component":"arb-validator","stack":[{"func":"startup","line":"211","source":"arb-validator.go"},{"func":"main","line":"74","source":"arb-validator.go"},{"func":"main","line":"225","source":"proc.go"},{"func":"goexit","line":"1371","source":"asm_amd64.s"}],"error":"error setting up staker: VM execution error.","time":"2022-03-02T10:02:44+02:00","caller":"/home/henry/fuse-arb/validator/arb-node-core/cmd/arb-validator/arb-validator.go:75","message":"Error running validator"}
+
+```
+
+I just created an account in the first time, and it saved in the ~/.arbritrum folder, so I added 0.5 Sparkfuse in the validator wallet: http://explorer.fusespark.io/address/0x0Ab6697a64de6A49aA7f207f5b0033F922a7c5AF/transactions 
+
+
+The private key is:
+{"address":"0ab6697a64de6a49aa7f207f5b0033f922a7c5af","crypto":{"cipher":"aes-128-ctr","ciphertext":"8254c802b8a5d8d8af01143f90b287ca63e9e5db31ba98c40ce7310e35f97980","cipherparams":{"iv":"bc51e245d3c742c7469ae0f505eab9e9"},"kdf":"scrypt","kdfparams":{"dklen":32,"n":262144,"p":1,"r":8,"salt":"813f77585b2e6798867ec1af44589e1e6c4d3bc77e17be998773ce55f42ebe61"},"mac":"b2f0ae1be3e44f6573bfbb81a13ed69dfaddddb45ed018c5df93708231109e0d"},"id":"3bd6f5f6-caf8-436b-9568-a097f0243536","version":3}
+
+To use this wallet, the password is 'jim'
+
+
+Tried again, and got a "loaded full machine !"
+
+```
+nix-shell:~/fuse-arb/validator/arb-node-core]$ make run-validator 
+./bin/arb-validator --l1.url=https://rpc.fusespark.io --feed.input.url=https:/rpc.fusespark.io:8546
+{"level":"info","component":"configuration","l1url":"https://rpc.fusespark.io","chainid":"123","time":"2022-03-02T10:09:36+02:00","caller":"/home/henry/fuse-arb/validator/arb-util/configuration/configuration.go:597","message":"connected to l1 chain"}
+{"level":"info","component":"cmdhelp","location":"/home/henry/.arbitrum/mainnet/validator-wallet","accounts":1,"time":"2022-03-02T10:09:36+02:00","caller":"/home/henry/fuse-arb/validator/arb-node-core/cmdhelp/wallet.go:169","message":"loading wallet"}
+Enter account password: {"level":"info","component":"cmdhelp","address":"0ab6697a64de6a49aa7f207f5b0033f922a7c5af","description":"account","time":"2022-03-02T10:11:03+02:00","caller":"/home/henry/fuse-arb/validator/arb-node-core/cmdhelp/wallet.go:205","message":"created new wallet"}
+{"level":"info","component":"cmdhelp","signer":"0ab6697a64de6a49aa7f207f5b0033f922a7c5af","time":"2022-03-02T10:11:03+02:00","caller":"/home/henry/fuse-arb/validator/arb-node-core/cmdhelp/wallet.go:146","message":"wallet used as signer"}
+{"level":"info","component":"arb-validator","address":"0x0Ab6697a64de6A49aA7f207f5b0033F922a7c5AF","time":"2022-03-02T10:11:03+02:00","caller":"/home/henry/fuse-arb/validator/arb-node-core/cmd/arb-validator/arb-validator.go:141","message":"Loaded wallet"}
+{"level":"info","component":"monitor","directory":"/home/henry/.arbitrum/mainnet/validator-db","time":"2022-03-02T10:11:03+02:00","caller":"/home/henry/fuse-arb/validator/arb-node-core/monitor/monitor.go:57","message":"database opened"}
+Reloading chain to the last message saved
+Initial machine load
+First database checkpoint,  total gas used: 0, L1 block: 0, L2 block: 0, log count: 0, messages count: 0, timestamp: Thu Jan  1 02:00:00 1970
+First valid database checkpoint,  total gas used: 0, L1 block: 0, L2 block: 0, log count: 0, messages count: 0, timestamp: Thu Jan  1 02:00:00 1970
+Loaded full machine,  total gas used: 0, L1 block: 0, L2 block: 0, log count: 0, messages count: 0, timestamp: Thu Jan  1 02:00:00 1970
+Reorg took 16ms
+{"level":"info","component":"monitor","time":"2022-03-02T10:11:04+02:00","caller":"/home/henry/fuse-arb/validator/arb-node-core/monitor/monitor.go:64","message":"storage initialized"}
+Aborting main ArbCore thread
+Exiting main ArbCore thread
+closing ArbStorage
+closed ArbStorage
+{"level":"info","component":"monitor","time":"2022-03-02T10:11:04+02:00","caller":"/home/henry/fuse-arb/validator/arb-node-core/monitor/monitor.go:83","message":"Database closed"}
+{"component":"arb-validator","time":"2022-03-02T10:11:04+02:00","caller":"/home/henry/fuse-arb/validator/arb-node-core/cmd/arb-validator/arb-validator.go:211","message":"Cleanly shutting down validator"}
+{"level":"error","component":"arb-validator","stack":[{"func":"startup","line":"211","source":"arb-validator.go"},{"func":"main","line":"74","source":"arb-validator.go"},{"func":"main","line":"225","source":"proc.go"},{"func":"goexit","line":"1371","source":"asm_amd64.s"}],"error":"error setting up staker: VM execution error.","time":"2022-03-02T10:11:04+02:00","caller":"/home/henry/fuse-arb/validator/arb-node-core/cmd/arb-validator/arb-validator.go:75","message":"Error running validator"}
+
+```
+
+
+The error was at the end of the startup in the arbvalidator.go code, when trying to up the staker...
+
+
+```
+❯ grep -I -rn "NewStaker" .
+./validator/arb-node-core/cmd/arb-validator/arb-validator.go:209:       stakerManager, _, err := staker.NewStaker(ctx, mon.Core, l1Client, val, config.Rollup.FromBlock, common.NewAddressFromEth(validatorUtilsAddr), strategy, bind.CallOpts{}, valAuth, config.Validator)
+./validator/arb-node-core/staker/staker_test.go:224:    staker, _, err := NewStaker(ctx, mon.Core, client, val, rollupBlock.Int64(), common.NewAddressFromEth(validatorUtilsAddr), MakeNodesStrategy, bind.CallOpts{}, valAuth, configuration.Validator{})
+./validator/arb-node-core/staker/staker_test.go:279:    faultyStaker, _, err := NewStaker(ctx, faultyCore, client, val2, rollupBlock.Int64(), common.NewAddressFromEth(validatorUtilsAddr), faultyStrategy, bind.CallOpts{}, val2Auth, configuration.Validator{})
+./validator/arb-node-core/staker/staker.go:72:func NewStaker(
+
+```
+
+The staker is only up by using the arbvalidator command.
+
+changing the gas to 1 gwei in the line 168
+
+
+
+Created a broadcaster and connected to it: websocat ws://localhost:9642
+with clean messages only, no data for this moment...

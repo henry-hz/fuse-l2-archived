@@ -7,6 +7,7 @@ build:
 
 
 run-validator:
+	go build -o bin/arb-validator cmd/arb-validator/arb-validator.go
 	./bin/arb-validator --l1.url=https://rpc.fusespark.io --feed.input.url=https:/rpc.fusespark.io:8546
 
 
