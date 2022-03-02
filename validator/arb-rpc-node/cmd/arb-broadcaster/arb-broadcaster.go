@@ -52,6 +52,34 @@ func startup() {
 	}
 
 	defer b.Stop()
+	time.Sleep(5 * time.Second)
+	fmt.Println("sending...")
+	newBroadcastMessage := broadcaster.SequencedMessages()
+	_, feedItem, _ := newBroadcastMessage()
 
+	time.Sleep(5 * time.Second)
+	fmt.Println("removing...")
+	b.ConfirmedAccumulator(feedItem.BatchItem.Accumulator) // remove the first message we generated
+	b.ConfirmedAccumulator(feedItem.BatchItem.Accumulator) // remove the first message we generated
+
+	time.Sleep(5 * time.Second)
+	fmt.Println("sending...")
+	newBroadcastMessage2 := broadcaster.SequencedMessages()
+	_, feedItem2, _ := newBroadcastMessage2()
+
+	time.Sleep(5 * time.Second)
+	fmt.Println("removing...")
+	b.ConfirmedAccumulator(feedItem2.BatchItem.Accumulator) // remove the first message we generated
+	b.ConfirmedAccumulator(feedItem2.BatchItem.Accumulator) // remove the first message we generated
+
+	time.Sleep(5 * time.Second)
+	fmt.Println("sending...")
+	newBroadcastMessage3 := broadcaster.SequencedMessages()
+	_, feedItem3, _ := newBroadcastMessage3()
+
+	time.Sleep(5 * time.Second)
+	fmt.Println("removing...")
+	b.ConfirmedAccumulator(feedItem3.BatchItem.Accumulator) // remove the first message we generated
+	b.ConfirmedAccumulator(feedItem3.BatchItem.Accumulator) // remove the first message we generated
 	time.Sleep(5 * time.Minute)
 }

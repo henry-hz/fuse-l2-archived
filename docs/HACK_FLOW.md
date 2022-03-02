@@ -560,4 +560,100 @@ Created a broadcaster and connected to it: websocat ws://localhost:9642
 with clean messages only, no data for this moment...
 
 
+## Sequencer
 
+Reading the docs in the transaction [lifecycle](https://developer.offchainlabs.com/docs/tx_lifecycle)
+
+Transaction Call Lifecycle
+There are a number of different phases that a transaction goes through before a user can consider it confirmed, starting with guaranteeing transaction ordering and ending with guaranteeing transaction execution. We start with the point at which the user submits the transaction to the sequencer (possibly forwarded through another node).
+
+So see that the sequencer needs a funded account !
+
+./bin/arb-node --l1.url=https://mainnet.infura.io/v3/17509665a88549b9a5a5f8f3e291120c \
+        --node.type=sequencer
+{"level":"info","component":"configuration","l1url":"https://mainnet.infura.io/v3/17509665a88549b9a5a5f8f3e291120c","chainid":"1","time":"2022-03-02T13:24:56+02:00","caller":"/home/henry/fuse-arb/validator/arb-util/configuration/configuration.go:597","message":"connected to l1 chain"}
+{"level":"info","component":"configuration","time":"2022-03-02T13:24:56+02:00","caller":"/home/henry/fuse-arb/validator/arb-util/configuration/configuration.go:772","message":"enabling last machine cache for sequencer"}
+{"level":"info","component":"arb-node","chainaddress":"c12ba48c781f6e392b49db2e25cd0c28cd77531a","chainid":"a4b1","type":"sequencer","fromBlock":12525700,"time":"2022-03-02T13:24:56+02:00","caller":"/home/henry/fuse-arb/validator/arb-rpc-node/cmd/arb-node/arb-node.go:199","message":"Launching arbitrum node"}
+{"level":"info","component":"monitor","directory":"/home/henry/.arbitrum/mainnet/db","time":"2022-03-02T13:24:56+02:00","caller":"/home/henry/fuse-arb/validator/arb-node-core/monitor/monitor.go:57","message":"database opened"}
+Reloading chain to the last message saved
+Initial machine load
+First database checkpoint,  total gas used: 4106555174, L1 block: 12555089, L2 block: 316, log count: 615, messages count: 630, timestamp: Wed Jun  2 15:25:28 2021
+First valid database checkpoint,  total gas used: 4106555174, L1 block: 12555089, L2 block: 316, log count: 615, messages count: 630, timestamp: Wed Jun  2 15:25:28 2021
+Loaded full machine,  total gas used: 4106555174, L1 block: 12555089, L2 block: 316, log count: 615, messages count: 630, timestamp: Wed Jun  2 15:25:28 2021
+Reorg took 578ms
+{"level":"info","component":"monitor","time":"2022-03-02T13:24:57+02:00","caller":"/home/henry/fuse-arb/validator/arb-node-core/monitor/monitor.go:64","message":"storage initialized"}
+{"level":"info","component":"broadcaster","url":"wss://arb1.arbitrum.io/feed","time":"2022-03-02T13:24:57+02:00","caller":"/home/henry/fuse-arb/validator/arb-util/broadcastclient/broadcastclient.go:115","message":"connecting to arbitrum inbox message broadcaster"}
+{"level":"info","component":"cmdhelp","location":"/home/henry/.arbitrum/mainnet/rpc-wallet","accounts":0,"time":"2022-03-02T13:24:58+02:00","caller":"/home/henry/fuse-arb/validator/arb-node-core/cmdhelp/wallet.go:169","message":"loading wallet"}
+Enter new account password: {"level":"info","component":"broadcaster","time":"2022-03-02T13:24:58+02:00","caller":"/home/henry/fuse-arb/validator/arb-util/broadcastclient/broadcastclient.go:130","message":"Connected"}
+{"level":"info","component":"cmdhelp","address":"25964813801236ec6de77a19ca7ab8c653b1411b","description":"account","time":"2022-03-02T13:25:13+02:00","caller":"/home/henry/fuse-arb/validator/arb-node-core/cmdhelp/wallet.go:205","message":"created new wallet"}
+{"level":"info","component":"cmdhelp","signer":"25964813801236ec6de77a19ca7ab8c653b1411b","time":"2022-03-02T13:25:13+02:00","caller":"/home/henry/fuse-arb/validator/arb-node-core/cmdhelp/wallet.go:146","message":"wallet used as signer"}
+{"level":"info","component":"arb-node","from":"25964813801236ec6de77a19ca7ab8c653b1411b","time":"2022-03-02T13:25:13+02:00","caller":"/home/henry/fuse-arb/validator/arb-rpc-node/cmd/arb-node/arb-node.go:282","message":"Arbitrum node submitting batches"}
+{"level":"info","component":"ethbridge","account":"25964813801236ec6de77a19ca7ab8c653b1411b","time":"2022-03-02T13:25:13+02:00","caller":"/home/henry/fuse-arb/validator/arb-node-core/ethbridge/balance.go:42","message":"Waiting for account to receive ETH"}                                                  
+Saved checkpoint,  total gas used: 5168348563, L1 block: 12567271, L2 block: 540, log count: 1050, messages count: 1078, timestamp: Fri Jun  4 12:53:27 2021
+Took 0 second(s) to save
+Saved checkpoint,  total gas used: 6185801030, L1 block: 12586270, L2 block: 771, log count: 1567, messages count: 1540, timestamp: Mon Jun  7 11:12:02 2021
+Took 0 second(s) to save
+^C{"level":"warn","component":"monitor","stack":[{"func":"(*SequencerInboxWatcher).ResolveBatchRef","line":"399","source":"sequencerInboxWatcher.go"},{"func":"(*InboxReader).addMessages","line":"539","source":"inboxReader.go"},{"func":"(*InboxReader).getMessages","line":"378","source":"inboxReader.go"},{"func":"(*InboxReader).Start.func1","line":"119","source":"inboxReader.go"},{"func":"goexit","line":"1371","source":"asm_amd64.s"}],"error":"Post \"https://mainnet.infura.io/v3/17509665a88549b9a5a5f8f3e291120c\": context canceled","time":"2022-03-02T13:25:53+02:00","caller":"/home/henry/fuse-arb/validator/arb-node-core/monitor/inboxReader.go:124","message":"Failed to read inbox messages"}
+Aborting main ArbCore thread
+Exiting main ArbCore thread
+closing ArbStorage
+closed ArbStorage
+{"level":"info","component":"monitor","time":"2022-03-02T13:25:53+02:00","caller":"/home/henry/fuse-arb/validator/arb-node-core/monitor/monitor.go:83","message":"Database closed"}
+{"component":"arb-node","time":"2022-03-02T13:25:53+02:00","caller":"/home/henry/fuse-arb/validator/arb-rpc-node/cmd/arb-node/arb-node.go:291","message":"Cleanly shutting down node"}
+{"level":"error","component":"arb-node","stack":[{"func":"startup","line":"291","source":"arb-node.go"},{"func":"main","line":"82","source":"arb-node.go"},{"func":"main","line":"225","source":"proc.go"},{"func":"goexit","line":"1371","source":"asm_amd64.s"}],"error":"error waiting for balance: timed out waiting for balance","time":"2022-03-02T13:25:53+02:00","caller":"/home/henry/fuse-arb/validator/arb-rpc-node/cmd/arb-node/arb-node.go:83","message":"Error running node"}
+
+
+
+So this time, I runned the arb-node as a sequencer, and we passed the connection with the blank WS:
+
+```
+        go build -o bin/arb-broadcaster cmd/arb-broadcaster/arb-broadcaster.go
+        ./bin/arb-broadcaster
+```
+
+
+```
+./bin/arb-node --l1.url=https://rpc.fusespark.io \
+        --node.type=sequencer
+{"level":"info","component":"configuration","l1url":"https://rpc.fusespark.io","chainid":"123","time":"2022-03-02T13:30:06+02:00","caller":"/home/henry/fuse-arb/validator/arb-util/configuration/configuration.go:597","message":"connected to l1 chain"}
+{"level":"info","component":"configuration","time":"2022-03-02T13:30:06+02:00","caller":"/home/henry/fuse-arb/validator/arb-util/configuration/configuration.go:772","message":"enabling last machine cache for sequencer"}
+{"level":"info","component":"arb-node","chainaddress":"c674399c6188ccb8e433a8b4b6d28ca0ba616104","chainid":"d753","type":"sequencer","fromBlock":12525700,"time":"2022-03-02T13:30:06+02:00","caller":"/home/henry/fuse-arb/validator/arb-rpc-node/cmd/arb-node/arb-node.go:199","message":"Launching arbitrum node"}
+{"level":"info","component":"monitor","directory":"/home/henry/.arbitrum/mainnet/db","time":"2022-03-02T13:30:07+02:00","caller":"/home/henry/fuse-arb/validator/arb-node-core/monitor/monitor.go:57","message":"database opened"}
+Reloading chain to the last message saved
+Initial machine load
+First database checkpoint,  total gas used: 6185801030, L1 block: 12586270, L2 block: 771, log count: 1567, messages count: 1540, timestamp: Mon Jun  7 11:12:02 2021
+First valid database checkpoint,  total gas used: 6185801030, L1 block: 12586270, L2 block: 771, log count: 1567, messages count: 1540, timestamp: Mon Jun  7 11:12:02 2021
+Loaded full machine,  total gas used: 6185801030, L1 block: 12586270, L2 block: 771, log count: 1567, messages count: 1540, timestamp: Mon Jun  7 11:12:02 2021
+Reorg took 1055ms
+{"level":"info","component":"monitor","time":"2022-03-02T13:30:08+02:00","caller":"/home/henry/fuse-arb/validator/arb-node-core/monitor/monitor.go:64","message":"storage initialized"}
+{"level":"info","component":"broadcaster","url":"ws://localhost:9642","time":"2022-03-02T13:30:08+02:00","caller":"/home/henry/fuse-arb/validator/arb-util/broadcastclient/broadcastclient.go:115","message":"connecting to arbitrum inbox message broadcaster"}
+{"level":"info","component":"broadcaster","time":"2022-03-02T13:30:08+02:00","caller":"/home/henry/fuse-arb/validator/arb-util/broadcastclient/broadcastclient.go:130","message":"Connected"}
+{"level":"warn","component":"arb-node","stack":[{"func":"(*Monitor).StartInboxReader","line":"102","source":"monitor.go"},{"func":"startup","line":"240","source":"arb-node.go"},{"func":"main","line":"82","source":"arb-node.go"},{"func":"main","line":"225","source":"proc.go"},{"func":"goexit","line":"1371","source":"asm_amd64.s"}],"error":"error checking initial chain state: One of the blocks specified in filter (fromBlock, toBlock or blockHash) cannot be found","url":"https://rpc.fusespark.io","rollup":"0xc674399C6188cCB8e433a8b4B6d28ca0BA616104","bridgeUtils":"0xc6ec791F3F9A83A88b01A8793eD3055aC3016DA6","fromBlock":12525700,"time":"2022-03-02T13:30:08+02:00","caller":"/home/henry/fuse-arb/validator/arb-rpc-node/cmd/arb-node/arb-node.go:258","message":"failed to start inbox reader, waiting and retrying"}
+
+```
+
+
+but it couldn't sync, because we still don't have real stuff inside the WS
+
+
+
+
+Trying to run the Rinkeby, but getting an issue with the initial machine hash:
+
+```
+        rm -rf arbitrum*
+        go build -o bin/arb-node cmd/arb-node/arb-node.go
+        ./bin/arb-node --l1.url=https://rinkeby.infura.io/v3/17509665a88549b9a5a5f8f3e291120c \
+                --node.type=aggregator
+
+
+{"level":"warn","component":"arb-node","stack":[{"func":"(*Monitor).StartInboxReader","line":"110","source":"monitor.go"},{"func":"startup","line":"240","source":"arb-node.go"},{"func":"main","line":"82","source":"arb-node.go"},{"func":"main","line":"225","source":"proc.go"},{"func":"goexit","line":"1371","source":"asm_amd64.s"}],"error":"Initial machine hash loaded from arbos.mexe doesn't match chain's initial machine hash: chain 0x1223c363f9c172597b694f669382596bc21516f5d2ab066a156c1ea7d3c92562, arbCore 0x541ad634cce9293e20f16e25e00ae7e4d003bfae2a9e4d24bc1c1d2db448dce6","url":"https://rinkeby.infura.io/v3/17509665a88549b9a5a5f8f3e291120c","rollup":"0xFe2c86CF40F89Fe2F726cFBBACEBae631300b50c","bridgeUtils":"0xA556F0eF1A0E37a7837ceec5527aFC7771Bf9a67","fromBlock":8700589,"time":"2022-03-02T18:09:31+02:00","caller":"/home/henry/fuse-arb/validator/arb-rpc-node/cmd/arb-node/arb-node.go:258","message":"failed to start inbox reader, waiting and retrying"}
+
+```
+
+
+
+## Critical Issues
+
+* turn on the WS with the synched messages
+* run even the rinkeby with the correct machine hash

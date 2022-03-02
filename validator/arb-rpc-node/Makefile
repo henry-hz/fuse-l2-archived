@@ -69,6 +69,11 @@ seq:
 	./bin/arb-node --l1.url=https://mainnet.infura.io/v3/17509665a88549b9a5a5f8f3e291120c \
 		--node.type=sequencer
 
+seq-spark:
+	rm -rf arbitrum*
+	go build -o bin/arb-node cmd/arb-node/arb-node.go
+	./bin/arb-node --l1.url=https://rpc.fusespark.io \
+		--node.type=sequencer
 
 dev-seq:
 	go build -o bin/arb-dev-sequencer cmd/arb-dev-sequencer/arb-dev-sequencer.go
