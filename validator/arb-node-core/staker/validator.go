@@ -3,6 +3,7 @@ package staker
 import (
 	"context"
 	"encoding/hex"
+	"fmt"
 	"math/big"
 
 	"github.com/ethereum/go-ethereum/accounts/abi/bind"
@@ -42,27 +43,33 @@ func NewValidator(
 ) (*Validator, error) {
 	builder, err := ethbridge.NewBuilderBackend(wallet)
 	if err != nil {
+		fmt.Println("error-1")
 		return nil, err
 	}
 	rollup, err := ethbridge.NewRollup(wallet.RollupAddress().ToEthAddress(), fromBlock, client, builder, callOpts)
 	_ = rollup
 	if err != nil {
+		fmt.Println("error-2")
 		return nil, err
 	}
 	delayedBridgeAddress, err := rollup.DelayedBridge(ctx)
 	if err != nil {
+		fmt.Println("error-3")
 		return nil, err
 	}
 	delayedBridge, err := ethbridge.NewDelayedBridgeWatcher(delayedBridgeAddress.ToEthAddress(), fromBlock, client)
 	if err != nil {
+		fmt.Println("error-4")
 		return nil, err
 	}
 	sequencerBridgeAddress, err := rollup.SequencerBridge(ctx)
 	if err != nil {
+		fmt.Println("error-5")
 		return nil, err
 	}
 	sequencerInbox, err := ethbridge.NewSequencerInboxWatcher(sequencerBridgeAddress.ToEthAddress(), client)
 	if err != nil {
+		fmt.Println("error-6")
 		return nil, err
 	}
 	validatorUtils, err := ethbridge.NewValidatorUtils(
@@ -72,6 +79,7 @@ func NewValidator(
 		callOpts,
 	)
 	if err != nil {
+		fmt.Println("error-7")
 		return nil, err
 	}
 	return &Validator{

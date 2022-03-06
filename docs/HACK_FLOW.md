@@ -657,3 +657,45 @@ Trying to run the Rinkeby, but getting an issue with the initial machine hash:
 
 * turn on the WS with the synched messages
 * run even the rinkeby with the correct machine hash
+
+
+
+I asked the dev in discord, and he told me that the validator should start the inbox-reader.
+
+```
+Thanks @Big Ben (will NEVER dm) , so I understand that the validator will start an inbox reader, listening to the smart contract inbox, and broadcasting it's state to the web-socket server, and aggregators will point to the web-socket server in the validator to sync. If it's correct, and the validator is the first source of the inbox broadcaster data, why in the command line to start it, we need to input a feed-url  like you see in the cmd file ?
+arb-validator --persistent.storage.path=<path> --l1.url=<L1 RPC> --feed.input.url=<feed websocket>
+
+```
+
+It's okay, we stil have a question on that but it simply worked without feeding the feeder-url:
+
+```
+[nix-shell:~/fuse-arb/validator/arb-node-core]$ make validator-s2 
+go build -o bin/arb-validator cmd/arb-validator/arb-validator.go
+./bin/arb-validator --l1.url=https://rpc.fusespark.io
+{"level":"info","component":"configuration","l1url":"https://rpc.fusespark.io","chainid":"123","time":"2022-03-06T12:07:54+02:00","caller":"/home/henry/fuse-arb/validator/arb-util/configuration/configuration.go:597","message":"connected to l1 chain"}
+{"level":"info","component":"cmdhelp","location":"/home/henry/.arbitrum/mainnet/validator-wallet","accounts":1,"time":"2022-03-06T12:07:54+02:00","caller":"/home/henry/fuse-arb/validator/arb-node-core/cmdhelp/wallet.go:169","message":"loading wallet"}
+Enter account password: {"level":"info","component":"cmdhelp","address":"546ea387728e63fcbb66f5160d716fbf93a5dcda","description":"account","time":"2022-03-06T12:07:57+02:00","caller":"/home/henry/fuse-arb/validator/arb-node-core/cmdhelp/wallet.go:205","message":"created new wallet"}
+{"level":"info","component":"cmdhelp","signer":"546ea387728e63fcbb66f5160d716fbf93a5dcda","time":"2022-03-06T12:07:57+02:00","caller":"/home/henry/fuse-arb/validator/arb-node-core/cmdhelp/wallet.go:146","message":"wallet used as signer"}
+{"level":"info","component":"arb-validator","address":"0x546Ea387728e63FcBb66F5160d716fbf93A5DCDa","time":"2022-03-06T12:07:57+02:00","caller":"/home/henry/fuse-arb/validator/arb-node-core/cmd/arb-validator/arb-validator.go:141","message":"Loaded wallet"}
+{"level":"info","component":"monitor","directory":"/home/henry/.arbitrum/mainnet/validator-db","time":"2022-03-06T12:07:58+02:00","caller":"/home/henry/fuse-arb/validator/arb-node-core/monitor/monitor.go:57","message":"database opened"}
+Reloading chain to the last message saved
+Initial machine load
+First database checkpoint,  total gas used: 0, L1 block: 0, L2 block: 0, log count: 0, messages count: 0, timestamp: Thu Jan  1 02:00:00 1970
+First valid database checkpoint,  total gas used: 0, L1 block: 0, L2 block: 0, log count: 0, messages count: 0, timestamp: Thu Jan  1 02:00:00 1970
+Loaded full machine,  total gas used: 0, L1 block: 0, L2 block: 0, log count: 0, messages count: 0, timestamp: Thu Jan  1 02:00:00 1970
+Reorg took 28ms
+{"level":"info","component":"monitor","time":"2022-03-06T12:07:59+02:00","caller":"/home/henry/fuse-arb/validator/arb-node-core/monitor/monitor.go:64","message":"storage initialized"}
+Aborting main ArbCore thread
+Exiting main ArbCore thread
+closing ArbStorage
+closed ArbStorage
+{"level":"info","component":"monitor","time":"2022-03-06T12:07:59+02:00","caller":"/home/henry/fuse-arb/validator/arb-node-core/monitor/monitor.go:83","message":"Database closed"}
+{"component":"arb-validator","time":"2022-03-06T12:07:59+02:00","caller":"/home/henry/fuse-arb/validator/arb-node-core/cmd/arb-validator/arb-validator.go:211","message":"Cleanly shutting down validator"}
+{"level":"error","component":"arb-validator","stack":[{"func":"startup","line":"211","source":"arb-validator.go"},{"func":"main","line":"74","source":"arb-validator.go"},{"func":"main","line":"225","source":"proc.go"},{"func":"goexit","line":"1371","source":"asm_amd64.s"}],"error":"error setting up staker: VM execution error.","time":"2022-03-06T12:07:59+02:00","caller":"/home/henry/fuse-arb/validator/arb-node-core/cmd/arb-validator/arb-validator.go:75","message":"Error running validator"}
+
+```
+
+but got a "staker error"
+

@@ -206,6 +206,8 @@ func startup() error {
 		return errors.Wrap(err, "error creating validator wallet")
 	}
 
+	fmt.Println("l1-client: ", l1Client)
+	fmt.Println("validator: ", val)
 	stakerManager, _, err := staker.NewStaker(ctx, mon.Core, l1Client, val, config.Rollup.FromBlock, common.NewAddressFromEth(validatorUtilsAddr), strategy, bind.CallOpts{}, valAuth, config.Validator)
 	if err != nil {
 		return errors.Wrap(err, "error setting up staker")

@@ -18,6 +18,7 @@ package staker
 
 import (
 	"context"
+	"fmt"
 	"math/big"
 	"runtime"
 	"time"
@@ -83,6 +84,7 @@ func NewStaker(
 ) (*Staker, *ethbridge.DelayedBridgeWatcher, error) {
 	val, err := NewValidator(ctx, lookup, client, wallet, fromBlock, validatorUtilsAddress, callOpts)
 	if err != nil {
+		fmt.Println("error building up the validator inside the new-staker")
 		return nil, nil, err
 	}
 	withdrawDestination := wallet.From()
