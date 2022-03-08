@@ -9,6 +9,11 @@ check-trace:
 		--header 'Content-Type: application/json' \
 		--data-raw '{ "jsonrpc":"2.0", "method":"debug_traceTransaction", "params":["0xe5e35ee13bb6326df4da89f17504a81923299d4986de06a019ca7856cbe76bca", {"tracer": "callTracer"}], "id":1 }'
 
+check-trace-ec2:
+	curl --location --request POST '147.235.72.87:8547' \
+		--header 'Content-Type: application/json' \
+		--data-raw '{ "jsonrpc":"2.0", "method":"debug_traceTransaction", "params":["0xe5e35ee13bb6326df4da89f17504a81923299d4986de06a019ca7856cbe76bca", {"tracer": "callTracer"}], "id":1 }'
+
 geth-trace:
 	geth --rpcapi eth,web3,debug,txpool,net,shh,db,admin,debug \
 		--rpc --ws --wsapi eth,web3,debug,txpool,net,shh,db,admin,debug  \
