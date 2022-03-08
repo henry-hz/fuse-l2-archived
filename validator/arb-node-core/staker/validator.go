@@ -52,16 +52,16 @@ func NewValidator(
 		fmt.Println("error-2")
 		return nil, err
 	}
-	delayedBridgeAddress, err := rollup.DelayedBridge(ctx)
-	if err != nil {
-		fmt.Println("error-3")
-		return nil, err
-	}
-	delayedBridge, err := ethbridge.NewDelayedBridgeWatcher(delayedBridgeAddress.ToEthAddress(), fromBlock, client)
-	if err != nil {
-		fmt.Println("error-4")
-		return nil, err
-	}
+	// delayedBridgeAddress, err := rollup.DelayedBridge(ctx)
+	// if err != nil {
+	// 	fmt.Println("error-3")
+	// 	return nil, err
+	// }
+	// delayedBridge, err := ethbridge.NewDelayedBridgeWatcher(delayedBridgeAddress.ToEthAddress(), fromBlock, client)
+	// if err != nil {
+	// 	fmt.Println("error-4")
+	// 	return nil, err
+	// }
 	sequencerBridgeAddress, err := rollup.SequencerBridge(ctx)
 	if err != nil {
 		fmt.Println("error-5")
@@ -83,8 +83,8 @@ func NewValidator(
 		return nil, err
 	}
 	return &Validator{
-		rollup:         rollup,
-		delayedBridge:  delayedBridge,
+		rollup: rollup,
+		// delayedBridge:  delayedBridge,
 		sequencerInbox: sequencerInbox,
 		validatorUtils: validatorUtils,
 		client:         client,

@@ -699,3 +699,82 @@ closed ArbStorage
 
 but got a "staker error"
 
+
+
+
+## Clear Strategy
+
+Let's move to a simpler strategy, having the contratcs in L1 + Sequencer[receive RPC transactions] + Validator [process transactions from inbox and send state to L1]
+
+but in any case, to have the sequencer working, we need the inbox broadcaster up. In Discord the guys told me that the validator should have one
+
+```
+{"level":"info","component":"monitor","time":"2022-03-08T11:00:25+02:00","caller":"/home/henry/fuse-arb/validator/arb-node-core/monitor/monitor.go:83","message":"Database closed"}
+{"component":"arb-node","time":"2022-03-08T11:00:25+02:00","caller":"/home/henry/fuse-arb/validator/arb-rpc-node/cmd/arb-node/arb-node.go:262","message":"Cleanly shutting down node"}
+{"level":"error","component":"arb-node","stack":[{"func":"startup","line":"262","source":"arb-node.go"},{"func":"main","line":"82","source":"arb-node.go"},{"func":"main","line":"225","source":"proc.go"},{"func":"goexit","line":"1371","source":"asm_amd64.s"}],"error":"ctx cancelled StartInboxReader retry loop","time":"2022-03-08T11:00:25+02:00","caller":"/home/henry/fuse-arb/validator/arb-rpc-node/cmd/arb-node/arb-node.go:83","message":"Error running node"}
+
+
+```
+
+
+
+So let's go to the validator again
+
+
+```
+irst database checkpoint,  total gas used: 262409515730, L1 block: 13133049, L2 block: 227308, log count: 458188, messages count: 454661, timestamp: Tue Aug 31 14:34:03 2021
+First valid database checkpoint,  total gas used: 262409515730, L1 block: 13133049, L2 block: 227308, log count: 458188, messages count: 454661, timestamp: Tue Aug 31 14:34:03 2021
+Loaded full machine,  total gas used: 262409515730, L1 block: 13133049, L2 block: 227308, log count: 458188, messages count: 454661, timestamp: Tue Aug 31 14:34:03 2021
+Reorg took 10149ms
+{"level":"info","component":"monitor","time":"2022-03-08T11:11:48+02:00","caller":"/home/henry/fuse-arb/validator/arb-node-core/monitor/monitor.go:64","message":"storage initialized"}
+l1-client:  &{0xc000516030 0xc0001b0630}
+validator:  &{<nil> <nil> 0xcb8000 0xc00050e690 0xc0003b4510 [198 116 57 156 97 136 204 184 228 51 168 180 182 210 140 160 186 97 97 4] [130 7 15 200 107 118 9 211 221 43 18 13 144 109 25 182 77 27 141 107] 12525700}
+error-sequencer-bridge-rollupuserfacet.go
+error-5
+error building up the validator inside the new-staker
+Aborting main ArbCore thread
+Exiting main ArbCore thread
+closing ArbStorage
+closed ArbStorage
+
+```
+
+
+We got an error calling the SequencerBridge function in the RollupUserFacet.go 
+
+see the calldata on SequencerBridge
+
+
+```
+go build -o bin/arb-validator cmd/arb-validator/arb-validator.go
+./bin/arb-validator --l1.url=https://rpc.fusespark.io
+{"level":"info","component":"configuration","l1url":"https://rpc.fusespark.io","chainid":"123","time":"2022-03-08T11:38:01+02:00","caller":"/home/henry/fuse-arb/validator/arb-util/configuration/configuration.go:597","message":"connected to l1 chain"}
+{"level":"info","component":"cmdhelp","location":"/home/henry/.arbitrum/mainnet/validator-wallet","accounts":1,"time":"2022-03-08T11:38:01+02:00","caller":"/home/henry/fuse-arb/validator/arb-node-core/cmdhelp/wallet.go:169","message":"loading wallet"}
+Enter account password: {"level":"info","component":"cmdhelp","address":"0ab6697a64de6a49aa7f207f5b0033f922a7c5af","description":"account","time":"2022-03-08T11:38:03+02:00","caller":"/home/henry/fuse-arb/validator/arb-node-core/cmdhelp/wallet.go:205","message":"created new wallet"}
+{"level":"info","component":"cmdhelp","signer":"0ab6697a64de6a49aa7f207f5b0033f922a7c5af","time":"2022-03-08T11:38:03+02:00","caller":"/home/henry/fuse-arb/validator/arb-node-core/cmdhelp/wallet.go:146","message":"wallet used as signer"}
+{"level":"info","component":"arb-validator","address":"0x0Ab6697a64de6A49aA7f207f5b0033F922a7c5AF","time":"2022-03-08T11:38:03+02:00","caller":"/home/henry/fuse-arb/validator/arb-node-core/cmd/arb-validator/arb-validator.go:141","message":"Loaded wallet"}
+{"level":"info","component":"monitor","directory":"/home/henry/.arbitrum/mainnet/validator-db","time":"2022-03-08T11:38:04+02:00","caller":"/home/henry/fuse-arb/validator/arb-node-core/monitor/monitor.go:57","message":"database opened"}
+Reloading chain to the last message saved
+Initial machine load
+First database checkpoint,  total gas used: 262409515730, L1 block: 13133049, L2 block: 227308, log count: 458188, messages count: 454661, timestamp: Tue Aug 31 14:34:03 2021
+First valid database checkpoint,  total gas used: 262409515730, L1 block: 13133049, L2 block: 227308, log count: 458188, messages count: 454661, timestamp: Tue Aug 31 14:34:03 2021
+Loaded full machine,  total gas used: 262409515730, L1 block: 13133049, L2 block: 227308, log count: 458188, messages count: 454661, timestamp: Tue Aug 31 14:34:03 2021
+Reorg took 10179ms
+{"level":"info","component":"monitor","time":"2022-03-08T11:38:15+02:00","caller":"/home/henry/fuse-arb/validator/arb-node-core/monitor/monitor.go:64","message":"storage initialized"}
+l1-client:  &{0xc000544000 0xc00052e240}
+validator:  &{<nil> <nil> 0xcb80c0 0xc000532080 0xc0003f2450 [198 116 57 156 97 136 204 184 228 51 168 180 182 210 140 160 186 97 97 4] [130 7 15 200 107 118 9 211 221 43 18 13 144 109 25 182 77 27 141 107] 12525700}
+&{false 0x0000000000000000000000000000000000000000 <nil> context.Background.WithCancel}
+error-5
+error building up the validator inside the new-staker
+Aborting main ArbCore thread
+Exiting main ArbCore thread
+closing ArbStorage
+closed ArbStorage
+{"level":"info","component":"monitor","time":"2022-03-08T11:38:15+02:00","caller":"/home/henry/fuse-arb/validator/arb-node-core/monitor/monitor.go:83","message":"Database closed"}
+{"component":"arb-validator","time":"2022-03-08T11:38:15+02:00","caller":"/home/henry/fuse-arb/validator/arb-node-core/cmd/arb-validator/arb-validator.go:213","message":"Cleanly shutting down validator"}
+{"level":"error","component":"arb-validator","stack":[{"func":"startup","line":"213","source":"arb-validator.go"},{"func":"main","line":"74","source":"arb-validator.go"},{"func":"main","line":"225","source":"proc.go"},{"func":"goexit","line":"1371","source":"asm_amd64.s"}],"error":"error setting up staker: VM execution error.","time":"2022-03-08T11:38:15+02:00","caller":"/home/henry/fuse-arb/validator/arb-node-core/cmd/arb-validator/arb-validator.go:75","message":"Error running validator"}
+
+```
+
+
+

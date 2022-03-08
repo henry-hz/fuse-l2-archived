@@ -2,6 +2,18 @@
 
 # Run arbitrum node as described in the manual
 # https://developer.offchainlabs.com/docs/running_node
+#
+#
+check-trace:
+	curl --location --request POST 'https://rinkeby.infura.io/v3/17509665a88549b9a5a5f8f3e291120c' \
+		--header 'Content-Type: application/json' \
+		--data-raw '{ "jsonrpc":"2.0", "method":"debug_traceTransaction", "params":["0xe5e35ee13bb6326df4da89f17504a81923299d4986de06a019ca7856cbe76bca", {"tracer": "callTracer"}], "id":1 }'
+
+geth-trace:
+	geth --rpcapi eth,web3,debug,txpool,net,shh,db,admin,debug \
+		--rpc --ws --wsapi eth,web3,debug,txpool,net,shh,db,admin,debug  \
+		--wsorigins localhost --gcmode full --rpcport=8547 --syncmode full --rinkeby
+
 
 dirs:
 	mkdir ~/db

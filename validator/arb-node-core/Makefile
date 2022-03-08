@@ -7,11 +7,11 @@ build:
 	go build -o bin/proof-server cmd/proof-test-server/proof_test_server.go
 
 
-validator-spark:
-	go build -o bin/arb-validator cmd/arb-validator/arb-validator.go
-	./bin/arb-validator --l1.url=https://rpc.fusespark.io --feed.input.url=ws://localhost:9642
+# validator-spark:
+# 	go build -o bin/arb-validator cmd/arb-validator/arb-validator.go
+# 	./bin/arb-validator --l1.url=https://rpc.fusespark.io --feed.input.url=ws://localhost:9642
 
-validator2:
+validator-spark:
 	go build -o bin/arb-validator cmd/arb-validator/arb-validator.go
 	./bin/arb-validator --l1.url=https://rpc.fusespark.io
 
