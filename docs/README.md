@@ -6,11 +6,13 @@ Arbitrum Exploration
 
 ## How Arbitrum Works
 
+* [rollup-overview](https://research.paradigm.xyz/rollups)
 * [tech-intro](https://medium.com/privacy-scaling-explorations/a-technical-introduction-to-arbitrums-optimistic-rollup-860955ea5fec) - best article around!
 * [optimism-tech-intro](https://medium.com/privacy-scaling-explorations/an-introduction-to-optimisms-optimistic-rollup-8450f22629e8)
 * [optimism-rollups](https://research.paradigm.xyz/optimism)
 * [vitalik-incomplete-guide](https://vitalik.ca/general/2021/01/05/rollup.html)
 * [getting-started-with-arbitrum](https://coinyuppie.com/getting-started-with-arbitrum-infrastructure-and-concepts/) - deep compare optimism with arbitrum
+* [merkle-tree](https://media.consensys.net/ever-wonder-how-merkle-trees-work-c2f8b7100ed3)
 
 
 ## Running Deploys
