@@ -17,10 +17,10 @@
 #ifndef config_hpp_in
 #define config_hpp_in
 
-const char* const test_cases_path = "/home/henry/fuse-arb/validator/arb-avm-cpp/tests/test_cases.json";
-const char* const test_contract_path = "/home/henry/fuse-arb/validator/arb-avm-cpp/tests/contract.mexe";
-const char* const arb_os_path = "/home/henry/fuse-arb/validator/arb-avm-cpp/tests/../../arb-os/arb_os/arbos.mexe";
-const char* const arb_os_test_cases_path = "/home/henry/fuse-arb/validator/arb-avm-cpp/tests/../../arb-os/replayTests";
-const char* const machine_test_cases_path = "/home/henry/fuse-arb/validator/arb-avm-cpp/tests/machine-cases";
+const char* const test_cases_path = "/home/henry/fuse-arb/arb/arb-avm-cpp/tests/test_cases.json";
+const char* const test_contract_path = "/home/henry/fuse-arb/arb/arb-avm-cpp/tests/contract.mexe";
+const char* const arb_os_path = "/home/henry/fuse-arb/arb/arb-avm-cpp/tests/../../arb-os/arb_os/arbos.mexe";
+const char* const arb_os_test_cases_path = "/home/henry/fuse-arb/arb/arb-avm-cpp/tests/../../arb-os/replayTests";
+const char* const machine_test_cases_path = "/home/henry/fuse-arb/arb/arb-avm-cpp/tests/machine-cases";
 
 #endif /* config_hpp_in */
