@@ -19,7 +19,6 @@ package main
 import (
 	"encoding/json"
 	"fmt"
-	"github.com/offchainlabs/arbitrum/packages/arb-util/arblog"
 	"io/ioutil"
 	golog "log"
 	"net/http"
@@ -27,6 +26,8 @@ import (
 	"os"
 	"path"
 	"strings"
+
+	"github.com/offchainlabs/arbitrum/packages/arb-util/arblog"
 
 	"github.com/pkg/errors"
 	"github.com/rs/zerolog"
