@@ -18,7 +18,6 @@ package ethbridge
 
 import (
 	"context"
-	"fmt"
 	"math/big"
 	"strings"
 
@@ -275,7 +274,6 @@ func (r *RollupWatcher) MinimumAssertionPeriod(ctx context.Context) (*big.Int, e
 }
 
 func (r *RollupWatcher) SequencerBridge(ctx context.Context) (common.Address, error) {
-	fmt.Println(r.getCallOpts(ctx))
 	addr, err := r.con.SequencerBridge(r.getCallOpts(ctx))
 	return common.NewAddressFromEth(addr), errors.WithStack(err)
 }

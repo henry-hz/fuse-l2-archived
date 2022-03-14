@@ -18,16 +18,13 @@ package staker
 
 import (
 	"context"
-	"fmt"
+	"github.com/offchainlabs/arbitrum/packages/arb-util/arblog"
 	"math/big"
 	"runtime"
 	"time"
 
 	"github.com/ethereum/go-ethereum/accounts/abi/bind"
 	ethcommon "github.com/ethereum/go-ethereum/common"
-	"github.com/pkg/errors"
-	"github.com/rs/zerolog/log"
-
 	"github.com/offchainlabs/arbitrum/packages/arb-node-core/challenge"
 	"github.com/offchainlabs/arbitrum/packages/arb-node-core/ethbridge"
 	"github.com/offchainlabs/arbitrum/packages/arb-util/arbtransaction"
@@ -36,9 +33,10 @@ import (
 	"github.com/offchainlabs/arbitrum/packages/arb-util/core"
 	"github.com/offchainlabs/arbitrum/packages/arb-util/ethutils"
 	"github.com/offchainlabs/arbitrum/packages/arb-util/transactauth"
+	"github.com/pkg/errors"
 )
 
-var logger = log.With().Caller().Stack().Str("component", "staker").Logger()
+var logger = arblog.Logger.With().Str("component", "staker").Logger()
 
 type Strategy uint8
 
@@ -84,7 +82,6 @@ func NewStaker(
 ) (*Staker, *ethbridge.DelayedBridgeWatcher, error) {
 	val, err := NewValidator(ctx, lookup, client, wallet, fromBlock, validatorUtilsAddress, callOpts)
 	if err != nil {
-		fmt.Println("error building up the validator inside the new-staker")
 		return nil, nil, err
 	}
 	withdrawDestination := wallet.From()
@@ -158,8 +155,6 @@ func (s *Staker) shouldAct(ctx context.Context) bool {
 	var gasPriceHigh = false
 	var gasPriceFloat float64
 	gasPrice, err := s.client.SuggestGasPrice(ctx)
-	// FUSE
-	gasPrice = big.NewInt(1000000000)
 	if err != nil {
 		logger.Warn().Err(err).Msg("error getting gas price")
 	} else {

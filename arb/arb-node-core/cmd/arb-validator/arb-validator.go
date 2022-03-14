@@ -19,6 +19,7 @@ package main
 import (
 	"encoding/json"
 	"fmt"
+	"github.com/offchainlabs/arbitrum/packages/arb-util/arblog"
 	"io/ioutil"
 	golog "log"
 	"net/http"
@@ -69,7 +70,7 @@ func main() {
 	zerolog.SetGlobalLevel(zerolog.InfoLevel)
 
 	// Print line number that log was created on
-	logger = log.With().Caller().Stack().Str("component", "arb-validator").Logger()
+	logger = arblog.Logger.With().Str("component", "arb-validator").Logger()
 
 	if err := startup(); err != nil {
 		logger.Error().Err(err).Msg("Error running validator")
@@ -95,8 +96,13 @@ func startup() error {
 		return nil
 	}
 
-	if config.Core.Test.JustMetadata {
+	if config.Core.Database.Metadata {
 		return cmdhelp.PrintDatabaseMetadata(config.GetValidatorDatabasePath(), &config.Core)
+	}
+
+	if config.Core.Database.MakeValidator {
+		// Exit immediately after converting database
+		return cmdhelp.NodeToValidator(config)
 	}
 
 	defer logger.Log().Msg("Cleanly shutting down validator")
@@ -148,8 +154,10 @@ func startup() error {
 		strategy = staker.StakeLatestStrategy
 	} else if strategyString == "Defensive" {
 		strategy = staker.DefensiveStrategy
+	} else if strategyString == "Watchtower" {
+		strategy = staker.WatchtowerStrategy
 	} else {
-		return errors.New("unsupported strategy specified. Currently supported: MakeNodes, StakeLatest")
+		return errors.New("unsupported strategy specified. Currently supported: MakeNodes, StakeLatest, Defensive, Watchtower")
 	}
 
 	chainState := ChainState{}
@@ -195,7 +203,7 @@ func startup() error {
 		}
 	}
 
-	mon, err := monitor.NewMonitor(config.GetValidatorDatabasePath(), config.Rollup.Machine.Filename, &config.Core)
+	mon, err := monitor.NewInitializedMonitor(config.GetValidatorDatabasePath(), config.Rollup.Machine.Filename, &config.Core)
 	if err != nil {
 		return errors.Wrap(err, "error opening monitor")
 	}
@@ -206,8 +214,6 @@ func startup() error {
 		return errors.Wrap(err, "error creating validator wallet")
 	}
 
-	fmt.Println("l1-client: ", l1Client)
-	fmt.Println("validator: ", val)
 	stakerManager, _, err := staker.NewStaker(ctx, mon.Core, l1Client, val, config.Rollup.FromBlock, common.NewAddressFromEth(validatorUtilsAddr), strategy, bind.CallOpts{}, valAuth, config.Validator)
 	if err != nil {
 		return errors.Wrap(err, "error setting up staker")
