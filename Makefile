@@ -16,8 +16,8 @@ lint:
 	go list ./... | grep -v /vendor/ | xargs -L1 golint -set_exit_status
 
 build:
-	go build -o bin/api ./cmd/api
-	go build -o bin/worker ./cmd/worker
+	go build -o bin/sequencer ./cmd/sequencer/main.go
+	go build -o bin/validator ./cmd/validator/main.go
 
 
 # copy go bindings files
@@ -26,7 +26,9 @@ copy-bindings:
 
 
 compile:
-	fswatch -m poll_monitor -or ./val | xargs -I{} sh -c "clear && go build val/main.go"
+	fswatch -m poll_monitor -or ./cmd/* | xargs -I{} sh -c "clear && \
+		go build -o bin/sequencer ./cmd/sequencer/main.go && \
+		go build -o bin/validator ./cmd/validator/main.go"
 
 
 deps:

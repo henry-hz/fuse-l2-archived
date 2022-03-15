@@ -15,6 +15,20 @@
 
 CONTAINER_NAME=arb-node
 
+
+run-avm:
+	mkdir ./arb-avm-cpp/release
+	cd ./arb-avm-cpp/release
+	cmake .. -DCMAKE_BUILD_TYPE=Release
+	cmake --build .
+	cd bin
+	mkdir db
+	wget https://raw.githubusercontent.com/OffchainLabs/arb-os/26ab8d7c818681c4ee40792aeb12981a8f2c3dfa/arb_os/arbos.mexe
+	./arbcore_runner ./db ./arbos.mexe
+	
+
+	./arbcore_runner ./db ./arbos.mexe
+
 build-docker:
 	docker build -t $(CONTAINER_NAME) .
 
