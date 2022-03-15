@@ -25,6 +25,10 @@ copy-bindings:
 	cp ../fuse-l1/out/*.go 	./util/contracts
 
 
+clean:
+	rm -rf go.sum
+	rm -rf ./vendor/*
+
 compile:
 	fswatch -m poll_monitor -or ./cmd/* | xargs -I{} sh -c "clear && \
 		go build -o bin/sequencer ./cmd/sequencer/main.go && \

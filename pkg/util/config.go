@@ -39,12 +39,11 @@ import (
 	"github.com/mitchellh/mapstructure"
 	"github.com/pkg/errors"
 	flag "github.com/spf13/pflag"
-
 )
 
 const PASSWORD_NOT_SET = "PASSWORD_NOT_SET"
 
-var logger = arblog.Logger.With().Str("component", "configuration").Logger()
+var logger = Logger.With().Str("component", "configuration").Logger()
 
 type Conf struct {
 	Dump      bool   `koanf:"dump"`
@@ -416,7 +415,8 @@ func (c *Config) GetValidatorDatabasePath() string {
 	return path.Join(c.Persistent.Chain, "validator-db")
 }
 
-func ParseCLI(ctx context.Context) (*Config, *Wallet, *ethutils.RPCEthClient, *big.Int, error) {
+/// RPCEthClient comes from ethutils
+func ParseCLI(ctx context.Context) (*Config, *Wallet, *RPCEthClient, *big.Int, error) {
 	f := flag.NewFlagSet(os.Args[0], flag.ContinueOnError)
 
 	AddForwarderTarget(f)
@@ -450,7 +450,7 @@ func AddL1PostingStrategyOptions(f *flag.FlagSet, prefix string) {
 	f.Int64(prefix+"l1-posting-strategy.high-gas-delay-blocks", 270, "wait up to this many more blocks when gas costs are high")
 }
 
-func ParseNode(ctx context.Context) (*Config, *Wallet, *ethutils.RPCEthClient, *big.Int, error) {
+func ParseNode(ctx context.Context) (*Config, *Wallet, *RPCEthClient, *big.Int, error) {
 	f := flag.NewFlagSet("", flag.ContinueOnError)
 
 	AddFeedOutputOptions(f)
@@ -511,7 +511,7 @@ func ParseNode(ctx context.Context) (*Config, *Wallet, *ethutils.RPCEthClient, *
 	return ParseNonRelay(ctx, f, "rpc-wallet", 250_000_000, time.Hour*48)
 }
 
-func ParseValidator(ctx context.Context) (*Config, *Wallet, *ethutils.RPCEthClient, *big.Int, error) {
+func ParseValidator(ctx context.Context) (*Config, *Wallet, *RPCEthClient, *big.Int, error) {
 	f := flag.NewFlagSet("", flag.ContinueOnError)
 
 	AddFeedOutputOptions(f)
@@ -527,7 +527,7 @@ func ParseValidator(ctx context.Context) (*Config, *Wallet, *ethutils.RPCEthClie
 	return ParseNonRelay(ctx, f, "validator-wallet", 0, 0)
 }
 
-func ParseNonRelay(ctx context.Context, f *flag.FlagSet, defaultWalletPathname string, maxExecutionGas int, checkpointPruningAge time.Duration) (*Config, *Wallet, *ethutils.RPCEthClient, *big.Int, error) {
+func ParseNonRelay(ctx context.Context, f *flag.FlagSet, defaultWalletPathname string, maxExecutionGas int, checkpointPruningAge time.Duration) (*Config, *Wallet, *RPCEthClient, *big.Int, error) {
 	f.String("bridge-utils-address", "", "bridgeutils contract address")
 
 	f.Float64("gas-price", 0, "float of gas price to use in gwei (0 = use L1 node's recommended value)")
@@ -562,7 +562,7 @@ func ParseNonRelay(ctx context.Context, f *flag.FlagSet, defaultWalletPathname s
 		return nil, nil, nil, nil, errors.New("required parameter --l1.url is missing")
 	}
 
-	l1Client, err := ethutils.NewRPCEthClient(l1URL)
+	l1Client, err := NewRPCEthClient(l1URL)
 	if err != nil {
 		return nil, nil, nil, nil, errors.Wrapf(err, "error connecting to ethereum L1 node: %s", l1URL)
 	}
@@ -1076,10 +1076,4 @@ func DatabaseInDirectory(path string) bool {
 	_, err := os.Stat(path + "/CURRENT")
 
 	return err == nil
-}
-
-import "fmt"
-
-func main() {
-	fmt.Println("vim-go")
 }
