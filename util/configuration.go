@@ -14,7 +14,7 @@
  * limitations under the License.
  */
 
-package configuration
+package config
 
 import (
 	"context"

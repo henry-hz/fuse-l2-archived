@@ -20,8 +20,8 @@
 #include <string>
 
 void sleep() {
-    std::chrono::hours dura{20};
-    //    std::chrono::seconds dura(2000);
+    //std::chrono::hours dura{20};
+    std::chrono::seconds dura(20);    // testing with 20 seconds
     std::this_thread::sleep_for(dura);  // this makes this thread sleep for 2s
 }
 

@@ -19,7 +19,6 @@ package config
 import (
 	"context"
 	"fmt"
-	"github.com/offchainlabs/arbitrum/packages/arb-util/arblog"
 	"io"
 	"math/big"
 	"net/http"
@@ -41,7 +40,6 @@ import (
 	"github.com/pkg/errors"
 	flag "github.com/spf13/pflag"
 
-	"github.com/offchainlabs/arbitrum/packages/arb-util/ethutils"
 )
 
 const PASSWORD_NOT_SET = "PASSWORD_NOT_SET"
