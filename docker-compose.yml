@@ -223,6 +223,7 @@ services:
       # ./go/gas-oracle/README.md:60:   --gas-price-oracle-address value           Address of OVM_GasPriceOracle (default: "0x420000000000000000000000000000000000000F") [$GAS_PRICE_ORACLE_GAS_PRICE_ORACLE_ADDRESS]
       # ./packages/contracts/bin/take-dump.ts:51:    env.GAS_PRICE_ORACLE_GAS_PRICE || '1',
       GAS_PRICE_ORACLE_GAS_PRICE: 1
+      # packages/contracts/bin/take-dump.ts:40:    env.GAS_PRICE_ORACLE_DECIMALS || '6',
       GAS_PRICE_ORACLE_DECIMALS: 6
     ports:
       # expose the service to the host for getting the contract addrs
