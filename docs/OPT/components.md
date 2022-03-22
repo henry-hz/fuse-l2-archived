@@ -6,7 +6,7 @@ This document contains a more detailed description of the Optimism codebase, and
 The diagram below is an example of a development deployment. The production should be 90% similar to this.
 
 
-![sequence-diagram](./sequence.png "Deployment Sequence Diagram")
+![sequence-diagram](./sequence.png)
 
 
 
