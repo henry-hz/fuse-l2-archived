@@ -1,4 +1,4 @@
-Services Responsabilities
+Services Responsibilities
 =========================
 
 This document contains a more detailed description of the Optimism codebase, and will be helpful to build the production devops environment. Reading the [intro](https://medium.com/privacy-scaling-explorations/an-introduction-to-optimisms-optimistic-rollup-8450f22629e8) will also give the background needed to get deep into the code. Mrs. Kyle only made one error, and called the component that transmit transaction from L2 to L1 'relayer', but the correct name is 'batch-submitter', once the relayer is only a help component for the development environment.
