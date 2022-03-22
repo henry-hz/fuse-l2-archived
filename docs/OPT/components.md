@@ -414,9 +414,13 @@ This package is meant to be used during local development and should **NOT** be 
 See the [readme](https://github.com/ethereum-optimism/optimism/tree/develop/packages/message-relayer) for more info.
 
 
-* [source-code](https://github.com/ethereum-optimism/optimism/tree/develop/packages/message-relayer)
+* [relayer](https://github.com/ethereum-optimism/optimism/tree/develop/packages/message-relayer)
+* [common-ts](https://github.com/ethereum-optimism/optimism/tree/develop/packages/common-ts)
+* [sdk](https://github.com/ethereum-optimism/optimism/tree/develop/packages/sdk)
+* [core-utils](https://github.com/ethereum-optimism/optimism/tree/develop/packages/core-utils)
 
 ```
+relayer:
 -------------------------------------------------------------------------------
 Language                     files          blank        comment           code
 -------------------------------------------------------------------------------
@@ -428,6 +432,49 @@ YAML                             1              0              0              2
 -------------------------------------------------------------------------------
 SUM:                            11            167             14            646
 -------------------------------------------------------------------------------
+
+
+core-utils
+-------------------------------------------------------------------------------
+Language                     files          blank        comment           code
+-------------------------------------------------------------------------------
+TypeScript                      27            200            304           1499
+Markdown                         2            124              0            170
+JSON                             4              2              0             80
+JavaScript                       2              0              0              6
+YAML                             1              0              0              2
+-------------------------------------------------------------------------------
+SUM:                            36            326            304           1757
+-------------------------------------------------------------------------------
+
+common-ts
+-------------------------------------------------------------------------------
+Language                     files          blank        comment           code
+-------------------------------------------------------------------------------
+TypeScript                      10             94            113            523
+JSON                             3              2              0             88
+Markdown                         2             33              0             36
+JavaScript                       2              0              0              6
+YAML                             1              0              0              2
+-------------------------------------------------------------------------------
+SUM:                            18            129            113            655
+-------------------------------------------------------------------------------
+
+sdk
+-------------------------------------------------------------------------------
+Language                     files          blank        comment           code
+-------------------------------------------------------------------------------
+TypeScript                      29            546           1200           4629
+Solidity                         6             44             29            316
+Markdown                         2             62              0            116
+JSON                             3              2              0             90
+JavaScript                       2              0              0              6
+YAML                             1              0              0              2
+-------------------------------------------------------------------------------
+SUM:                            43            654           1229           5159
+-------------------------------------------------------------------------------
+
+
 
 ```
 
