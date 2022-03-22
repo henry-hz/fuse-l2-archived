@@ -71,9 +71,12 @@ The Optimism Data Transport Layer is a long-running software service (written in
 * State roots (transaction results) that have been published to the StateCommitmentChain via [`StateCommitmentChain.appendStateBatch`].
 
 
-* [source-code](https://github.com/ethereum-optimism/optimism/tree/develop/packages/data-transport-layer)
+* [dtl](https://github.com/ethereum-optimism/optimism/tree/develop/packages/data-transport-layer)
+* [core-utils](https://github.com/ethereum-optimism/optimism/tree/develop/packages/core-utils)
+* [common-ts](https://github.com/ethereum-optimism/optimism/tree/develop/packages/common-ts)
 
 ```
+dtl
 -------------------------------------------------------------------------------
 Language                     files          blank        comment           code
 -------------------------------------------------------------------------------
@@ -86,6 +89,31 @@ JavaScript                       2              0              0              6
 SUM:                            41            645            194           7807
 -------------------------------------------------------------------------------
 
+core-utils
+-------------------------------------------------------------------------------
+Language                     files          blank        comment           code
+-------------------------------------------------------------------------------
+TypeScript                      27            200            304           1499
+Markdown                         2            124              0            170
+JSON                             4              2              0             80
+JavaScript                       2              0              0              6
+YAML                             1              0              0              2
+-------------------------------------------------------------------------------
+SUM:                            36            326            304           1757
+-------------------------------------------------------------------------------
+
+common-ts
+-------------------------------------------------------------------------------
+Language                     files          blank        comment           code
+-------------------------------------------------------------------------------
+TypeScript                      10             94            113            523
+JSON                             3              2              0             88
+Markdown                         2             33              0             36
+JavaScript                       2              0              0              6
+YAML                             1              0              0              2
+-------------------------------------------------------------------------------
+SUM:                            18            129            113            655
+-------------------------------------------------------------------------------
 ```
 
 See the [README](https://github.com/ethereum-optimism/optimism/tree/develop/packages/data-transport-layer) in packages/data-transport-layer folder, with all the config info.
