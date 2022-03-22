@@ -204,7 +204,7 @@ ENTRYPOINT ["geth"]
 
 * [geth.sh](https://github.com/ethereum-optimism/optimism/blob/develop/ops/scripts/geth.sh)
 
-```
+```bash
 #!/bin/sh
 
 # FIXME: Cannot use set -e since bash is not installed in Dockerfile
@@ -439,7 +439,7 @@ CMD ["npm", "run", "start"]
 
 * [relayer.sh]
 
-```
+```bash
 #!/bin/bash
 
 set -e
@@ -479,7 +479,20 @@ RETRIES: 60
 
 ## Batch Submitter
 
-Service for submitting batches of transactions and results to L1
+Service for submitting batches of transactions and results to L1, that synchronize L2 state to L1 contracts.
+
+```
+-------------------------------------------------------------------------------
+Language                     files          blank        comment           code
+-------------------------------------------------------------------------------
+Go                              17            748            967           3384
+JSON                             2              0              0           1157
+make                             1             16              0             50
+Markdown                         1             29              0             41
+-------------------------------------------------------------------------------
+SUM:                            21            793            967           4632
+-------------------------------------------------------------------------------
+```
 
 
 * [docker](https://github.com/ethereum-optimism/optimism/blob/develop/ops/docker/Dockerfile.batch-submitter-service)
@@ -543,7 +556,75 @@ BATCH_SUBMITTER_CLEAR_PENDING_TXS=false
 - l2geth
 ```
 
+* [batch-submitter.sh](https://github.com/ethereum-optimism/optimism/blob/develop/ops/scripts/batch-submitter.sh)
 
+```bash
+#!/bin/sh
+
+set -e
+
+RETRIES=${RETRIES:-40}
+
+if [[ ! -z "$URL" ]]; then
+    # get the addrs from the URL provided
+    ADDRESSES=$(curl --fail --show-error --silent --retry-connrefused --retry $RETRIES --retry-delay 5 $URL)
+    # set the env
+    export CTC_ADDRESS=$(echo $ADDRESSES | jq -r '.CanonicalTransactionChain')
+    export SCC_ADDRESS=$(echo $ADDRESSES | jq -r '.StateCommitmentChain')
+fi
+
+
+# waits for l2geth to be up
+curl --fail \
+    --show-error \
+    --silent \
+    --retry-connrefused \
+    --retry $RETRIES \
+    --retry-delay 1 \
+    --output /dev/null \
+    $L2_ETH_RPC
+
+# go
+exec batch-submitter "$@"
+```
+
+* [environment](https://github.com/ethereum-optimism/optimism/blob/develop/ops/envs/batch-submitter.env)
+
+```
+BUILD_ENV=development
+ETH_NETWORK_NAME=clique
+
+LOG_LEVEL=debug
+BATCH_SUBMITTER_LOG_LEVEL=debug
+BATCH_SUBMITTER_LOG_TERMINAL=true
+BATCH_SUBMITTER_MIN_L1_TX_SIZE=32
+BATCH_SUBMITTER_MAX_L1_TX_SIZE=90000
+BATCH_SUBMITTER_MIN_STATE_ROOT_ELEMENTS=1
+BATCH_SUBMITTER_MAX_STATE_ROOT_ELEMENTS=3000
+BATCH_SUBMITTER_MAX_BATCH_SUBMISSION_TIME=0
+BATCH_SUBMITTER_POLL_INTERVAL=500ms
+BATCH_SUBMITTER_NUM_CONFIRMATIONS=1
+BATCH_SUBMITTER_SAFE_ABORT_NONCE_TOO_LOW_COUNT=3
+BATCH_SUBMITTER_RESUBMISSION_TIMEOUT=1s
+BATCH_SUBMITTER_FINALITY_CONFIRMATIONS=0
+BATCH_SUBMITTER_RUN_TX_BATCH_SUBMITTER=true
+BATCH_SUBMITTER_RUN_STATE_BATCH_SUBMITTER=true
+BATCH_SUBMITTER_SAFE_MINIMUM_ETHER_BALANCE=0
+BATCH_SUBMITTER_CLEAR_PENDING_TXS=false
+```
+
+
+* dynaimc environment
+
+
+```
+L1_ETH_RPC: http://l1_chain:8545
+L2_ETH_RPC: http://l2geth:8545
+URL: http://deployer:8081/addresses.json
+BATCH_SUBMITTER_SEQUENCER_PRIVATE_KEY: '0x59c6995e998f97a5a0044966f0945389dc9e86dae88c7a8412f4603b6b78690d'
+BATCH_SUBMITTER_PROPOSER_PRIVATE_KEY: '0x5de4111afa1a4b94908f83103eb1f1706367c2e68ca870fc3fb9a804cdab365a'
+BATCH_SUBMITTER_SEQUENCER_BATCH_TYPE: ${BATCH_SUBMITTER_SEQUENCER_BATCH_TYPE:-zlib}
+```
 
 ## Gas Oracle
 
