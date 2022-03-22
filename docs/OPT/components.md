@@ -70,6 +70,9 @@ The Optimism Data Transport Layer is a long-running software service (written in
 * Transactions that have been included in the CanonicalTransactionChain via [`CanonicalTransactionChain.appendQueueBatch`] or [`CanonicalTransactionChain.appendSequencerBatch`].
 * State roots (transaction results) that have been published to the StateCommitmentChain via [`StateCommitmentChain.appendStateBatch`].
 
+
+* [source-code](https://github.com/ethereum-optimism/optimism/tree/develop/packages/data-transport-layer)
+
 ```
 -------------------------------------------------------------------------------
 Language                     files          blank        comment           code
@@ -410,6 +413,9 @@ This package is meant to be used during local development and should **NOT** be 
 
 See the [readme](https://github.com/ethereum-optimism/optimism/tree/develop/packages/message-relayer) for more info.
 
+
+* [source-code](https://github.com/ethereum-optimism/optimism/tree/develop/packages/message-relayer)
+
 ```
 -------------------------------------------------------------------------------
 Language                     files          blank        comment           code
@@ -481,7 +487,10 @@ RETRIES: 60
 
 Service for submitting batches of transactions and results to L1, that synchronize L2 state to L1 contracts.
 
+* [source-code](https://github.com/ethereum-optimism/optimism/tree/develop/go/batch-submitter)
+
 ```
+batch_submitter:
 -------------------------------------------------------------------------------
 Language                     files          blank        comment           code
 -------------------------------------------------------------------------------
@@ -492,6 +501,17 @@ Markdown                         1             29              0             41
 -------------------------------------------------------------------------------
 SUM:                            21            793            967           4632
 -------------------------------------------------------------------------------
+
+
+bss-core:
+-------------------------------------------------------------------------------
+Language                     files          blank        comment           code
+-------------------------------------------------------------------------------
+Go                              19            472            523           2067
+-------------------------------------------------------------------------------
+SUM:                            19            472            523           2067
+-------------------------------------------------------------------------------
+
 ```
 
 
@@ -629,4 +649,76 @@ BATCH_SUBMITTER_SEQUENCER_BATCH_TYPE: ${BATCH_SUBMITTER_SEQUENCER_BATCH_TYPE:-zl
 ## Gas Oracle
 
 
+This service is responsible for sending transactions to the Sequencer to update the L2 gas price over time. It consists of a set of functions found in the gasprices package that define the parameters of how the gas prices are updated and then the oracle package is responsible for observing the Sequencer over time and send transactions that actually do update the gas prices. See the [readme](https://github.com/ethereum-optimism/optimism/blob/develop/go/gas-oracle/README.md) for more info.
 
+
+
+* [source-code](https://github.com/ethereum-optimism/optimism/tree/develop/go/gas-oracle)
+```
+-------------------------------------------------------------------------------
+Language                     files          blank        comment           code
+-------------------------------------------------------------------------------
+Go                              14            398            453           2572
+JSON                             2              0              0            307
+Markdown                         2             53              0            105
+make                             1             12              0             33
+-------------------------------------------------------------------------------
+SUM:                            19            463            453           3017
+-------------------------------------------------------------------------------
+
+```
+
+
+* [gas-oracle.sh](https://github.com/ethereum-optimism/optimism/blob/develop/ops/scripts/gas-oracle.sh)
+
+```bash
+#!/bin/sh
+
+RETRIES=${RETRIES:-40}
+
+if [[ -z $GAS_PRICE_ORACLE_ETHEREUM_HTTP_URL ]]; then
+    echo "Must set env GAS_PRICE_ORACLE_ETHEREUM_HTTP_URL"
+    exit 1
+fi
+
+# waits for l2geth to be up
+curl --fail \
+    --show-error \
+    --silent \
+    --retry-connrefused \
+    --retry $RETRIES \
+    --retry-delay 1 \
+    --output /dev/null \
+    $GAS_PRICE_ORACLE_ETHEREUM_HTTP_URL
+
+exec gas-oracle "$@"
+```
+
+* dynamic config (only dyanmic, I didn't find any .env file)
+
+```
+GAS_PRICE_ORACLE_ETHEREUM_HTTP_URL: http://l2geth:8545
+# Default hardhat account 5
+GAS_PRICE_ORACLE_PRIVATE_KEY: '0x8b3a350cf5c34c9194ca85829a2df0ec3153be0318b5e2d3348e872092edffba'
+```
+
+
+* [dockerfile](https://github.com/ethereum-optimism/optimism/blob/develop/ops/docker/Dockerfile.gas-oracle)
+
+```
+FROM golang:1.15-alpine3.13 as builder
+
+RUN apk add --no-cache make gcc musl-dev linux-headers git jq bash
+
+COPY ./go/gas-oracle /gas-oracle
+RUN cd /gas-oracle && make gas-oracle
+
+FROM alpine:3.13
+
+RUN apk add --no-cache ca-certificates jq curl
+COPY --from=builder /gas-oracle/gas-oracle /usr/local/bin/
+
+WORKDIR /usr/local/bin/
+COPY ./ops/scripts/gas-oracle.sh .
+ENTRYPOINT ["gas-oracle"]
+```
